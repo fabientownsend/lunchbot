@@ -1,7 +1,6 @@
 require 'sinatra/base'
 require 'slack-ruby-client'
 require_relative 'message_handler'
-require_relative 'menu'
 
 class EventController < Sinatra::Base
   attr_reader :message_handler
