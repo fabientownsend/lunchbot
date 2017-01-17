@@ -4,8 +4,9 @@ require_relative 'message_handler'
 require_relative 'menu'
 
 class EventController < Sinatra::Base
+  attr_reader :message_handler
   def initialize
-    @menu = Menu.new
+    @message_handler = MessageHandler.new
   end
 
   post '/events' do
@@ -30,7 +31,7 @@ class EventController < Sinatra::Base
       event_data = data['event']
 
       if event_data['type'] == 'message'
-          MessageHandler.handle(team_id, event_data, @menu)
+          @message_handler.handle(team_id, event_data)
       end
     end
   end
