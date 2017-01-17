@@ -1,8 +1,18 @@
 require 'sinatra/base'
 require 'slack-ruby-client'
 require_relative 'message_handler'
+<<<<<<< HEAD
 
 class EventController < Sinatra::Base
+=======
+require_relative 'menu'
+
+class EventController < Sinatra::Base
+  def initialize
+    @menu = Menu.new
+  end
+
+>>>>>>> 59ee66deb69c2dcbfc723a2379a09a3be64a860e
   post '/events' do
     request_data = JSON.parse(request.body.read)
 
@@ -25,7 +35,11 @@ class EventController < Sinatra::Base
       event_data = data['event']
 
       if event_data['type'] == 'message'
+<<<<<<< HEAD
           MessageHandler.handle(team_id, event_data)
+=======
+          MessageHandler.handle(team_id, event_data, @menu)
+>>>>>>> 59ee66deb69c2dcbfc723a2379a09a3be64a860e
       end
     end
   end
