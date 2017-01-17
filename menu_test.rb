@@ -1,15 +1,3 @@
-<<<<<<< HEAD
-class Menu
-  def menu 
-    "www.mymenu.com"
-  end
-end
-
-RSpec.describe Menu do
-  it "return the url of the current menu" do
-    menu = Menu.new
-    expect(menu.menu).to eq("www.mymenu.com")
-=======
 require_relative 'menu'
 
 RSpec.describe Menu do
@@ -64,6 +52,5 @@ RSpec.describe Menu do
     menu = Menu.new
     url = menu.parse_url("asdfj dasfjkla https://www.menu.co.uk asdfad")
     expect(url).to eq("https://www.menu.co.uk")
->>>>>>> 59ee66deb69c2dcbfc723a2379a09a3be64a860e
   end
 end
