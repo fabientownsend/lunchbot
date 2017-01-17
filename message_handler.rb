@@ -1,7 +1,7 @@
-class EventHandler
+class MessageHandler
   attr_reader :menu_url
 
-  def self.message(team_id, event_data)
+  def self.handle(team_id, event_data)
     user_id = event_data['user']
     @menu_url = /((http|https):\/{2})+([A-Za-z]+\.)+(com|co.uk)/.match(event_data['message'])
 
