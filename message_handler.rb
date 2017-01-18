@@ -1,3 +1,6 @@
+require_relative 'menu'
+require_relative 'response'
+
 class MessageHandler
   def initialize()
     @menu = Menu.new
