@@ -8,9 +8,7 @@ class MessageHandler
   
   def handle(team_id, event_data)
     user_id = event_data['user']
-    unless user_id == $teams[team_id][:bot_user_id]
-      respondToMessage(team_id, user_id)
-    end
+    respondToMessage(team_id, user_id)
   end
 
   def respondToMessage(team_id, user_id)

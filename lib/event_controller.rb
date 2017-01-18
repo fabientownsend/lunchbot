@@ -30,7 +30,9 @@ class EventController < Sinatra::Base
       event_data = data['event']
 
       if event_data['type'] == 'message'
+        unless $teams[team_id][:bot_user_id]
           @message_handler.handle(team_id, event_data)
+        end
       end
     end
   end
