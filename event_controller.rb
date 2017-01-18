@@ -4,7 +4,7 @@ require_relative 'message_handler'
 
 class EventController < Sinatra::Base
   attr_reader :message_handler
-  def initialize
+  def initialize()
     @message_handler = MessageHandler.new
   end
 
