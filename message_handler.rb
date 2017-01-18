@@ -13,8 +13,8 @@ class MessageHandler
   def determineMessage(data)
       if data["text"].include?("new menu")
         @menu.set_url(@menu.parse_url(data["text"]))
-        @response = Response.new(team_id, user_id)
-        @response.send("Menu has been set.")
+        response = Response.new(team_id, user_id)
+        response.send("Menu has been set.")
       end
   end
 end
