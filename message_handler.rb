@@ -14,6 +14,7 @@ class MessageHandler
   end
 
   def determineMessage(data)
+      puts data
       if data["text"].include?("new menu")
         @menu.set_url(@menu.parse_url(data["text"]))
         response = Response.new(team_id, user_id)
