@@ -1,3 +1,5 @@
+require 'spec_helper'
+
 class RequestParser
   def parse(request)
     if request.include?("menu")
