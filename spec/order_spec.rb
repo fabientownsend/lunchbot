@@ -1,5 +1,5 @@
-require_relative '../order'
-require_relative '../order_list'
+require_relative '../lib/order'
+require_relative '../lib/order_list'
 
 RSpec.describe Order do
   it "stores users lunch order" do

@@ -1,4 +1,4 @@
-require_relative '../menu'
+require_relative '../lib/menu'
 
 RSpec.describe Menu do
   it "notify if no link provided" do
