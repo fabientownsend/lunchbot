@@ -17,7 +17,7 @@ class MessageHandler
 
     if user_request == "menu"
       save_menu_url(user_message)
-      bot_answer = "Menu has been set."
+      bot_answer = "<!here> Menu has been set: #{@menu.url}"
       respondToMessage(bot_answer, team_id, user_id, channel)
     elsif user_request == "get_menu"
       bot_answer = "This week the menu is from: #{@menu.url}"
