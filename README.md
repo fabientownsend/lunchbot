@@ -13,3 +13,18 @@ export SLACK_API_SECRET="XXXX"
 export SLACK_VERIFICATION_TOKEN="XXXX"
 export SLACK_REDIRECT_URI="XXXX"
 ```
+
+# Slack
+User can set a url to the new menu, this will alert all the user present in the
+channel about the new menu url.
+
+``` bash
+new menu www.new_menu.com // will set the url of the new menu
+```
+
+The current menu url can be then asked by the user.
+
+``` bash
+menu? // will return the url of the menu
+```
+
