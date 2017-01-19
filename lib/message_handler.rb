@@ -1,10 +1,13 @@
 require_relative 'menu'
 require_relative 'response'
 require_relative 'request_parser'
+require_relative 'order_list'
+require_relative 'order'
 
 class MessageHandler
   def initialize()
     @menu = Menu.new
+    @order_list = OrderList.new
     @request_parser = RequestParser.new
   end
   
@@ -22,6 +25,13 @@ class MessageHandler
     elsif user_request == "get_menu"
       bot_answer = "This week the menu is from: #{@menu.url}"
       respondToMessage(bot_answer, team_id, user_id, channel)
+    elsif user_request == "set_order"
+      user_name = event_data['user_name']
+      lunch = user_message.gsub("order me: ", "")
+      order = Order.new(user_name, lunch, user_id)
+      @order_list.add_order(order)
+      bot_answer = "Your order #{order.lunch} is updated"
+      respondToMessage(bot_answer, team_id, user_id)
     else
       respondToMessage("This isn't a valid request", team_id, user_id)
     end

@@ -24,6 +24,6 @@ class RequestParser
   end
 
   def set_order_request?(request)
-    request.start_with?("order me:") && request.split.size > 2
+    request.start_with?("order me: ") && request.split.size > 2
   end
 end

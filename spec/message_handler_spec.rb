@@ -44,6 +44,11 @@ RSpec.describe RequestParser do
     expect(user_request.parse(request)).to eq("set_order")
   end
 
+  it "return error when there is no space between colon and order" do
+    request = "order me:my meal"
+    expect(user_request.parse(request)).to eq("error")
+  end
+
   it "return error when the user order nothing" do
     request = "order me:"
     expect(user_request.parse(request)).to eq("error")
