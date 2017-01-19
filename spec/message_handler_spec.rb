@@ -38,4 +38,14 @@ RSpec.describe RequestParser do
     request = "menu? ?"
     expect(user_request.parse(request)).to eq("error")
   end
+
+  it "return set_order when it's a correct order request" do
+    request = "order me: name_of_the_menu"
+    expect(user_request.parse(request)).to eq("set_order")
+  end
+
+  it "return error when the user order nothing" do
+    request = "order me:"
+    expect(user_request.parse(request)).to eq("error")
+  end
 end
