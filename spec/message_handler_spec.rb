@@ -1,27 +1,31 @@
 require 'spec_helper'
-
-class RequestParser
-  def parse(request)
-    if request.include?("menu")
-      "menu"
-    elsif request.include?("order")
-      "order"
-    end
-  end
-end
+require 'request_parser'
 
 RSpec.describe RequestParser do
-  it "return menu when its a menu request" do
-    request_parser = RequestParser.new
-    slack_request = "menu"
+  let(:user_request) { RequestParser.new }
 
-    expect(request_parser.parse(slack_request)).to eq("menu")
+  it "return menu when the request is a menu" do
+    request = "new menu www.menu.com"
+    expect(user_request.parse(request)).to eq("menu")
   end
 
-  it "return order when they try to order" do
-    request_parser = RequestParser.new
-    slack_request = "order chicken"
+  it "return error when the menu request has too munch arguments" do
+    request = "new menu www.menu.com bla"
+    expect(user_request.parse(request)).to eq("error")
+  end
 
-    expect(request_parser.parse(slack_request)).to eq("order")
+  it "return error when the menu request hasn't enough arguments " do
+    request = "new menu www.menu.com bla"
+    expect(user_request.parse(request)).to eq("error")
+  end
+
+  it "return error when the request keywork aren't correct" do
+    request = "lol menu www.menu.com"
+    expect(user_request.parse(request)).to eq("error")
+  end
+
+  it "return error when the request doesn't provide an url" do
+    request = "new menu no-an-url"
+    expect(user_request.parse(request)).to eq("error")
   end
 end
