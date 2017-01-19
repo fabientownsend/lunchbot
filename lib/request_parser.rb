@@ -6,6 +6,8 @@ class RequestParser
       "get_menu"
     elsif set_order_request?(request)
       "set_order"
+    elsif request.start_with?("order:") && request.split.size > 1
+      "get_order"
     else
       "error"
     end
