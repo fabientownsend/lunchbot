@@ -53,4 +53,9 @@ RSpec.describe RequestParser do
     request = "order me:"
     expect(user_request.parse(request)).to eq("error")
   end
+
+  it "return get_order when it's a correct request" do
+    correct_request = "order: Fabien Townsend"
+    expect(user_request.parse(correct_request)).to eq("get_order")
+  end
 end
