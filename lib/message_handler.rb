@@ -30,7 +30,7 @@ class MessageHandler
       lunch = user_message.gsub("order me: ", "")
       order = Order.new(user_name, lunch, user_id)
       @order_list.add_order(order)
-      bot_answer = "Your order #{order.lunch} is updated"
+      bot_answer = "Your order `#{order.lunch}` is updated"
       respondToMessage(bot_answer, team_id, user_id)
     else
       respondToMessage("This isn't a valid request", team_id, user_id)
