@@ -28,4 +28,14 @@ RSpec.describe RequestParser do
     request = "new menu no-an-url"
     expect(user_request.parse(request)).to eq("error")
   end
+
+  it "return get_menu when the person request for a menu" do
+    request = "menu?"
+    expect(user_request.parse(request)).to eq("get_menu")
+  end
+
+  it "return error when get_menu request has more than one argument" do
+    request = "menu? ?"
+    expect(user_request.parse(request)).to eq("error")
+  end
 end

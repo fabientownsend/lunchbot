@@ -2,6 +2,8 @@ class RequestParser
   def parse(request)
     if menu_request?(request)
       "menu"
+    elsif request.include?("menu?") && request.split.size == 1
+      "get_menu"
     else
       "error"
     end
