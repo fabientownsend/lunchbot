@@ -8,6 +8,8 @@ class RequestParser
       "set_order"
     elsif request.start_with?("order:") && request.split.size > 1
       "get_order"
+    elsif request.start_with?("foreman")
+      "foreman"
     else
       "error"
     end

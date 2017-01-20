@@ -8,10 +8,11 @@ class MessageHandler
   def initialize()
     @menu = Menu.new
     @order_list = OrderList.new
+    @apprentice_rota = ApprenticeRota.new({"id" => "Will", "id2" => "Fabien"})
     @request_parser = RequestParser.new
   end
   
-  def handle(team_id, event_data)
+  def handle(team_id, event_data) #TODO: refactor with polymorphism
     user_id = event_data['user']
     channel = event_data['channel']
     user_message = event_data['text']
@@ -37,8 +38,10 @@ class MessageHandler
       user_message = user_message.gsub("order: ", "")
       user_id_meal_researched = user_message[/(?<=\<@)(\w+)(?=>)/]
       meal = @order_list.find_lunch(user_id_meal_researched)
-
       bot_answer = "<@#{user_id_meal_researched}> ordered: `#{meal}`"
+      respondToMessage(bot_answer, team_id, user_id, channel)
+    elsif user_request == "foreman"
+      bot_answer = "The foreman for this week is #{@apprentice_rota.foremanName()}"
       respondToMessage(bot_answer, team_id, user_id, channel)
     else
       respondToMessage("This isn't a valid request", team_id, user_id)
