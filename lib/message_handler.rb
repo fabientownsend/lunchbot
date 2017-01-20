@@ -5,13 +5,14 @@ require_relative 'order_list'
 require_relative 'order'
 
 class MessageHandler
-  def initialize()
+  def initialize(response = Response.new)
+    @response = response
     @menu = Menu.new
     @order_list = OrderList.new
     @apprentice_rota = ApprenticeRota.new({"id" => "Will", "id2" => "Fabien"})
     @request_parser = RequestParser.new
   end
-  
+
   def handle(team_id, event_data) #TODO: refactor with polymorphism
     user_id = event_data['user']
     channel = event_data['channel']
@@ -49,12 +50,11 @@ class MessageHandler
   end
 
   def respondToMessage(bot_answer, team_id, user_id, channel = user_id)
-      response = Response.new(team_id, channel)
-      response.send(bot_answer)
+      @response.send(bot_answer, team_id, channel)
   end
 
   private
-  
+
   def save_menu_url(text)
     url = @menu.parse_url(text)
     @menu.set_url(url)
