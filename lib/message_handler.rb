@@ -41,7 +41,7 @@ class MessageHandler
       bot_answer = "<@#{user_id_meal_researched}> ordered: `#{meal}`"
       respondToMessage(bot_answer, team_id, user_id, channel)
     elsif user_request == "foreman"
-      bot_answer = "The foreman for this week is #{@apprentice_rota.foreman().at(1)}"
+      bot_answer = "The foreman for this week is #{@apprentice_rota.foremanName()}"
       respondToMessage(bot_answer, team_id, user_id, channel)
     else
       respondToMessage("This isn't a valid request", team_id, user_id)

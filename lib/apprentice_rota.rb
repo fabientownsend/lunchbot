@@ -9,10 +9,19 @@ class ApprenticeRota
     @rota.first
   end
 
+  def foremanName()
+    foreman().at(1)
+  end
+
+  def foremanID()
+    foreman().at(0)
+  end
+
   def rotate()
-    current_foreman = foreman()
-    @rota.delete(current_foreman.at(0))
-    @rota[current_foreman.at(0)] = current_foreman.at(1)
+    foreman_name = foremanName()
+    foreman_id = foremanID()
+    @rota.delete(foreman_id)
+    @rota[foreman_id] = foreman_name
   end
 
   def rota()
