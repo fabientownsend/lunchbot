@@ -3,6 +3,7 @@ require_relative 'response'
 require_relative 'request_parser'
 require_relative 'order_list'
 require_relative 'order'
+require_relative 'apprentice_rota'
 
 class MessageHandler
   def initialize()
