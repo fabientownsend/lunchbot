@@ -17,7 +17,6 @@ class MessageHandler
     user_id = event_data['user']
     channel = event_data['channel']
     user_message = event_data['text']
-
     user_request = @request_parser.parse(user_message)
 
     if user_request == "menu"
@@ -30,7 +29,6 @@ class MessageHandler
     elsif user_request == "set_order"
       user_name = event_data['user_name']
       lunch = user_message.gsub("order me: ", "")
-      puts user_id
       order = Order.new(user_name, lunch, user_id)
       @order_list.add_order(order)
       bot_answer = "Your order `#{order.lunch}` is updated"

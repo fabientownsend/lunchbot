@@ -4,7 +4,7 @@ class OrderList
   def initialize()
     @orders = {}
   end
-  
+
   def add_order(order)
     @orders[order.user_id] = order
   end
