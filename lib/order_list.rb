@@ -12,4 +12,8 @@ class OrderList
   def remove_order(user_id)
     @orders.delete(user_id)
   end
+
+  def find_lunch(user_id)
+    @orders[user_id].lunch
+  end
 end
