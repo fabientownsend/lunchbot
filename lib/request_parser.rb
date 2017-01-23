@@ -1,7 +1,7 @@
 class RequestParser
   def parse(request)
     if menu_request?(request)
-      "menu"
+      menu_command.new(request)
     elsif request == "menu?"
       "get_menu"
     elsif set_order_request?(request)
