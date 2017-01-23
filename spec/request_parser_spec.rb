@@ -6,7 +6,7 @@ RSpec.describe RequestParser do
 
   it "return menu when the request is a menu" do
     request = "new menu www.menu.com"
-    expect(user_request.parse(request)).to eq("menu")
+    expect(user_request.parse(request)).to be_a(SetMenuCommand)
   end
 
   it "return error when the menu request has too munch arguments" do
@@ -31,7 +31,7 @@ RSpec.describe RequestParser do
 
   it "return get_menu when the person request for a menu" do
     request = "menu?"
-    expect(user_request.parse(request)).to eq("get_menu")
+    expect(user_request.parse(request)).to be_a(GetMenuCommand)
   end
 
   it "return error when get_menu request has more than one argument" do
@@ -41,7 +41,7 @@ RSpec.describe RequestParser do
 
   it "return set_order when it's a correct order request" do
     request = "order me: name_of_the_menu"
-    expect(user_request.parse(request)).to eq("set_order")
+    expect(user_request.parse(request)).to be_a(SetOrderCommand)
   end
 
   it "return error when there is no space between colon and order" do
