@@ -17,7 +17,7 @@ GEM
     docile (1.1.5)
     faraday (0.11.0)
       multipart-post (>= 1.2, < 3)
-    faraday_middleware (0.11.0)
+    faraday_middleware (0.11.0.1)
       faraday (>= 0.7.4, < 1.0)
     gli (2.15.0)
     hashie (3.4.6)
