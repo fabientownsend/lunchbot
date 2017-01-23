@@ -4,8 +4,8 @@ class SetOrderCommand
   def initialize(message, order_list, event_data)
     @user_message = message
     @order_list = order_list
-    @user_id = event_data['user']
-    @user_name = event_data['user_name']
+    @user_id = event_data[:user_id]
+    @user_name = event_data[:user_name]
   end
   
   def run()

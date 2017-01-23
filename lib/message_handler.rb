@@ -5,12 +5,16 @@ class MessageHandler
     @request_parser = RequestParser.new()
   end
 
-  def handle(team_id, event_data) 
-    user_id = event_data['user']
+  def handle(team_id, event_data)
     channel = event_data['channel']
-    user_message = event_data['text']
 
-    returned_command = @request_parser.parse(event_data)
+    data = {
+      user_message: event_data['text'],
+      user_id: event_data['user'],
+      user_name: event_data['user_name']
+    }
+
+    returned_command = @request_parser.parse(data)
     returned_command.run()
 
     if returned_command.response?

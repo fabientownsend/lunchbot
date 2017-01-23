@@ -1,11 +1,11 @@
-require_relative 'menu'
-require_relative 'response'
-require_relative 'order_list'
-require_relative 'order'
 require_relative 'apprentice_rota'
-require_relative 'order_command'
-require_relative 'menu_command'
 require_relative 'foreman_command'
+require_relative 'menu'
+require_relative 'menu_command'
+require_relative 'order'
+require_relative 'order_command'
+require_relative 'order_list'
+require_relative 'response'
 
 class RequestParser
   def initialize()
@@ -15,7 +15,7 @@ class RequestParser
   end
 
   def parse(data)
-    request = data['text']
+    request = data[:user_message]
     if menu_request?(request)
       SetMenuCommand.new(request, @menu)
     elsif request == "menu?"
@@ -25,6 +25,7 @@ class RequestParser
     elsif request.start_with?("order:") && request.split.size > 1
       GetOrderCommand.new(request, @order_list)
     elsif request.start_with?("foreman")
+      puts "foreman"
       ForemanCommand.new(@apprentice_rota)
     else
       "error"
