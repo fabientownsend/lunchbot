@@ -1,13 +1,12 @@
 require_relative 'request_parser'
 
 class MessageHandler
-  def initialize()
+  def initialize(response = Response.new)
+      @response = response
     @request_parser = RequestParser.new()
   end
 
   def handle(team_id, event_data)
-    channel = event_data['channel']
-
     data = {
       user_message: event_data['text'],
       user_id: event_data['user'],
@@ -18,12 +17,11 @@ class MessageHandler
     returned_command.run()
 
     if returned_command.response?
-      respond(returned_command.response, team_id, user_id, channel)
+      respond(returned_command.response, team_id, event_data['user'], event_data['channel'])
     end
   end
 
   def respond(bot_answer, team_id, user_id, channel = user_id)
-      response = Response.new(team_id, channel)
-      response.send(bot_answer)
+    @response.send(bot_answer, team_id, channel)
   end
 end

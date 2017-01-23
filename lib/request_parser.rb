@@ -6,6 +6,7 @@ require_relative 'order'
 require_relative 'order_command'
 require_relative 'order_list'
 require_relative 'response'
+require_relative 'error_command'
 
 class RequestParser
   def initialize()
@@ -25,10 +26,9 @@ class RequestParser
     elsif request.start_with?("order:") && request.split.size > 1
       GetOrderCommand.new(request, @order_list)
     elsif request.start_with?("foreman")
-      puts "foreman"
       ForemanCommand.new(@apprentice_rota)
     else
-      "error"
+      ErrorCommand.new
     end
   end
 
