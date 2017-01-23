@@ -1,24 +1,18 @@
 require_relative 'menu'
 
 class MenuCommand
-  attr_reader :team_id;
-  attr_reader :user_message;
-  attr_reader :user_id;
-  attr_reader :channel;
-  attr_reader :menu;
+  attr_reader :user_message
+  attr_reader :menu
+  attr_reader :response
 
-  def initialize(team_id, event_data)
-    @team_id = team_id
-    @user_message = event_data['text']
-    @user_id = event_data['user']
-    @channel = event_data['channel']
+  def initialize(message)
+    @user_message = message
     @menu = Menu.new
   end
   
   def run()
     save_menu_url(user_message)
-    bot_answer = "<!here> Menu has been set :#{@menu.url}"
-    respondToMessage(@bot_answer, @team_id, @user_id, @channel)
+    @response = "<!here> Menu has been set :#{@menu.url}"
   end
   
   private 
