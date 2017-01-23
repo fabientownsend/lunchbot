@@ -8,10 +8,10 @@ require_relative 'menu_command'
 require_relative 'foreman_command'
 
 class RequestParser
-  def intialize()
+  def initialize()
     @menu = Menu.new
     @order_list = OrderList.new
-    @apprentice_rota = ApprenticeRota.new({})
+    @apprentice_rota = ApprenticeRota.new({"id" => "Will", "id2" => "Fabien"})
   end
 
   def parse(data)

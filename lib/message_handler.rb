@@ -1,6 +1,10 @@
 require_relative 'request_parser'
 
 class MessageHandler
+  def initialize()
+    @request_parser = RequestParser.new()
+  end
+
   def handle(team_id, event_data) 
     user_id = event_data['user']
     channel = event_data['channel']
