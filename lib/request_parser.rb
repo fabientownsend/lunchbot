@@ -1,15 +1,32 @@
+require_relative 'apprentice_rota'
+require_relative 'foreman_command'
+require_relative 'menu'
+require_relative 'menu_command'
+require_relative 'order'
+require_relative 'order_command'
+require_relative 'order_list'
+require_relative 'response'
+
 class RequestParser
-  def parse(request)
+  def initialize()
+    @menu = Menu.new
+    @order_list = OrderList.new
+    @apprentice_rota = ApprenticeRota.new({"id" => "Will", "id2" => "Fabien"})
+  end
+
+  def parse(data)
+    request = data[:user_message]
     if menu_request?(request)
-      "menu"
+      SetMenuCommand.new(request, @menu)
     elsif request == "menu?"
-      "get_menu"
+      GetMenuCommand.new(@menu)
     elsif set_order_request?(request)
-      "set_order"
+      SetOrderCommand.new(request, @order_list, data)
     elsif request.start_with?("order:") && request.split.size > 1
-      "get_order"
+      GetOrderCommand.new(request, @order_list)
     elsif request.start_with?("foreman")
-      "foreman"
+      puts "foreman"
+      ForemanCommand.new(@apprentice_rota)
     else
       "error"
     end
