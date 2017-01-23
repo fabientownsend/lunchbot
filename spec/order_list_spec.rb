@@ -1,4 +1,4 @@
-require_relative '../lib/order_list'
+require 'order_list'
 
 RSpec.describe OrderList do
   let (:order_list) { OrderList.new }

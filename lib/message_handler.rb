@@ -1,9 +1,9 @@
-require_relative 'menu'
-require_relative 'response'
-require_relative 'request_parser'
-require_relative 'order_list'
-require_relative 'order'
-require_relative 'apprentice_rota'
+require 'apprentice_rota'
+require 'menu'
+require 'order'
+require 'order_list'
+require 'request_parser'
+require 'response'
 
 class MessageHandler
   def initialize(response = Response.new)

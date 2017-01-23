@@ -1,5 +1,5 @@
-require 'spec_helper'
 require 'request_parser'
+require 'spec_helper'
 
 RSpec.describe RequestParser do
   let(:user_request) { RequestParser.new }

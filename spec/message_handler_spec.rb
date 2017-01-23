@@ -1,5 +1,5 @@
-require 'message_handler'
 require 'fake_response'
+require 'message_handler'
 
 RSpec.describe MessageHandler do
   let (:fake_response) { FakeResponse.new }

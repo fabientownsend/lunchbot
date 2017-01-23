@@ -1,5 +1,5 @@
+require 'apprentice_rota'
 require 'spec_helper'
-require_relative '../lib/apprentice_rota'
 
 RSpec.describe ApprenticeRota do
   it "knows the apprentices" do

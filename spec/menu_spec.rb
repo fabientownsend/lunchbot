@@ -1,5 +1,5 @@
+require 'menu'
 require 'spec_helper'
-require_relative '../lib/menu'
 
 RSpec.describe Menu do
   it "notify if no link provided" do

@@ -1,5 +1,5 @@
+require 'order'
 require 'spec_helper'
-require_relative '../lib/order'
 
 RSpec.describe Order do
   it "stores users lunch order" do
