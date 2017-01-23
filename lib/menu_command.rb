@@ -1,6 +1,4 @@
 class SetMenuCommand
-  attr_reader :user_message
-  attr_reader :menu
   attr_reader :response
 
   def initialize(message, menu)
@@ -23,7 +21,6 @@ end
 
 class GetMenuCommand
   attr_reader :response
-  attr_reader :menu
 
   def initialize(menu)
     @menu = menu

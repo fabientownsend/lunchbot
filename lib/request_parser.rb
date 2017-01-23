@@ -4,6 +4,7 @@ require_relative 'menu'
 class RequestParser
   def intialize()
     @menu = Menu.new
+    @order_list = OrderList.new
   end
 
   def parse(request)
@@ -12,7 +13,7 @@ class RequestParser
     elsif request == "menu?"
       GetMenuCommand.new(@menu)
     elsif set_order_request?(request)
-      "set_order"
+      SetOrderCommand.new(request, @order_list)
     elsif request.start_with?("order:") && request.split.size > 1
       "get_order"
     elsif request.start_with?("foreman")

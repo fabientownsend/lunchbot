@@ -13,33 +13,19 @@ class MessageHandler
     @request_parser = RequestParser.new
   end
   
-  def handle(team_id, event_data) #TODO: refactor with polymorphism
+  def handle(team_id, event_data) 
     user_id = event_data['user']
     channel = event_data['channel']
     user_message = event_data['text']
 
-    returned_command = @request_parser.parse(user_message)
+    returned_command = @request_parser.parse(event_data)
     returned_command.run()
 
     if returned_command.response?
       respond(returned_command.response, team_id, user_id, channel)
     end
 
-    if user_request == "set_order"
-      user_name = event_data['user_name']
-      lunch = user_message.gsub("order me: ", "")
-      puts user_id
-      order = Order.new(user_name, lunch, user_id)
-      @order_list.add_order(order)
-      bot_answer = "Your order `#{order.lunch}` is updated"
-      respondToMessage(bot_answer, team_id, user_id)
-    elsif user_request == "get_order"
-      user_message = user_message.gsub("order: ", "")
-      user_id_meal_researched = user_message[/(?<=\<@)(\w+)(?=>)/]
-      meal = @order_list.find_lunch(user_id_meal_researched)
-      bot_answer = "<@#{user_id_meal_researched}> ordered: `#{meal}`"
-      respondToMessage(bot_answer, team_id, user_id, channel)
-    elsif user_request == "foreman"
+    if user_request == "foreman"
       bot_answer = "The foreman for this week is #{@apprentice_rota.foremanName()}"
       respondToMessage(bot_answer, team_id, user_id, channel)
     else
