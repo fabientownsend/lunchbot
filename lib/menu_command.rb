@@ -1,13 +1,11 @@
-require_relative 'menu'
-
-class MenuCommand
+class SetMenuCommand
   attr_reader :user_message
   attr_reader :menu
   attr_reader :response
 
-  def initialize(message)
+  def initialize(message, menu)
     @user_message = message
-    @menu = Menu.new
+    @menu = menu
   end
   
   def run()
@@ -20,5 +18,18 @@ class MenuCommand
   def save_menu_url(text)
     url = @menu.parse_url(text)
     @menu.set_url(url)
+  end
+end
+
+class GetMenuCommand
+  attr_reader :response
+  attr_reader :menu
+
+  def initialize(menu)
+    @menu = menu
+  end
+  
+  def run()
+    @response = "The menu for this week is: #{@menu.url}"
   end
 end

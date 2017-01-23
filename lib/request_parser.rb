@@ -1,9 +1,16 @@
+require_relative 'menu_command'
+require_relative 'menu'
+
 class RequestParser
+  def intialize()
+    @menu = Menu.new
+  end
+
   def parse(request)
     if menu_request?(request)
-      menu_command.new(request)
+      SetMenuCommand.new(request, @menu)
     elsif request == "menu?"
-      "get_menu"
+      GetMenuCommand.new(@menu)
     elsif set_order_request?(request)
       "set_order"
     elsif request.start_with?("order:") && request.split.size > 1

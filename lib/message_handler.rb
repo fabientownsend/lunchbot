@@ -25,10 +25,7 @@ class MessageHandler
       respond(returned_command.response, team_id, user_id, channel)
     end
 
-    if user_request == "get_menu"
-      bot_answer = "This week the menu is from: #{@menu.url}"
-      respondToMessage(bot_answer, team_id, user_id, channel)
-    elsif user_request == "set_order"
+    if user_request == "set_order"
       user_name = event_data['user_name']
       lunch = user_message.gsub("order me: ", "")
       puts user_id
