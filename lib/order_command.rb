@@ -45,7 +45,8 @@ class GetOrderCommand
   def run()
     user_message = @user_message.gsub("order: ", "")
     user_id_meal_researched = user_message[/(?<=\<@)(\w+)(?=>)/]
-    meal = @order_list.find_lunch(user_id_meal_researched)
-    @response = "<@#{user_id_meal_researched}> ordered: `#{meal}`"
+
+    the_order = Order.last(:user_id => user_id_meal_researched).lunch
+    @response = "<@#{user_id_meal_researched}> ordered: `#{the_order}`"
   end
 end
