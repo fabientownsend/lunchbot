@@ -1,8 +1,9 @@
 require 'request_parser'
+require 'response'
 
 class MessageHandler
   def initialize(response = Response.new)
-      @response = response
+    @response = response
     @request_parser = RequestParser.new()
   end
 
@@ -10,7 +11,7 @@ class MessageHandler
     data = {
       user_message: event_data['text'],
       user_id: event_data['user'],
-      user_name: event_data['user_name']
+      user_name: event_data['name']
     }
 
     returned_command = @request_parser.parse(data)

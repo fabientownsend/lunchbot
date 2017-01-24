@@ -1,3 +1,5 @@
+require 'order'
+
 class SetOrderCommand
   attr_reader :response
 
@@ -14,8 +16,16 @@ class SetOrderCommand
 
   def run()
     lunch = @user_message.gsub("order me: ", "")
-    order = Order.new(@user_name, lunch, @user_id)
-    @order_list.add_order(order)
+
+    order = Order.new
+    order.attributes = {
+      :user_name => @user_name,
+      :user_id => @user_id,
+      :lunch => lunch,
+      :date => Time.now
+    }
+    order.save
+
     @response = "Your order `#{order.lunch}` is updated"
   end
 end

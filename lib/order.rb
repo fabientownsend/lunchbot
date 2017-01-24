@@ -1,11 +1,11 @@
-class Order
-  attr_reader :user_name
-  attr_reader :lunch
-  attr_reader :user_id
+require 'data_mapper'
 
-  def initialize(user_name, lunch, user_id)
-    @user_name = user_name
-    @lunch = lunch
-    @user_id = user_id
-  end
+class Order
+  include DataMapper::Resource
+
+  property :id, Serial
+  property :user_name, String
+  property :user_id, String
+  property :lunch, String
+  property :date, DateTime
 end
