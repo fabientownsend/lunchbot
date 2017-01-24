@@ -1,12 +1,12 @@
-require_relative 'apprentice_rota'
-require_relative 'foreman_command'
-require_relative 'menu'
-require_relative 'menu_command'
-require_relative 'order'
-require_relative 'order_command'
-require_relative 'order_list'
-require_relative 'response'
-require_relative 'error_command'
+require 'apprentice_rota'
+require 'foreman_command'
+require 'menu'
+require 'menu_command'
+require 'order'
+require 'order_command'
+require 'order_list'
+require 'response'
+require 'error_command'
 
 class RequestParser
   def initialize()

@@ -1,4 +1,4 @@
-require_relative 'request_parser'
+require 'request_parser'
 
 class MessageHandler
   def initialize(response = Response.new)
