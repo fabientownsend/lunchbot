@@ -1,12 +1,10 @@
 require 'apprentice_rota'
+require 'error_command'
 require 'foreman_command'
 require 'menu'
 require 'menu_command'
-require 'order'
 require 'order_command'
 require 'order_list'
-require 'response'
-require 'error_command'
 
 class RequestParser
   def initialize()
