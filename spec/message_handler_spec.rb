@@ -49,10 +49,10 @@ RSpec.describe MessageHandler do
   end
 
   it "return the order of a person" do
-    message_from_slack("order me: humberger")
+    message_from_slack("order me: hamburger")
     message_from_slack("order: <@#{recipient}>")
 
-    expect(fake_response.message).to eq("<@D3S6XE6SZ> ordered: `humberger`")
+    expect(fake_response.message).to eq("<@D3S6XE6SZ> ordered: `hamburger`")
     expect(fake_response.team_id).to eq(team_id)
     expect(fake_response.user_id).to eq(recipient)
   end
@@ -65,15 +65,24 @@ RSpec.describe MessageHandler do
     expect(fake_response.user_id).to eq(recipient)
   end
 
+  it "return list of different orders" do
+    message_from_slack("order me: hamburger")
+    recipient = "asdf"
+    message_from_slack("order me: fish", "Fabien", recipient)
+    message_from_slack("all orders?")
+
+    expect(fake_response.message).to eq("Will: hamburger\nFabien: fish")
+  end
+
   private
 
-  def message_from_slack(request)
+  def message_from_slack(request, name = "Will", new_recipient = recipient)
     user_message = request
-    event_data = create_event_data(user_message, recipient)
+    event_data = create_event_data(user_message, new_recipient, name)
     message_handler.handle(team_id, event_data)
   end
 
-  def create_event_data(message, recipient)
-    {"type"=>"message", "user"=>"#{recipient}", "text"=>"#{message}", "ts"=>"1484928006.000013", "channel"=>"#{recipient}", "event_ts"=>"1484928006.000013"}
+  def create_event_data(message, recipient, name)
+    {"name" => "#{name}", "type"=>"message", "user"=>"#{recipient}", "text"=>"#{message}", "ts"=>"1484928006.000013", "channel"=>"#{recipient}", "event_ts"=>"1484928006.000013"}
   end
 end

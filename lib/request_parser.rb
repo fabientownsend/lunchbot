@@ -7,6 +7,7 @@ require 'get_menu_command'
 require 'set_order_command'
 require 'get_order_command'
 require 'order_list'
+require 'get_all_orders_command'
 
 class RequestParser
   def initialize()
@@ -21,6 +22,8 @@ class RequestParser
       SetMenuCommand.new(request, @menu)
     elsif request == "menu?"
       GetMenuCommand.new(@menu)
+    elsif request == "all orders?"
+      GetAllOrdersCommand.new
     elsif set_order_request?(request)
       lunch = request.gsub("order me: ", "")
       SetOrderCommand.new(lunch, data)
