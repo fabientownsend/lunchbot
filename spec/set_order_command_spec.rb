@@ -47,4 +47,17 @@ RSpec.describe SetOrderCommand do
 
     expect(Order.count).to eq(2)
   end
+
+  it "return the name of the first persn which ordered" do
+    message = "burger"
+    event_data = {user_id: "asdf", user_name: "Will" }
+    set_order_command = SetOrderCommand.new(message, event_data)
+    set_order_command.run
+
+    event_data = {user_id: "qwery", user_name: "Fabien" }
+    set_order_command = SetOrderCommand.new(message, event_data)
+    set_order_command.run
+
+    expect(Order.first.user_name).to eq("Will")
+  end
 end
