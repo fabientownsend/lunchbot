@@ -22,7 +22,8 @@ class RequestParser
     elsif request == "menu?"
       GetMenuCommand.new(@menu)
     elsif set_order_request?(request)
-      SetOrderCommand.new(request, @order_list, data)
+      lunch = request.gsub("order me: ", "")
+      SetOrderCommand.new(lunch, data)
     elsif request.start_with?("order:") && request.split.size > 1
       GetOrderCommand.new(request, @order_list)
     elsif request.start_with?("foreman")

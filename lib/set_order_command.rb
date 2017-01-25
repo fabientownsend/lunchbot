@@ -3,9 +3,8 @@ require 'order'
 class SetOrderCommand
   attr_reader :response
 
-  def initialize(message, order_list, event_data)
-    @user_message = message
-    @order_list = order_list
+  def initialize(lunch, event_data)
+    @lunch = lunch
     @user_id = event_data[:user_id]
     @user_name = event_data[:user_name]
   end
@@ -15,16 +14,21 @@ class SetOrderCommand
   end
 
   def run()
-    lunch = @user_message.gsub("order me: ", "")
+    order = Order.last(:user_id => @user_id)
 
-    order = Order.new
-    order.attributes = {
-      :user_name => @user_name,
-      :user_id => @user_id,
-      :lunch => lunch,
-      :date => Time.now
-    }
-    order.save
+    if order
+      order.lunch = @lunch
+      order.save
+    else
+      order = Order.new
+      order.attributes = {
+        :user_name => @user_name,
+        :user_id => @user_id,
+        :lunch => @lunch,
+        :date => Time.now
+      }
+      order.save
+    end
 
     @response = "Your order `#{order.lunch}` is updated"
   end
