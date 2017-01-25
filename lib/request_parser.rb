@@ -2,8 +2,10 @@ require 'apprentice_rota'
 require 'error_command'
 require 'foreman_command'
 require 'menu'
-require 'menu_command'
-require 'order_command'
+require 'set_menu_command'
+require 'get_menu_command'
+require 'set_order_command'
+require 'get_order_command'
 require 'order_list'
 
 class RequestParser
