@@ -3,10 +3,10 @@ require 'order'
 class SetOrderCommand
   attr_reader :response
 
-  def initialize(lunch, event_data)
+  def initialize(lunch, data)
     @lunch = lunch
-    @user_id = event_data[:user_id]
-    @user_name = event_data[:user_name]
+    @user_id = data[:user_id]
+    @user_name = data[:user_name]
   end
 
   def response?

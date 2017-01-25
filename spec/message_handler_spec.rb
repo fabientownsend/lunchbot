@@ -1,9 +1,11 @@
 require 'fake_response'
 require 'message_handler'
+require 'fake_user_info_provider'
 
 RSpec.describe MessageHandler do
   let (:fake_response) { FakeResponse.new }
-  let (:message_handler) { MessageHandler.new(fake_response) }
+  let (:fake_user_info_provider) { FakeUserInfoProvider.new }
+  let (:message_handler) { MessageHandler.new(fake_response, fake_user_info_provider) }
   let (:team_id) { "T026MULUJ" }
   let (:recipient) { "D3S6XE6SZ" }
 
@@ -83,6 +85,7 @@ RSpec.describe MessageHandler do
   end
 
   def create_event_data(message, recipient, name)
-    {"name" => "#{name}", "type"=>"message", "user"=>"#{recipient}", "text"=>"#{message}", "ts"=>"1484928006.000013", "channel"=>"#{recipient}", "event_ts"=>"1484928006.000013"}
+    {"type"=>"message", "user"=>"#{recipient}", "text"=>"#{message}", "ts"=>"1484928006.000013", "channel"=>"#{recipient}", "event_ts"=>"1484928006.000013"}
   end
+#"name" => "#{name}", 
 end
