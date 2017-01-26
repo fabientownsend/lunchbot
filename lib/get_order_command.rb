@@ -3,9 +3,8 @@ require 'order'
 class GetOrderCommand
   attr_reader :response
 
-  def initialize(message, order_list)
+  def initialize(message)
     @user_message = message
-    @order_list = order_list
   end
 
   def response?

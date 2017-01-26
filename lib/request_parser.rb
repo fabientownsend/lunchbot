@@ -6,13 +6,11 @@ require 'set_menu_command'
 require 'get_menu_command'
 require 'set_order_command'
 require 'get_order_command'
-require 'order_list'
 require 'get_all_orders_command'
 
 class RequestParser
   def initialize()
     @menu = Menu.new
-    @order_list = OrderList.new
     @apprentice_rota = ApprenticeRota.new({"id" => "Will", "id2" => "Fabien"})
   end
 
@@ -28,7 +26,7 @@ class RequestParser
       lunch = request.gsub("order me: ", "")
       SetOrderCommand.new(lunch, data)
     elsif request.start_with?("order:") && request.split.size > 1
-      GetOrderCommand.new(request, @order_list)
+      GetOrderCommand.new(request)
     elsif request.start_with?("foreman")
       ForemanCommand.new(@apprentice_rota)
     else
