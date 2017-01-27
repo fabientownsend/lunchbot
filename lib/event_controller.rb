@@ -6,6 +6,7 @@ require 'slack-ruby-client'
 
 class EventController < Sinatra::Base
   attr_reader :message_handler
+
   def initialize()
     @message_handler = MessageHandler.new
   end

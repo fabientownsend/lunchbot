@@ -1,16 +1,10 @@
 require 'order'
 
 class SetOrderCommand
-  attr_reader :response
-
   def initialize(lunch, data)
     @lunch = lunch
     @user_id = data[:user_id]
     @user_name = data[:user_name]
-  end
-
-  def response?
-    response
   end
 
   def run()
@@ -29,6 +23,6 @@ class SetOrderCommand
       order.save
     end
 
-    @response = "Your order `#{order.lunch}` is updated"
+    "Your order `#{order.lunch}` is updated"
   end
 end

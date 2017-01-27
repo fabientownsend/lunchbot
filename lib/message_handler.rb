@@ -18,10 +18,10 @@ class MessageHandler
     }
 
     returned_command = @request_parser.parse(data)
-    returned_command.run()
+    response = returned_command.run()
 
-    if returned_command.response?
-      respond(returned_command.response, team_id, event_data['user'], event_data['channel'])
+    if response
+      respond(response, team_id, event_data['user'], event_data['channel'])
     end
   end
 
