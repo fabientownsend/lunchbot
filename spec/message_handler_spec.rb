@@ -1,11 +1,13 @@
 require 'fake_response'
 require 'message_handler'
 require 'fake_user_info_provider'
+require 'fake_channel_info_provider'
 
 RSpec.describe MessageHandler do
   let (:fake_response) { FakeResponse.new }
   let (:fake_user_info_provider) { FakeUserInfoProvider.new }
-  let (:message_handler) { MessageHandler.new(fake_response, fake_user_info_provider) }
+  let (:fake_channel_info_provider) { FakeChannelInfoProvider.new }
+  let (:message_handler) { MessageHandler.new(fake_response, fake_user_info_provider, fake_channel_info_provider) }
   let (:team_id) { "T026MULUJ" }
   let (:recipient) { "D3S6XE6SZ" }
 
@@ -74,6 +76,20 @@ RSpec.describe MessageHandler do
     message_from_slack("all orders?")
 
     expect(fake_response.message).to eq("Will: hamburger\nFabien: fish")
+  end
+
+  it "return list of users that doesn't ordered yet" do
+    message_from_slack("remind")
+
+    expect(fake_response.message).to eq("<@FabienUserId>\n<@WillUserId>")
+  end
+
+  it "return a list without the people who ordered" do
+    message_from_slack("order me: fish", "Fabien", "FabienUserId")
+    message_from_slack("all orders?")
+    message_from_slack("remind")
+
+    expect(fake_response.message).to eq("<@WillUserId>")
   end
 
   private

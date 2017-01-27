@@ -7,6 +7,7 @@ require 'get_menu_command'
 require 'set_order_command'
 require 'get_order_command'
 require 'get_all_orders_command'
+require 'reminder'
 
 class RequestParser
   def initialize()
@@ -20,6 +21,8 @@ class RequestParser
       SetMenuCommand.new(request, @menu)
     elsif request == "menu?"
       GetMenuCommand.new(@menu)
+    elsif request == "remind"
+      Reminder.new(data)
     elsif request == "all orders?"
       GetAllOrdersCommand.new
     elsif set_order_request?(request)
