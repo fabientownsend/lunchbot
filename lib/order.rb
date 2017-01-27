@@ -5,7 +5,10 @@ class Order
 
   property :id, Serial
   property :user_name, String
-  property :user_id, String
   property :lunch, String
   property :date, DateTime
+
+  property :user_id, String
+
+  property :host, String
 end

@@ -52,4 +52,12 @@ class RequestParser
   def set_order_request?(request)
     request.start_with?("order me: ") && request.split.size > 2
   end
+
+  def get_string_betwee_quote
+    message[/(?<=\')(.+?)(?=\')/]
+  end
+
+  def get_string_after_collon
+    message[/(?<=\:\s)(.+?)$/]
+  end
 end
