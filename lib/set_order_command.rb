@@ -20,13 +20,12 @@ class SetOrderCommand
       order.lunch = @lunch
       order.save
     else
-      order = Order.new
-      order.attributes = {
+      order = Order.new(
         :user_name => @user_name,
         :user_id => @user_id,
         :lunch => @lunch,
         :date => Time.now
-      }
+      )
       order.save
     end
 
