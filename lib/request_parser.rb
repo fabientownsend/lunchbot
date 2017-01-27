@@ -8,6 +8,7 @@ require 'set_order_command'
 require 'get_order_command'
 require 'get_all_orders_command'
 require 'reminder'
+require 'place_order_guest'
 
 class RequestParser
   def initialize()
@@ -17,6 +18,7 @@ class RequestParser
 
   def parse(data)
     request = data[:user_message]
+
     if menu_request?(request)
       SetMenuCommand.new(request, @menu)
     elsif request == "menu?"
@@ -32,6 +34,12 @@ class RequestParser
       GetOrderCommand.new(request)
     elsif request.start_with?("foreman")
       ForemanCommand.new(@apprentice_rota)
+    elsif get_string_betwee_dash(request) && get_string_after_collon(request)
+      PlaceOrderGuest.new(
+        get_string_after_collon(request),
+        get_string_betwee_dash(request),
+        data[:user_id]
+      )
     else
       ErrorCommand.new
     end
@@ -53,11 +61,11 @@ class RequestParser
     request.start_with?("order me: ") && request.split.size > 2
   end
 
-  def get_string_betwee_quote
-    message[/(?<=\')(.+?)(?=\')/]
+  def get_string_betwee_dash(message)
+    message[/(?<=\-)(.+?)(?=\-)/]
   end
 
-  def get_string_after_collon
+  def get_string_after_collon(message)
     message[/(?<=\:\s)(.+?)$/]
   end
 end

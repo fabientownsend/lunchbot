@@ -74,6 +74,11 @@ RSpec.describe RequestParser do
     expect(user_request.parse(request)).to be_a(GetAllOrdersCommand)
   end
 
+  it "return PlaceOrderGuest when it's a correct request" do
+    request = {user_message: "order -james smith-: burger"}
+    expect(user_request.parse(request)).to be_a(PlaceOrderGuest)
+  end
+
   it "return remind command when it's a remind request" do
     request = {user_message: "remind", channel_info: FakeChannelInfoProvider.new, channel_id: "asdf", team_id: "team id"}
     expect(user_request.parse(request)).to be_a(Reminder)

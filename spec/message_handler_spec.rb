@@ -92,6 +92,12 @@ RSpec.describe MessageHandler do
     expect(fake_response.message).to eq("<@WillUserId>")
   end
 
+  it "return confirmation guest order" do
+    message_from_slack("order -james smith-: burger")
+
+    expect(fake_response.message).to eq("james smith order saved")
+  end
+
   private
 
   def message_from_slack(request, name = "Will", new_recipient = recipient)

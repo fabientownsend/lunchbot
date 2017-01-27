@@ -23,10 +23,19 @@ RSpec.describe PlaceOrderGuest do
   it "add another order when the name is different" do
     place_order_guest = PlaceOrderGuest.new("burger", "james smith", "host id")
     place_order_guest.run
-    place_order_guest = PlaceOrderGuest.new("fish", "smith james ", "host id")
+    place_order_guest = PlaceOrderGuest.new("fish", "smith james", "host id")
     place_order_guest.run
 
     expect(Order.count).to eq(2)
+    expect(Order.last.lunch).to eq("fish")
+    expect(Order.last.user_name).to eq("smith james")
+  end
+
+  it "remove the spaces before and after names" do
+    place_order_guest = PlaceOrderGuest.new("burger", " james smith ", "host id")
+    place_order_guest.run
+
+    expect(Order.last.user_name).to eq("james smith")
   end
 end
 

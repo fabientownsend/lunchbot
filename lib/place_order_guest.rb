@@ -13,12 +13,14 @@ class PlaceOrderGuest
       lunch_order.save
     else
       new_order = Order.new(
-      :user_name => @name,
+      :user_name => @name.strip,
       :lunch => @lunch_order,
       :date => Time.now,
       :host => @host_id
       )
       new_order.save
     end
+
+    "#{@name} order saved"
   end
 end
