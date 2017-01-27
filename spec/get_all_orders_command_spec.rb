@@ -16,9 +16,9 @@ RSpec.describe GetAllOrdersCommand do
     set_order_command = SetOrderCommand.new(message, event_data)
     set_order_command.run
 
-    get_all_orders_command.run()
+    response = get_all_orders_command.run()
     list_all_orders = "Will: burger"
-    expect(get_all_orders_command.response).to eq(list_all_orders)
+    expect(response).to eq(list_all_orders)
   end
 
   it "return all order with a new line for each orders" do
@@ -34,8 +34,8 @@ RSpec.describe GetAllOrdersCommand do
     set_order_command = SetOrderCommand.new(message, event_data)
     set_order_command.run
 
-    get_all_orders_command.run()
+    response = get_all_orders_command.run()
     list_all_orders = "Will: burger\nFabien: fish"
-    expect(get_all_orders_command.response).to eq(list_all_orders)
+    expect(response).to eq(list_all_orders)
   end
 end

@@ -1,12 +1,6 @@
 class GetAllOrdersCommand
-  attr_reader :response
-
   def run
     format_response(orders)
-  end
-
-  def response?
-    response
   end
 
   private
@@ -16,10 +10,13 @@ class GetAllOrdersCommand
   end
 
   def format_response(orders)
+    response = ""
     if orders.empty?
-      @response = "no orders"
+      response = "no orders"
     else
-      @response = orders.join("\n")
+      response = orders.join("\n")
     end
+
+    response
   end
 end

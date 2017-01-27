@@ -1,14 +1,8 @@
 require 'order'
 
 class GetOrderCommand
-  attr_reader :response
-
   def initialize(message)
     @user_message = message
-  end
-
-  def response?
-    response
   end
 
   def run()
@@ -16,6 +10,6 @@ class GetOrderCommand
     user_id_meal_researched = user_message[/(?<=\<@)(\w+)(?=>)/]
 
     the_order = Order.last(:user_id => user_id_meal_researched).lunch
-    @response = "<@#{user_id_meal_researched}> ordered: `#{the_order}`"
+    "<@#{user_id_meal_researched}> ordered: `#{the_order}`"
   end
 end
