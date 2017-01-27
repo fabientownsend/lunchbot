@@ -3,17 +3,11 @@ $: << File.expand_path('../lib', File.dirname(__FILE__))
 require 'message_handler'
 require 'sinatra/base'
 require 'slack-ruby-client'
-require 'data_mapper'
-require 'dm-core'
 
 class EventController < Sinatra::Base
   attr_reader :message_handler
   def initialize()
     @message_handler = MessageHandler.new
-
-
-    DataMapper::setup(:default, ENV['DATABASE_URL'] || "sqlite3://#{Dir.pwd}/db_name.db")
-    DataMapper.finalize.auto_upgrade!
   end
 
   post '/events' do
