@@ -5,18 +5,18 @@ RSpec.describe AddGuest do
 
   it "return list of guest when only one guest" do
     get_all_guests = GetAllGuests.new
-    get_all_guests.run
+    response = get_all_guests.run
 
-    expect(get_all_guests.response).to eq("no guest")
+    expect(response).to eq("no guest")
   end
 
   it "return list of guest when only one guest" do
     create_new_guest("Will")
 
     get_all_guests = GetAllGuests.new
-    get_all_guests.run
+    response = get_all_guests.run
 
-    expect(get_all_guests.response).to eq("Will")
+    expect(response).to eq("Will")
   end
 
   it "return the list of the guests when multiple guests" do
@@ -24,9 +24,9 @@ RSpec.describe AddGuest do
     create_new_guest("Fabien")
 
     get_all_guests = GetAllGuests.new
-    get_all_guests.run
+    response = get_all_guests.run
 
-    expect(get_all_guests.response).to eq("Will\nFabien")
+    expect(response).to eq("Will\nFabien")
   end
 
   def create_new_guest(guest_name, host_id = "host_id")

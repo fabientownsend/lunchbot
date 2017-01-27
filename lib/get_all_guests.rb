@@ -1,12 +1,6 @@
 require 'guest'
 
 class GetAllGuests
-  attr_reader :response
-
-  def response?
-    not response.nil?
-  end
-
   def run()
     format_response(guests)
   end
@@ -19,9 +13,9 @@ class GetAllGuests
 
   def format_response(guest)
     if guest.empty?
-      @response = "no guest"
+      "no guest"
     else
-      @response = guest.join("\n")
+      guest.join("\n")
     end
   end
 end
