@@ -15,7 +15,7 @@ class RequestParser
   def initialize()
     @menu = Menu.new
     @apprentice_rota = ApprenticeRota.new({"id" => "Will", "id2" => "Fabien"})
-    @commands = [SetMenuCommand.new(@menu), GetMenuCommand.new(@menu), Reminder.new, GetAllOrdersCommand.new, GetAllGuests.new, SetOrderCommand.new]
+    @commands = [SetMenuCommand.new(@menu), GetMenuCommand.new(@menu), Reminder.new, GetAllOrdersCommand.new, GetAllGuests.new, SetOrderCommand.new, GetOrderCommand.new]
   end
 
   def parse(data)
@@ -23,16 +23,14 @@ class RequestParser
 
     for command in @commands
       if command.applies_to(request)
-        if command.kind_of? Reminder or command.kind_of? SetOrderCommand
+        if command.kind_of? Reminder or command.kind_of? SetOrderCommand or command.kind_of? SetMenuCommand or command.kind_of? GetOrderCommand
           command.prepare(data) 
         end
         return command
       end
     end
 
-    if request.start_with?("order:") && request.split.size > 1
-      GetOrderCommand.new(request)
-    elsif request.start_with?("foreman")
+    if request.start_with?("foreman")
       ForemanCommand.new(@apprentice_rota)
     elsif get_string_betwee_dash(request) && get_string_after_collon(request)
       PlaceOrderGuest.new(
