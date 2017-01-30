@@ -113,6 +113,19 @@ RSpec.describe MessageHandler do
     expect(fake_response.message).to eq("james smith\njean bon")
   end
 
+  it "return list of guests after guest removed" do
+    message_from_slack("order me: burger")
+    message_from_slack("order -james smith-: burger")
+    message_from_slack("order -jean bon-: burger")
+    message_from_slack("guests?")
+
+    expect(fake_response.message).to eq("james smith\njean bon")
+
+    message_from_slack("remove guest: jean bon")
+    message_from_slack("guests?")
+    expect(fake_response.message).to eq("james smith")
+  end
+
   private
 
   def message_from_slack(request, name = "Will", new_recipient = recipient)
