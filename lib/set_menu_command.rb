@@ -1,7 +1,10 @@
 class SetMenuCommand
-  def initialize(message, menu)
-    @user_message = message
+  def initialize(menu)
     @menu = menu
+  end
+
+  def prepare_message(user_message)
+    @user_message = user_message
   end
 
   def run()
@@ -9,10 +12,20 @@ class SetMenuCommand
     "<!here> Menu has been set: #{@menu.url}"
   end
 
+  def applies_to(request)
+    request.split.size == 3 &&
+    request.include?("new menu") &&
+    contain_url?(request)
+  end
+
   private
 
   def save_menu_url(text)
     url = @menu.parse_url(text)
     @menu.set_url(url)
+  end
+
+  def contain_url?(request)
+    request[/((http|https):\/\/)?(w{3}.)?[A-Za-z0-9-]+.(com|co.uk)/]
   end
 end
