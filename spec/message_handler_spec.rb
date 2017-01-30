@@ -2,6 +2,7 @@ require 'fake_response'
 require 'message_handler'
 require 'fake_user_info_provider'
 require 'fake_channel_info_provider'
+require 'add_guest'
 
 RSpec.describe MessageHandler do
   let (:fake_response) { FakeResponse.new }
@@ -79,9 +80,10 @@ RSpec.describe MessageHandler do
   end
 
   it "return list of users that doesn't ordered yet" do
+    AddGuest.new("james smith", "host id").run
     message_from_slack("remind")
 
-    expect(fake_response.message).to eq("<@FabienUserId>\n<@WillUserId>")
+    expect(fake_response.message).to eq("<@FabienUserId>\n<@WillUserId>\njames smith")
   end
 
   it "return a list without the people who ordered" do
@@ -124,5 +126,4 @@ RSpec.describe MessageHandler do
   def create_event_data(message, recipient, name)
     {"type"=>"message", "user"=>"#{recipient}", "text"=>"#{message}", "ts"=>"1484928006.000013", "channel"=>"#{recipient}", "event_ts"=>"1484928006.000013"}
   end
-#"name" => "#{name}", 
 end

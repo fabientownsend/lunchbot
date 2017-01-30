@@ -17,13 +17,29 @@ class Reminder
     request == "remind"
   end
 
+  private
+
+  def format_response(orders)
+    if orders.empty?
+      "no orders"
+    else
+      orders.join("\n")
+    end
+  end
+
   def not_ordered_members
+      crafter_wihtout_order + guest_without_order
+  end
+
+  def crafter_wihtout_order
       not_ordered_members = []
+
       @members.each do |member_id|
         if !has_ordered(member_id)
           not_ordered_members << "<@#{member_id}>"
         end
       end
+
       not_ordered_members
   end
 
@@ -31,14 +47,15 @@ class Reminder
     Order.last(:user_id => user_id)
   end
 
-  def format_response(orders)
-    response = ""
-    if orders.empty?
-      response = "no orders"
-    else
-      response = orders.join("\n")
-    end
+  def guest_without_order
+      not_ordered_members = []
 
-    response
+      Order.each do |order|
+        if order.host && order.lunch.nil?
+            not_ordered_members << "#{order.user_name}"
+        end
+      end
+
+      not_ordered_members
   end
 end
