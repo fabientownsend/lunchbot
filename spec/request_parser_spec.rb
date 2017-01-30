@@ -79,6 +79,12 @@ RSpec.describe RequestParser do
     expect(user_request.parse(request)).to be_a(PlaceOrderGuest)
   end
 
+  it "return GetAllGuests" do
+    request = {user_message: "guests?"}
+    expect(user_request.parse(request)).to be_a(GetAllGuests)
+  end
+
+
   it "return remind command when it's a remind request" do
     request = {user_message: "remind", channel_info: FakeChannelInfoProvider.new, channel_id: "asdf", team_id: "team id"}
     expect(user_request.parse(request)).to be_a(Reminder)

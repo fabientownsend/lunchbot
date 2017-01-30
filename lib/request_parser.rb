@@ -9,6 +9,7 @@ require 'get_order_command'
 require 'get_all_orders_command'
 require 'reminder'
 require 'place_order_guest'
+require 'get_all_guests'
 
 class RequestParser
   def initialize()
@@ -27,6 +28,8 @@ class RequestParser
       Reminder.new(data)
     elsif request == "all orders?"
       GetAllOrdersCommand.new
+    elsif request == "guests?"
+      GetAllGuests.new
     elsif set_order_request?(request)
       lunch = request.gsub("order me: ", "")
       SetOrderCommand.new(lunch, data)
