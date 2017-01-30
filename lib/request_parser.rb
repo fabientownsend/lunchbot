@@ -15,7 +15,7 @@ class RequestParser
   def initialize()
     @menu = Menu.new
     @apprentice_rota = ApprenticeRota.new({"id" => "Will", "id2" => "Fabien"})
-    @commands = [SetMenuCommand.new(@menu), GetMenuCommand.new(@menu), Reminder.new()]
+    @commands = [SetMenuCommand.new(@menu), GetMenuCommand.new(@menu), Reminder.new, GetAllOrdersCommand.new, GetAllGuests.new]
   end
 
   def parse(data)
@@ -30,11 +30,7 @@ class RequestParser
       end
     end
 
-    if request == "all orders?"
-      GetAllOrdersCommand.new
-    elsif request == "guests?"
-      GetAllGuests.new
-    elsif set_order_request?(request)
+    if set_order_request?(request)
       lunch = request.gsub("order me: ", "")
       SetOrderCommand.new(lunch, data)
     elsif request.start_with?("order:") && request.split.size > 1

@@ -5,6 +5,10 @@ class GetAllGuests
     format_response(guests)
   end
 
+  def applies_to(request)
+    request == "guests?"
+  end
+
   private
 
   def guests

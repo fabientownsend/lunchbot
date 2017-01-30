@@ -3,6 +3,10 @@ class GetAllOrdersCommand
     format_response(orders)
   end
 
+  def applies_to(request)
+    request == "all orders?"
+  end
+
   private
 
   def orders
