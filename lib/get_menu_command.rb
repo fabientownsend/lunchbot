@@ -1,10 +1,12 @@
-class GetMenuCommand
-  def initialize(menu)
-    @menu = menu
-  end
+require 'menu'
 
-  def run()
-    "The menu for this week is: #{@menu.url}"
+class GetMenuCommand
+  def run
+    if Menu.last
+      "The menu for this week is: #{Menu.last.url}"
+    else
+      "The menu for this week is: no url provided"
+    end
   end
 
   def prepare(data)

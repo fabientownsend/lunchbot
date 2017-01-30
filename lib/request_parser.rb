@@ -16,8 +16,8 @@ class RequestParser
     @menu = Menu.new
     @apprentice_rota = ApprenticeRota.new({"id" => "Will", "id2" => "Fabien"})
     @commands = [
-      SetMenuCommand.new(@menu),
-      GetMenuCommand.new(@menu),
+      SetMenuCommand.new,
+      GetMenuCommand.new,
       Reminder.new,
       GetAllOrdersCommand.new,
       GetAllGuests.new,

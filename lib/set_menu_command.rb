@@ -1,31 +1,32 @@
-class SetMenuCommand
-  def initialize(menu)
-    @menu = menu
-  end
+require 'menu'
 
+class SetMenuCommand
   def prepare(data)
     @user_message = data[:user_message]
   end
 
   def run()
-    save_menu_url(@user_message)
-    "<!here> Menu has been set: #{@menu.url}"
+    set_url(extract_url(@user_message))
+    "<!here> Menu has been set: #{extract_url(@user_message)}"
   end
 
   def applies_to(request)
     request.split.size == 3 &&
     request.include?("new menu") &&
-    contain_url?(request)
+    extract_url(request)
   end
 
   private
 
-  def save_menu_url(text)
-    url = @menu.parse_url(text)
-    @menu.set_url(url)
+  def extract_url(request)
+    request[/((http|https):\/\/)?(w{3}.)?[A-Za-z0-9-]+.(com|co.uk)/]
   end
 
-  def contain_url?(request)
-    request[/((http|https):\/\/)?(w{3}.)?[A-Za-z0-9-]+.(com|co.uk)/]
+  def set_url(url)
+    menu = Menu.new(
+      :url => url,
+      :date => Time.now
+    )
+    menu.save
   end
 end

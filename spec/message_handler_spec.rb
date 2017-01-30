@@ -31,9 +31,7 @@ RSpec.describe MessageHandler do
   it "return the url when you ask the menu which is not provided" do
     message_from_slack("menu?")
 
-    expect(fake_response.message).to eq("The menu for this week is: no link provided")
-    expect(fake_response.team_id).to eq(team_id)
-    expect(fake_response.user_id).to eq(recipient)
+    expect(fake_response.message).to eq("The menu for this week is: no url provided")
   end
 
   it "return the url when you ask the menu which is not provided" do
