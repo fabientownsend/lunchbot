@@ -37,7 +37,8 @@ RSpec.describe GetAllGuests do
   private
 
   def guest_order_for(name)
-    place_order_guest = PlaceOrderGuest.new("burger", name, "host id")
+    place_order_guest = PlaceOrderGuest.new
+    place_order_guest.prepare({user_id: "host id", user_message: "order -#{name}-: burger"})
     place_order_guest.run
   end
 end
