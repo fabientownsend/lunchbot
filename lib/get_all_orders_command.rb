@@ -7,6 +7,9 @@ class GetAllOrdersCommand
     request == "all orders?"
   end
 
+  def prepare(data)
+  end
+
   private
 
   def orders

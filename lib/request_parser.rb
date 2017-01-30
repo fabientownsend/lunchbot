@@ -15,7 +15,17 @@ class RequestParser
   def initialize()
     @menu = Menu.new
     @apprentice_rota = ApprenticeRota.new({"id" => "Will", "id2" => "Fabien"})
-    @commands = [SetMenuCommand.new(@menu), GetMenuCommand.new(@menu), Reminder.new, GetAllOrdersCommand.new, GetAllGuests.new, SetOrderCommand.new, GetOrderCommand.new, ForemanCommand.new(@apprentice_rota), PlaceOrderGuest.new]
+    @commands = [
+      SetMenuCommand.new(@menu),
+      GetMenuCommand.new(@menu),
+      Reminder.new,
+      GetAllOrdersCommand.new,
+      GetAllGuests.new,
+      SetOrderCommand.new,
+      GetOrderCommand.new,
+      ForemanCommand.new(@apprentice_rota),
+      PlaceOrderGuest.new
+    ]
   end
 
   def parse(data)
@@ -23,12 +33,11 @@ class RequestParser
 
     for command in @commands
       if command.applies_to(request)
-        if command.kind_of? Reminder or command.kind_of? SetOrderCommand or command.kind_of? SetMenuCommand or command.kind_of? GetOrderCommand or command.kind_of? PlaceOrderGuest
-          command.prepare(data) 
-        end
+        command.prepare(data)
         return command
       end
     end
+
     ErrorCommand.new
   end
 end

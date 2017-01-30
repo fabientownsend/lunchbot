@@ -9,6 +9,9 @@ class GetAllGuests
     request == "guests?"
   end
 
+  def prepare(data)
+  end
+
   private
 
   def guests

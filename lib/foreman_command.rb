@@ -3,6 +3,13 @@ class ForemanCommand
     @apprentice_rota = rota
   end
 
+  def applies_to(request)
+    request.start_with?("foreman")
+  end
+
+  def prepare(data)
+  end
+
   def run()
     "The foreman for this week is #{@apprentice_rota.foremanName()}"
   end

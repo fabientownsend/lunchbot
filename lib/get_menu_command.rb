@@ -7,6 +7,9 @@ class GetMenuCommand
     "The menu for this week is: #{@menu.url}"
   end
 
+  def prepare(data)
+  end
+
   def applies_to(request)
     request == "menu?"
   end

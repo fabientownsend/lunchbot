@@ -1,9 +1,18 @@
 class PlaceOrderGuest
+  def initialize(lunch_order = nil, name = nil, host_id = nil)
+    @lunch_order = lunch_order
+    @name = name
+    @host_id = host_id
+  end
+
+  def applies_to(request)
+    get_string_betwee_dash(request) && get_string_after_collon(request)
+  end
+
   def prepare(data)
-    @user_message = data[:user_message]
+    @lunch_order = get_string_after_collon(data[:user_message])
+    @name = get_string_betwee_dash(data[:user_message])
     @host_id = data[:user_id]
-    @lunch_order = string_after_collon(@user_message)
-    @name = string_between_dash(@user_message)
   end
 
   def run
@@ -14,10 +23,10 @@ class PlaceOrderGuest
       lunch_order.save
     else
       new_order = Order.new(
-      :user_name => @name,
-      :lunch => @lunch_order,
-      :date => Time.now,
-      :host => @host_id
+        :user_name => @name.strip,
+        :lunch => @lunch_order,
+        :date => Time.now,
+        :host => @host_id
       )
       new_order.save
     end
@@ -25,17 +34,13 @@ class PlaceOrderGuest
     "#{@name} order saved"
   end
 
-  def applies_to(request)
-    string_between_dash(request) && string_after_collon(request)
-  end
-
   private
 
-  def string_between_dash(message)
+  def get_string_betwee_dash(message)
     message[/(?<=\-)(.+?)(?=\-)/]
   end
 
-  def string_after_collon(message)
+  def get_string_after_collon(message)
     message[/(?<=\:\s)(.+?)$/]
   end
 end
