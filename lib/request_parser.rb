@@ -15,14 +15,20 @@ class RequestParser
   def initialize()
     @menu = Menu.new
     @apprentice_rota = ApprenticeRota.new({"id" => "Will", "id2" => "Fabien"})
+    @commands = [SetMenuCommand.new(@menu)]
   end
 
   def parse(data)
     request = data[:user_message]
 
-    if menu_request?(request)
-      SetMenuCommand.new(request, @menu)
-    elsif request == "menu?"
+    for command in @commands
+      if command.applies_to(request)
+        command.prepare_message(request)
+        return command
+      end
+    end
+
+    if request == "menu?"
       GetMenuCommand.new(@menu)
     elsif request == "remind"
       Reminder.new(data)
