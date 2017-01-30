@@ -9,7 +9,9 @@ RSpec.describe GetAllGuests do
   let (:get_all_orders) { GetAllOrdersCommand.new }
 
   it "do nothing when the user name doesn't exist" do
-    response = RemoveGuestOrder.new("james smith").run
+    remove_guest_order = RemoveGuestOrder.new
+    remove_guest_order.prepare({user_message: "remove guest: james smith"})
+    response = remove_guest_order.run
 
     expect(response).to eq("james smith doesn't exist!")
   end
@@ -17,7 +19,9 @@ RSpec.describe GetAllGuests do
   it "remove a guest" do
     guest_order_for("james smith")
     guest_order_for("jean bon")
-    response = RemoveGuestOrder.new("james smith").run
+    remove_guest_order = RemoveGuestOrder.new
+    remove_guest_order.prepare({user_message: "remove guest: james smith"})
+    response = remove_guest_order.run
 
     expect(guest_provider.run).to eq("jean bon")
     expect(response).to eq("james smith removed")
@@ -26,7 +30,9 @@ RSpec.describe GetAllGuests do
   it "isn't case sensitive" do
     guest_order_for("james smith")
     guest_order_for("jean bon")
-    response = RemoveGuestOrder.new("James smith").run
+    remove_guest_order = RemoveGuestOrder.new
+    remove_guest_order.prepare({user_message: "remove guest: James Smith"})
+    response = remove_guest_order.run
 
     expect(guest_provider.run).to eq("jean bon")
     expect(response).to eq("james smith removed")
@@ -35,9 +41,11 @@ RSpec.describe GetAllGuests do
   it "isn't extra space sensitive" do
     guest_order_for("james smith")
     guest_order_for("jean bon")
-    response = RemoveGuestOrder.new("james smith ").run
+    remove_guest_order = RemoveGuestOrder.new
+    remove_guest_order.prepare({user_message: "remove guest: james smith "})
+    response = remove_guest_order.run
 
-    expect(guest_provider.run).to eq("jean bon")
+    remove_guest_order.prepare({user_message: "remove guest: jean bon"})
     expect(response).to eq("james smith removed")
   end
 
@@ -48,7 +56,9 @@ RSpec.describe GetAllGuests do
     set_order_command.prepare(event_data_from_will)
     set_order_command.run
 
-    response = RemoveGuestOrder.new("Will").run
+    remove_guest_order = RemoveGuestOrder.new
+    remove_guest_order.prepare({user_message: "remove guest: will"})
+    response = remove_guest_order.run
 
     expect(get_all_orders.run).to eq(
       "james smith: burger\n" +

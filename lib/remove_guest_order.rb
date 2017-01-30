@@ -1,7 +1,13 @@
 require 'order'
 
 class RemoveGuestOrder
-  def initialize(name)
+  def applies_to(request)
+    request.start_with?("remove guest:")
+  end
+
+  def prepare(data)
+    message = data[:user_message]
+    name = message.gsub("remove guest:", "")
     @name = name.strip.downcase
   end
 
