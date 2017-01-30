@@ -2,7 +2,7 @@ require 'get_all_guests'
 require 'set_order_command'
 
 RSpec.describe GetAllGuests do
-  let (:event_data_from_will) { {user_id: "asdf", user_name: "Will" } }
+  let (:event_data_from_will) { {user_id: "asdf", user_name: "Will", user_message: "burger" } }
   let (:guest_provider) { GetAllGuests.new }
 
   it "return list of guest when only one guest" do
@@ -23,7 +23,9 @@ RSpec.describe GetAllGuests do
   end
 
   it "doesn't return the crafters" do
-    SetOrderCommand.new("burger", event_data_from_will).run
+    set_order_command = SetOrderCommand.new
+    set_order_command.prepare(event_data_from_will)
+    set_order_command.run
 
     guest_order_for("james smith")
     guest_order_for("jean bon")

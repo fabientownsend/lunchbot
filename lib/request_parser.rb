@@ -15,7 +15,7 @@ class RequestParser
   def initialize()
     @menu = Menu.new
     @apprentice_rota = ApprenticeRota.new({"id" => "Will", "id2" => "Fabien"})
-    @commands = [SetMenuCommand.new(@menu), GetMenuCommand.new(@menu), Reminder.new, GetAllOrdersCommand.new, GetAllGuests.new]
+    @commands = [SetMenuCommand.new(@menu), GetMenuCommand.new(@menu), Reminder.new, GetAllOrdersCommand.new, GetAllGuests.new, SetOrderCommand.new]
   end
 
   def parse(data)
@@ -23,17 +23,14 @@ class RequestParser
 
     for command in @commands
       if command.applies_to(request)
-        if command.kind_of? Reminder 
+        if command.kind_of? Reminder or command.kind_of? SetOrderCommand
           command.prepare(data) 
         end
         return command
       end
     end
 
-    if set_order_request?(request)
-      lunch = request.gsub("order me: ", "")
-      SetOrderCommand.new(lunch, data)
-    elsif request.start_with?("order:") && request.split.size > 1
+    if request.start_with?("order:") && request.split.size > 1
       GetOrderCommand.new(request)
     elsif request.start_with?("foreman")
       ForemanCommand.new(@apprentice_rota)
@@ -49,20 +46,6 @@ class RequestParser
   end
 
   private
-
-  def menu_request?(request)
-    request.split.size == 3 &&
-    request.include?("new menu") &&
-    contain_url?(request)
-  end
-
-  def contain_url?(request)
-    request[/((http|https):\/\/)?(w{3}.)?[A-Za-z0-9-]+.(com|co.uk)/]
-  end
-
-  def set_order_request?(request)
-    request.start_with?("order me: ") && request.split.size > 2
-  end
 
   def get_string_betwee_dash(message)
     message[/(?<=\-)(.+?)(?=\-)/]

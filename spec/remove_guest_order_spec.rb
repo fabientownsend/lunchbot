@@ -4,7 +4,7 @@ require 'remove_guest_order'
 require 'set_order_command'
 
 RSpec.describe GetAllGuests do
-  let (:event_data_from_will) { {user_id: "asdf", user_name: "will" } }
+  let (:event_data_from_will) { {user_id: "asdf", user_name: "will", user_message: "burger"} }
   let (:guest_provider) { GetAllGuests.new }
   let (:get_all_orders) { GetAllOrdersCommand.new }
 
@@ -44,7 +44,9 @@ RSpec.describe GetAllGuests do
   it "doesn't remove a crafter" do
     guest_order_for("james smith")
     guest_order_for("jean bon")
-    SetOrderCommand.new("burger", event_data_from_will).run
+    set_order_command = SetOrderCommand.new
+    set_order_command.prepare(event_data_from_will)
+    set_order_command.run
 
     response = RemoveGuestOrder.new("Will").run
 

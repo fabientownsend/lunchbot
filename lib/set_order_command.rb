@@ -1,8 +1,9 @@
 require 'order'
 
 class SetOrderCommand
-  def initialize(lunch, data)
-    @lunch = lunch
+  def prepare(data)
+    request = data[:user_message]
+    @lunch = request.gsub("order me: ", "")
     @user_id = data[:user_id]
     @user_name = data[:user_name]
   end
@@ -24,5 +25,9 @@ class SetOrderCommand
     end
 
     "Your order `#{order.lunch}` is updated"
+  end
+
+  def applies_to(request)
+    request.start_with?("order me: ") && request.split.size > 2
   end
 end
