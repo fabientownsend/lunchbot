@@ -2,7 +2,7 @@ require 'channel_info_provider'
 require 'order'
 
 class Reminder
-  def initialize(data)
+  def prepare(data)
     @channel_info = data[:channel_info]
     @channel_id = data[:channel_id]
     @team_id = data[:team_id]
@@ -11,6 +11,10 @@ class Reminder
 
   def run
     format_response(not_ordered_members)
+  end
+
+  def applies_to(request)
+    request == "remind"
   end
 
   def not_ordered_members

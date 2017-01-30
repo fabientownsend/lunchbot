@@ -12,7 +12,8 @@ RSpec.describe Reminder do
       team_id: "team id",
       channel_info: FakeChannelInfoProvider.new
     }
-    reminder = Reminder.new(data)
+    reminder = Reminder.new()
+    reminder.prepare(data)
     response = reminder.run
 
     expect(response).to eq("<@FabienUserId>\n<@WillUserId>")

@@ -3,16 +3,13 @@ class SetMenuCommand
     @menu = menu
   end
 
-  def prepare_message(user_message)
-    @user_message = user_message
-  end
-
   def run()
     save_menu_url(@user_message)
     "<!here> Menu has been set: #{@menu.url}"
   end
 
   def applies_to(request)
+    @user_message = request
     request.split.size == 3 &&
     request.include?("new menu") &&
     contain_url?(request)
