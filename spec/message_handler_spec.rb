@@ -78,14 +78,26 @@ RSpec.describe MessageHandler do
   end
 
   it "return list of users that doesn't ordered yet" do
-    AddGuest.new("james smith", "host id").run
+    add_guest("james smith")
     message_from_slack("remind")
 
-    expect(fake_response.message).to eq("<@FabienUserId>\n<@WillUserId>\njames smith")
+    expect(fake_response.message).to eq("<@FabienUserId>\n<@WillUserId>\njames smith host: <id host>")
+  end
+
+  it "return list of users that doesn't ordered yet" do
+    add_guest("james smith")
+    message_from_slack("remind")
+
+    expect(fake_response.message).to eq("<@FabienUserId>\n<@WillUserId>\njames smith host: <id host>")
+
+    message_from_slack("remove guest: james smith")
+    message_from_slack("remind")
+    expect(fake_response.message).to eq("<@FabienUserId>\n<@WillUserId>")
   end
 
   it "return a list without the people who ordered" do
     message_from_slack("order me: fish", "Fabien", "FabienUserId")
+    message_from_slack("order -james-: fish")
     message_from_slack("all orders?")
     message_from_slack("remind")
 
@@ -150,5 +162,14 @@ RSpec.describe MessageHandler do
 
   def create_event_data(message, recipient, name)
     {"type"=>"message", "user"=>"#{recipient}", "text"=>"#{message}", "ts"=>"1484928006.000013", "channel"=>"#{recipient}", "event_ts"=>"1484928006.000013"}
+  end
+
+  def add_guest(name)
+    add_guest = AddGuest.new
+    add_guest.prepare({
+      user_message: "add guest: #{name}",
+      user_id: "id host"
+    })
+    add_guest.run
   end
 end
