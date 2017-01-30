@@ -1,4 +1,4 @@
-require 'guest'
+require 'order'
 
 class GetAllGuests
   def run()
@@ -8,7 +8,7 @@ class GetAllGuests
   private
 
   def guests
-    Guest.all.map { |guest| "#{guest.guest_name}" }
+    Order.all.map { |order| "#{order.user_name}" if order.host }.compact
   end
 
   def format_response(guest)

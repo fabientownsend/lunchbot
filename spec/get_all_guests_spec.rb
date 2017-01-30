@@ -1,38 +1,41 @@
 require 'get_all_guests'
-require 'add_guest'
+require 'set_order_command'
 
-RSpec.describe AddGuest do
+RSpec.describe GetAllGuests do
+  let (:event_data_from_will) { {user_id: "asdf", user_name: "Will" } }
+  let (:guest_provider) { GetAllGuests.new }
 
   it "return list of guest when only one guest" do
-    get_all_guests = GetAllGuests.new
-    response = get_all_guests.run
-
-    expect(response).to eq("no guest")
+    expect(guest_provider.run).to eq("no guest")
   end
 
   it "return list of guest when only one guest" do
-    create_new_guest("Will")
+    guest_order_for("james smith")
 
-    get_all_guests = GetAllGuests.new
-    response = get_all_guests.run
-
-    expect(response).to eq("Will")
+    expect(guest_provider.run).to eq("james smith")
   end
 
   it "return the list of the guests when multiple guests" do
-    create_new_guest("Will")
-    create_new_guest("Fabien")
+    guest_order_for("james smith")
+    guest_order_for("jean bon")
 
-    get_all_guests = GetAllGuests.new
-    response = get_all_guests.run
-
-    expect(response).to eq("Will\nFabien")
+    expect(guest_provider.run).to eq("james smith\njean bon")
   end
 
-  def create_new_guest(guest_name, host_id = "host_id")
-    event_data = {user_id: "#{host_id}", user_name: "a name" }
-    set_order_command = AddGuest.new(guest_name, event_data)
-    set_order_command.run
-    set_order_command
+  it "doesn't return the crafters" do
+    SetOrderCommand.new("burger", event_data_from_will).run
+
+    guest_order_for("james smith")
+    guest_order_for("jean bon")
+
+    expect(guest_provider.run).to eq("james smith\njean bon")
+    expect(Order.last(:user_id => "asdf")).not_to be_nil
+  end
+
+  private
+
+  def guest_order_for(name)
+    place_order_guest = PlaceOrderGuest.new("burger", name, "host id")
+    place_order_guest.run
   end
 end
