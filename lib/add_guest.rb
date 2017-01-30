@@ -1,9 +1,15 @@
 require 'order'
 
 class AddGuest
-  def initialize(name, host_id)
+  def applies_to(request)
+    request.start_with?("add guest:")
+  end
+
+  def prepare(data)
+    @host_id = data[:user_id]
+    message = data[:user_message]
+    name = message.gsub("add guest:", "")
     @name = name.strip.downcase
-    @host_id = host_id
   end
 
   def run

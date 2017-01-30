@@ -26,6 +26,7 @@ class RequestParser
       ForemanCommand.new(@apprentice_rota),
       PlaceOrderGuest.new,
       RemoveGuestOrder.new,
+      AddGuest.new
     ]
   end
 
