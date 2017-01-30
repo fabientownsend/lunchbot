@@ -13,7 +13,7 @@ class GetAllOrdersCommand
   private
 
   def orders
-    Order.all.map { |order| "#{order.user_name}: #{order.lunch}" }
+    Order.all.map { |order| "#{order.user_name}: #{order.lunch}" if !order.lunch.nil?}
   end
 
   def format_response(orders)
@@ -21,7 +21,7 @@ class GetAllOrdersCommand
     if orders.empty?
       response = "no orders"
     else
-      response = orders.join("\n")
+      response = orders.join("\n").strip
     end
 
     response
