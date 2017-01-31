@@ -11,6 +11,7 @@ require 'commands/set_order_command'
 require 'commands/place_order_guest'
 require 'commands/remove_guest_order'
 require 'commands/add_guest'
+require 'commands/out'
 
 class RequestParser
   def initialize()
@@ -28,7 +29,8 @@ class RequestParser
       AddGuest.new,
       NextForeman.new,
       AddApprentice.new,
-      RemoveApprentice.new
+      RemoveApprentice.new,
+      Out.new
     ]
   end
 

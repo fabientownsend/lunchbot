@@ -15,6 +15,11 @@ RSpec.describe RequestParser do
     expect(user_request.parse(request)).to be_a(SetMenuCommand)
   end
 
+  it "return out when the request is to be marked out" do
+    request = {user_message: "out"}
+    expect(user_request.parse(request)).to be_a(Out)
+  end
+
   it "return error when the menu request has too munch arguments" do
     request = {user_message: "new menu www.menu.com bla"}
     expect(user_request.parse(request)).to be_a(ErrorCommand)
