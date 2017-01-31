@@ -26,7 +26,11 @@ class MessageHandler
     response = returned_command.run()
 
     if response
-      respond(response, team_id, event_data['user'], event_data['channel'])
+      if returned_command.is_a?(Reminder) && event_data['text'].downcase.end_with?(" private")
+        respond(response, team_id, event_data['user'])
+      else
+        respond(response, team_id, event_data['user'], event_data['channel'])
+      end
     end
   end
 

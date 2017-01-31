@@ -14,7 +14,7 @@ class Reminder
   end
 
   def applies_to(request)
-    request == "remind"
+    request == "remind" || request == "remind private"
   end
 
   private
