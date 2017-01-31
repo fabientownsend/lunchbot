@@ -1,8 +1,4 @@
 class ForemanCommand
-  def initialize(rota)
-    @apprentice_rota = rota
-  end
-
   def applies_to(request)
     request.start_with?("foreman")
   end
@@ -11,7 +7,12 @@ class ForemanCommand
   end
 
   def run()
-    "The foreman for this week is #{@apprentice_rota.foremanName()}"
+    apprentice = Apprentice.first
+    if apprentice
+      "The foreman for this week is #{Apprentice.first.user_name}"
+    else
+      "There are no apprentices!"
+    end
   end
 
   def applies_to(request)

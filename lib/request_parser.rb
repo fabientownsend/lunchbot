@@ -11,10 +11,13 @@ require 'place_order_guest'
 require 'get_all_guests'
 require 'remove_guest_order'
 require 'add_guest'
+require 'next_foreman_command'
+require 'apprentice'
+require 'remove_apprentice'
+require 'add_apprentice'
 
 class RequestParser
   def initialize()
-    @apprentice_rota = ApprenticeRota.new({"id" => "Will", "id2" => "Fabien"})
     @commands = [
       SetMenuCommand.new,
       GetMenuCommand.new,
@@ -23,10 +26,13 @@ class RequestParser
       GetAllGuests.new,
       SetOrderCommand.new,
       GetOrderCommand.new,
-      ForemanCommand.new(@apprentice_rota),
+      ForemanCommand.new,
       PlaceOrderGuest.new,
       RemoveGuestOrder.new,
-      AddGuest.new
+      AddGuest.new,
+      NextForeman.new,
+      AddApprentice.new,
+      RemoveApprentice.new
     ]
   end
 

@@ -17,6 +17,10 @@ class ApprenticeRota
     foreman().at(0)
   end
 
+  def notify_new_foreman()
+    response = Response.new
+  end
+
   def rotate()
     foreman_name = foremanName()
     foreman_id = foremanID()

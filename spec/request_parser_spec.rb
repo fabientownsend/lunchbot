@@ -95,6 +95,21 @@ RSpec.describe RequestParser do
     expect(user_request.parse(request)).to be_a(AddGuest)
   end
 
+  it "returns NextForeman" do
+    request = {user_message: "next foreman"}
+    expect(user_request.parse(request)).to be_a(NextForeman)
+  end
+
+  it "returns AddApprentice" do
+    request = {user_message: "add apprentice"}
+    expect(user_request.parse(request)).to be_a(AddApprentice)
+  end
+
+  it "returns RemoveApprentice" do
+    request = {user_message: "remove apprentice"}
+    expect(user_request.parse(request)).to be_a(RemoveApprentice)
+  end
+
   it "return remind command when it's a remind request" do
     request = {user_message: "remind", channel_info: FakeChannelInfoProvider.new, channel_id: "asdf", team_id: "team id"}
     expect(user_request.parse(request)).to be_a(Reminder)
