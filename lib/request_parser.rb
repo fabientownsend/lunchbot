@@ -1,4 +1,3 @@
-require 'commands/apprentice_rota'
 require 'commands/error_command'
 require 'commands/get_order_command'
 require 'commands/foreman_command'
