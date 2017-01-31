@@ -7,7 +7,7 @@ class NextForeman
     @apprentice = Apprentice.first
     if @apprentice
       @apprentice.destroy
-      "The new forman is <@#{Apprentice.first.user_name}>"
+      "The new foreman is <@#{Apprentice.first.slack_id}>"
       readd_apprentice
     else
       "There are no apprentices!"
