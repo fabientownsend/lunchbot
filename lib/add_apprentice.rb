@@ -7,6 +7,7 @@ class AddApprentice
     :slack_id => @user_id
     )
     apprentice.save
+    "#{@user_name} has been added to apprentices."
   end
   
   def applies_to(request)
