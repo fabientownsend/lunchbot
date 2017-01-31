@@ -1,4 +1,4 @@
-require "add_apprentice"
+require "commands/add_apprentice"
 
 RSpec.describe AddApprentice do
   let(:fake_data) {{user_id: "id", user_name: "Will"}}

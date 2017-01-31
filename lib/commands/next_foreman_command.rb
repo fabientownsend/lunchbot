@@ -1,3 +1,5 @@
+require 'models/apprentice'
+
 class NextForeman
   def run
     shift_apprentice_table

@@ -1,5 +1,5 @@
-require "add_apprentice"
-require "remove_apprentice"
+require "commands/add_apprentice"
+require "commands/remove_apprentice"
 
 RSpec.describe RemoveApprentice do
   let(:fake_data) {{user_id: "id", user_name: "Will"}}
