@@ -45,9 +45,46 @@ person isn't in the channel or didn't order anything, the bot will not reply.
 order: @name_of_the_person
 ```
 
+You can display all the orders
+``` bash
+all orders?
+```
+
+## Guest
+Here are all the interaction with the guest
+
+You can add a guest
+``` bash
+add guest: Harry Potter
+```
+
+You can remove a guest
+``` bash
+remove guest: Harry Potter
+```
+
+You can place an order for a guest
+``` bash
+order -name of the guest-: his meal
+```
+
+## Remind
+Thid command will remind all the people that didn't order their meal.
+The people displayed are those in the channel without any meal and
+the added customer without a meal.
+
+``` bash
+remind
+```
+
 ## Foreman
 User can ask who is in charge of the meal with the foreman command.
 
 ``` bash
 foreman
+```
+
+Set the next person as the foreman of the week
+``` bash
+next foreman
 ```
