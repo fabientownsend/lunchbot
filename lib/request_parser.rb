@@ -11,6 +11,9 @@ require 'commands/set_order_command'
 require 'commands/place_order_guest'
 require 'commands/remove_guest_order'
 require 'commands/add_guest'
+require 'commands/next_foreman_command'
+require 'commands/remove_apprentice'
+require 'commands/add_apprentice'
 require 'commands/out'
 
 class RequestParser
