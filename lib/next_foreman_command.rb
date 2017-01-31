@@ -30,5 +30,6 @@ class NextForeman
       user_name: user_name,
       slack_id: slack_id
     )
+    new_apprentice.save
   end
 end
