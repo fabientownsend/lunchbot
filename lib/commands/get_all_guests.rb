@@ -1,4 +1,4 @@
-require 'order'
+require 'models/order'
 
 class GetAllGuests
   def run()

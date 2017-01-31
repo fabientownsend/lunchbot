@@ -1,4 +1,4 @@
-require 'menu'
+require 'models/menu'
 
 class GetMenuCommand
   def run

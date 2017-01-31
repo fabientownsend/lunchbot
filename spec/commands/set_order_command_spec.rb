@@ -1,4 +1,4 @@
-require 'set_order_command'
+require 'commands/set_order_command'
 
 RSpec.describe SetOrderCommand do
   let (:event_data_from_will) { {user_id: "asdf", user_name: "Will", user_message: "fish" } }

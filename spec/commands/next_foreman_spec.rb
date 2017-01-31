@@ -1,6 +1,5 @@
-require 'next_foreman_command'
-require 'add_apprentice'
-require 'apprentice'
+require 'commands/next_foreman_command'
+require 'commands/add_apprentice'
 
 RSpec.describe NextForeman do
   it "nextforeman changes to the new apprentice on run" do

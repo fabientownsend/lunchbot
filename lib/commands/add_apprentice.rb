@@ -1,4 +1,4 @@
-require "apprentice"
+require "models/apprentice"
 
 class AddApprentice
   def run()

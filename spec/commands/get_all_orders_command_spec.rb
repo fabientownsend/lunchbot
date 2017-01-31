@@ -1,5 +1,5 @@
-require 'get_all_orders_command'
-require 'set_order_command'
+require 'commands/get_all_orders_command'
+require 'commands/set_order_command'
 
 RSpec.describe GetAllOrdersCommand do
   it "returns no orders" do

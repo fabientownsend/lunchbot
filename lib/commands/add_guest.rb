@@ -1,4 +1,4 @@
-require 'order'
+require 'models/order'
 
 class AddGuest
   def applies_to(request)
