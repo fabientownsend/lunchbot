@@ -14,7 +14,7 @@ RSpec.describe SetMenuCommand do
 
   it "return the url without the www" do
     menu = SetMenuCommand.new
-    menu.prepare({user_message: "sdf fdas fsa asdf.com asdfas"})
+    menu.prepare({user_message: "sdf fdas fsa www.menu.com asdfas"})
     response = menu.run
     expect(response).to eq("<!here> Menu has been set: www.menu.com")
   end
