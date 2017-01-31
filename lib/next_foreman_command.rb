@@ -1,11 +1,22 @@
 class NextForeman
-  def initialize(apprentice_rota)
-    @apprentice_rota = apprentice_rota
+  def run
+    shift_apprentice_table
   end
 
-  def run()
-    @apprentice_rota.rotate()
-    "The new forman is <@#{@apprentice_rota.foremanID()}>"
+  def shift_apprentice_table
+    apprentice = Apprentice.first
+    user_name = apprentice.user_name
+    slack_id = apprentice.slack_id
+    if apprentice
+      apprentice.destroy
+      "The new forman is <@#{Apprentice.first.user_name}>"
+      new_apprentice = Apprentice.new(
+        user_name: user_name,
+        slack_id: slack_id
+      )
+    else
+      "There are no apprentices!"
+    end
   end
 
   def applies_to(request)

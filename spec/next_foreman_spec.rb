@@ -1,11 +1,18 @@
 require 'next_foreman_command'
-require 'fake_channel_info_provider'
+require 'add_apprentice'
 
 RSpec.describe NextForeman do
-  it "return all the person that didn't order" do
-    apprentice_rota = ApprenticeRota.new({"id" => "Will", "id2" => "Fabien"})
-    foreman_next = NextForeman.new(apprentice_rota)
+  it "nextforeman changes to the new apprentice on run" do
+    add_apprentice = AddApprentice.new
+    add_apprentice.prepare({user_name: "Will", slack_id: "id"})
+    add_apprentice.run()
+
+    add_apprentice = AddApprentice.new
+    add_apprentice.prepare({user_name: "Fabien", slack_id: "id2"})
+    add_apprentice.run()
+
+    foreman_next = NextForeman.new
     foreman_next.run()
-    expect(apprentice_rota.foremanName()).to eq("Fabien")
+    expect(Apprentice.last.user_name).to eq("Fabien")
   end
 end

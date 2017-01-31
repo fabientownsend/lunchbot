@@ -18,7 +18,6 @@ require 'add_apprentice'
 
 class RequestParser
   def initialize()
-    @apprentice_rota = ApprenticeRota.new({"id" => "Will", "id2" => "Fabien"})
     @commands = [
       SetMenuCommand.new,
       GetMenuCommand.new,
@@ -27,11 +26,11 @@ class RequestParser
       GetAllGuests.new,
       SetOrderCommand.new,
       GetOrderCommand.new,
-      ForemanCommand.new(@apprentice_rota),
+      ForemanCommand.new,
       PlaceOrderGuest.new,
       RemoveGuestOrder.new,
       AddGuest.new,
-      NextForeman.new(@apprentice_rota),
+      NextForeman.new,
       AddApprentice.new,
       RemoveApprentice.new
     ]

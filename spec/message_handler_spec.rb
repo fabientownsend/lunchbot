@@ -3,6 +3,7 @@ require 'message_handler'
 require 'fake_user_info_provider'
 require 'fake_channel_info_provider'
 require 'add_guest'
+require 'add_apprentice'
 
 RSpec.describe MessageHandler do
   let (:fake_response) { FakeResponse.new }
@@ -61,6 +62,10 @@ RSpec.describe MessageHandler do
   end
 
   it "return the foreman of the week" do
+    add_apprentice = AddApprentice.new()
+    add_apprentice.prepare({user_name: "Will", slack_id: "id"})
+    add_apprentice.run
+
     message_from_slack("foreman")
 
     expect(fake_response.message).to eq("The foreman for this week is Will")
