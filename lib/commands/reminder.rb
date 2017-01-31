@@ -1,5 +1,5 @@
 require 'channel_info_provider'
-require 'order'
+require 'models/order'
 
 class Reminder
   def prepare(data)

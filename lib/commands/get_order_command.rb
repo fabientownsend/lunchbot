@@ -1,4 +1,4 @@
-require 'order'
+require 'models/order'
 
 class GetOrderCommand
   def prepare(data)

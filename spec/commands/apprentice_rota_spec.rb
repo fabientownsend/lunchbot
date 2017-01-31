@@ -1,4 +1,4 @@
-require 'apprentice_rota'
+require 'commands/apprentice_rota'
 require 'spec_helper'
 
 RSpec.describe ApprenticeRota do

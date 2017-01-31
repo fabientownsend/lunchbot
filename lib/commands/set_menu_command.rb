@@ -1,4 +1,4 @@
-require 'menu'
+require 'models/menu'
 
 class SetMenuCommand
   def prepare(data)

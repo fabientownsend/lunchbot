@@ -2,8 +2,12 @@ require 'fake_response'
 require 'message_handler'
 require 'fake_user_info_provider'
 require 'fake_channel_info_provider'
+<<<<<<< HEAD
 require 'add_guest'
 require 'add_apprentice'
+=======
+require 'commands/add_guest'
+>>>>>>> Move commands and models classes into folders
 
 RSpec.describe MessageHandler do
   let (:fake_response) { FakeResponse.new }

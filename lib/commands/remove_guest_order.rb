@@ -1,4 +1,4 @@
-require 'order'
+require 'models/order'
 
 class RemoveGuestOrder
   def applies_to(request)

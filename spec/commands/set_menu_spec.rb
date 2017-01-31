@@ -1,5 +1,5 @@
-require 'set_menu_command'
-require 'menu'
+require 'commands/set_menu_command'
+require 'models/menu'
 require 'spec_helper'
 
 RSpec.describe SetMenuCommand do
