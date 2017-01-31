@@ -40,7 +40,7 @@ class Reminder
         end
       end
 
-      not_ordered_members
+      not_ordered_members.sort
   end
 
   def has_ordered(user_id)
@@ -56,6 +56,6 @@ class Reminder
         end
       end
 
-      not_ordered_members
+      not_ordered_members.sort
   end
 end
