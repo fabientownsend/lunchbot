@@ -52,7 +52,7 @@ class Reminder
 
       Order.each do |order|
         if order.host && order.lunch.nil?
-            not_ordered_members << "#{order.user_name} host: <#{order.host}>"
+            not_ordered_members << "#{order.user_name} host: <@#{order.host}>"
         end
       end
 

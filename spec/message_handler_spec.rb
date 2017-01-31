@@ -81,14 +81,14 @@ RSpec.describe MessageHandler do
     add_guest("james smith")
     message_from_slack("remind")
 
-    expect(fake_response.message).to eq("<@FabienUserId>\n<@WillUserId>\njames smith host: <id host>")
+    expect(fake_response.message).to eq("<@FabienUserId>\n<@WillUserId>\njames smith host: <@id host>")
   end
 
   it "return list of users that doesn't ordered yet" do
     add_guest("james smith")
     message_from_slack("remind")
 
-    expect(fake_response.message).to eq("<@FabienUserId>\n<@WillUserId>\njames smith host: <id host>")
+    expect(fake_response.message).to eq("<@FabienUserId>\n<@WillUserId>\njames smith host: <@id host>")
 
     message_from_slack("remove guest: james smith")
     message_from_slack("remind")
