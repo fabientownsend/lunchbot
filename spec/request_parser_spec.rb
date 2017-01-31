@@ -5,6 +5,11 @@ require 'fake_channel_info_provider'
 RSpec.describe RequestParser do
   let(:user_request) { RequestParser.new }
 
+  it "is not case sensitive" do
+    request = {user_message: "NEW mEnU www.mENU.CoM"}
+    expect(user_request.parse(request)).to be_a(SetMenuCommand)
+  end
+
   it "return menu when the request is a menu" do
     request = {user_message: "new menu www.menu.com"}
     expect(user_request.parse(request)).to be_a(SetMenuCommand)

@@ -36,7 +36,7 @@ class RequestParser
     request = data[:user_message]
 
     for command in @commands
-      if command.applies_to(request)
+      if command.applies_to(request.downcase)
         command.prepare(data)
         return command
       end
