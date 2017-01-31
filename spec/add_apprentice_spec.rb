@@ -25,4 +25,16 @@ RSpec.describe AddApprentice do
     expect(Apprentice.last.slack_id).to eq("id2")
     expect(Apprentice.first.slack_id).to eq("id")
   end
+
+  it "can not add the same apprentice twice" do
+    add_apprentice = AddApprentice.new
+    add_apprentice.prepare(fake_data)
+    add_apprentice.run()
+
+    add_apprentice = AddApprentice.new
+    add_apprentice.prepare(fake_data)
+    add_apprentice.run()
+
+    expect(Apprentice.count).to eq(1)
+  end
 end
