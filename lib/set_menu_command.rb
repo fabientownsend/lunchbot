@@ -19,7 +19,7 @@ class SetMenuCommand
   private
 
   def extract_url(request)
-    request[/((http|https):\/\/)?(w{3}.)?[A-Za-z0-9-]+.(com|co.uk)/]
+    request[/((http|https):\/\/)?(w{3}.)?[A-Za-z0-9-]+.(com|co.uk)([a-zA-Z0-9\.\/\-]+)?/]
   end
 
   def set_url(url)

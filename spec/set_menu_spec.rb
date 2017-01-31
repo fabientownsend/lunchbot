@@ -14,8 +14,16 @@ RSpec.describe SetMenuCommand do
 
   it "return the url without the www" do
     menu = SetMenuCommand.new
-    menu.prepare({user_message: "sdf fdas fsa www.menu.com asdfas"})
+    menu.prepare({user_message: "sdf fdas fsa asdf.com asdfas"})
     response = menu.run
     expect(response).to eq("<!here> Menu has been set: www.menu.com")
+  end
+
+  it "return deliveroo url" do
+    menu = SetMenuCommand.new
+    url = "https://deliveroo.co.uk/menu/london/covent-garden/the-real-greek-covent-garden?day=today&rpos=0&time=1130"
+    menu.prepare({user_message: "sdf fdas fsa #{url} asdfas"})
+    response = menu.run
+    expect(response).to eq("<!here> Menu has been set: https://deliveroo.co.uk/menu/london/covent-garden/the-real-greek-covent-garden")
   end
 end
