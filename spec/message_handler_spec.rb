@@ -79,7 +79,7 @@ RSpec.describe MessageHandler do
     message_from_slack("order me: fish", "Fabien", recipient)
     message_from_slack("all orders?")
 
-    expect(fake_response.message).to eq("Will: hamburger\nFabien: fish")
+    expect(fake_response.message).to eq("Fabien: fish\nWill: hamburger")
   end
 
   it "return list of users that doesn't ordered yet" do

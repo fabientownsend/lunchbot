@@ -13,7 +13,7 @@ class GetAllOrdersCommand
   private
 
   def orders
-    Order.all.map { |order| "#{order.user_name}: #{order.lunch}" if !order.lunch.nil?}
+    Order.all.map { |order| "#{order.user_name}: #{order.lunch}" if !order.lunch.nil?}.compact.sort
   end
 
   def format_response(orders)
