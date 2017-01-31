@@ -1,5 +1,6 @@
 require 'request_parser'
 require 'spec_helper'
+require 'fake_channel_info_provider'
 
 RSpec.describe RequestParser do
   let(:user_request) { RequestParser.new }
@@ -67,5 +68,35 @@ RSpec.describe RequestParser do
   it "return foreman when it's a correct request" do
     request = {user_message: "foreman"}
     expect(user_request.parse(request)).to be_a(ForemanCommand)
+  end
+
+  it "return all orders command  when it's a correct request" do
+    request = {user_message: "all orders?"}
+    expect(user_request.parse(request)).to be_a(GetAllOrdersCommand)
+  end
+
+  it "return PlaceOrderGuest when it's a correct request" do
+    request = {user_message: "order -james smith-: burger"}
+    expect(user_request.parse(request)).to be_a(PlaceOrderGuest)
+  end
+
+  it "return GetAllGuests" do
+    request = {user_message: "guests?"}
+    expect(user_request.parse(request)).to be_a(GetAllGuests)
+  end
+
+  it "return GetAllGuests" do
+    request = {user_message: "remove guest: james"}
+    expect(user_request.parse(request)).to be_a(RemoveGuestOrder)
+  end
+
+  it "return GetAllGuests" do
+    request = {user_message: "add guest: james"}
+    expect(user_request.parse(request)).to be_a(AddGuest)
+  end
+
+  it "return remind command when it's a remind request" do
+    request = {user_message: "remind", channel_info: FakeChannelInfoProvider.new, channel_id: "asdf", team_id: "team id"}
+    expect(user_request.parse(request)).to be_a(Reminder)
   end
 end

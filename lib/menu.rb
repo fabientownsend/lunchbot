@@ -1,15 +1,9 @@
+require 'data_mapper'
+
 class Menu
-  attr_reader :url
+  include DataMapper::Resource
 
-  def initialize
-    @url = "no link provided"
-  end
-
-  def set_url(url)
-    @url = url
-  end
-
-  def parse_url(text)
-    text[/((http|https):\/\/)?(w{3}.)?[A-Za-z0-9-]+.(com|co.uk)/]
-  end
+  property :id, Serial
+  property :url, String
+  property :date, DateTime
 end
