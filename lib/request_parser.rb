@@ -11,6 +11,7 @@ require 'place_order_guest'
 require 'get_all_guests'
 require 'remove_guest_order'
 require 'add_guest'
+require 'next_foreman_command'
 
 class RequestParser
   def initialize()
@@ -26,7 +27,8 @@ class RequestParser
       ForemanCommand.new(@apprentice_rota),
       PlaceOrderGuest.new,
       RemoveGuestOrder.new,
-      AddGuest.new
+      AddGuest.new,
+      NextForeman.new(@apprentice_rota)
     ]
   end
 
