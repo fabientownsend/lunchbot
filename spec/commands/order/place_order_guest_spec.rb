@@ -1,41 +1,33 @@
 require 'commands/order/place_order_guest'
+require 'spec_helper'
 
 RSpec.describe PlaceOrderGuest do
-  let (:event_data_from_will) { {user_id: "asdf", user_name: "Will", user_message: "order -james smith-: burger" } }
-
   it "save the order of a guest" do
-    place_order_guest = PlaceOrderGuest.new
-    place_order_guest.prepare(event_data_from_will)
-    place_order_guest.run
+    Helper.order_guest({name: "james smith", meal: "burger", from: "slack id"})
 
-     expect(Order.count).to eq(1)
+    expect(Order.last(:user_name => "james smith")).not_to be(nil)
+  end
+
+  it "a guest has a host" do
+    slack_id = "slack id"
+    Helper.order_guest({name: "james smith", meal: "burger", from: slack_id})
+
+    expect(Order.last(:user_name => "james smith").host).to eq(slack_id)
   end
 
   it "updates guest order when new order is placed for same guest" do
-    place_order_guest = PlaceOrderGuest.new
-    place_order_guest.prepare(event_data_from_will)
-    place_order_guest.run
+    Helper.order_guest({name: "james smith", meal: "burger", from: "slack id"})
+    Helper.order_guest({name: "james smith", meal: "fish", from: "slack id"})
 
-    place_order_guest = PlaceOrderGuest.new
-    place_order_guest.prepare({user_id: "asdf", user_name: "Will", user_message: "order -james smith-: fish" })
-    place_order_guest.run
-
-    expect(Order.count).to eq(1)
-    expect(Order.first.lunch).to eq("fish")
+    expect(Order.last(:user_name => "james smith").lunch).to eq("fish")
   end
 
   it "add another order when the name is different" do
-    place_order_guest = PlaceOrderGuest.new
-    place_order_guest.prepare(event_data_from_will)
-    place_order_guest.run
+    Helper.order_guest({name: "james smith", meal: "burger", from: "slack id"})
+    Helper.order_guest({name: "jean bon", meal: "fish", from: "slack id"})
 
-    place_order_guest = PlaceOrderGuest.new
-    place_order_guest.prepare({user_id: "asdf", user_name: "Will", user_message: "order -smith james-: fish" })
-    place_order_guest.run
-
-    expect(Order.count).to eq(2)
-    expect(Order.last.lunch).to eq("fish")
-    expect(Order.last.user_name).to eq("smith james")
+    expect(Order.last(:user_name => "james smith").lunch).to eq("burger")
+    expect(Order.last(:user_name => "jean bon").lunch).to eq("fish")
   end
 end
 
