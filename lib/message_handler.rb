@@ -23,9 +23,9 @@ class MessageHandler
     }
 
     returned_command = @request_parser.parse(data)
-    response = returned_command.run()
+    response = returned_command.run
 
-    if response
+    if response || !returned_command.is_a?(ErrorCommand)
       if returned_command.is_a?(Reminder) && event_data['text'].downcase.end_with?(" private")
         respond(response, team_id, event_data['user'])
       else
