@@ -1,16 +1,24 @@
 require 'channel_info_provider'
 require 'models/order'
+require_relative '../../foreman_checker'
 
 class Reminder
+  include ForemanChecker
+
   def prepare(data)
     @channel_info = data[:channel_info]
     @channel_id = data[:channel_id]
     @team_id = data[:team_id]
+    @user_id = data[:user_id]
     @members = @channel_info.members(@channel_id, @team_id)
   end
 
   def run
-    format_response(not_ordered_members)
+    if is_foreman(@user_id)
+      format_response(not_ordered_members)
+    else
+      "You are not the foreman!"
+    end
   end
 
   def applies_to(request)
