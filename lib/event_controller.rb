@@ -21,6 +21,18 @@ class EventController < Sinatra::Base
     status 200
   end
 
+  private
+
+  def verify_token(data)
+    if invalid_token?(data['token'])
+      halt 403, "Invalid Slack verification token received: #{data['token']}"
+    end
+  end
+
+  def invalid_token?(token)
+    !SLACK_CONFIG[:slack_verification_token] == token
+  end
+
   def verify_url(data)
     if data['type'] == 'url_verification'
       data['challenge']
@@ -32,17 +44,17 @@ class EventController < Sinatra::Base
       team_id = data['team_id']
       event_data = data['event']
 
-      if event_data['type'] == 'message'
-        unless event_data['user'] == $teams[team_id][:bot_user_id]
-          @message_handler.handle(team_id, event_data)
-        end
+      if message?(event_data) && !from_robot?(event_data, team_id)
+        @message_handler.handle(team_id, event_data)
       end
     end
   end
 
-  def verify_token(data)
-    if !SLACK_CONFIG[:slack_verification_token] == data['token']
-      halt 403, "Invalid Slack verification token received: #{data['token']}"
-    end
+  def message?(event_data)
+    event_data['type'] == 'message'
+  end
+
+  def from_robot?(event_data, team_id)
+    event_data['user'] == $teams[team_id][:bot_user_id]
   end
 end
