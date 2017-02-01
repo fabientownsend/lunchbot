@@ -1,5 +1,5 @@
 require 'commands/order/get_all_orders_command'
-require 'commands/order/set_order_command'
+require 'spec_helper'
 
 RSpec.describe GetAllOrdersCommand do
   let (:get_all_orders_command) { GetAllOrdersCommand.new }
@@ -8,37 +8,28 @@ RSpec.describe GetAllOrdersCommand do
   end
 
   it "returns all orders when its returned" do
-    order("asdf", "Will", "burger")
+    Helper.order({user_id: "asdf", user_name: "will", user_message: "burger"})
 
     response = get_all_orders_command.run()
-    list_all_orders = "Will: burger"
+    list_all_orders = "will: burger"
     expect(response).to eq(list_all_orders)
   end
 
   it "return all order with a new line for each orders" do
-    order("qwer", "Fabien", "fish")
-    order("asdf", "Will", "burger")
+    Helper.order({user_id: "qwer", user_name: "fabien", user_message: "fish"})
+    Helper.order({user_id: "asdf", user_name: "will", user_message: "burger"})
 
     response = get_all_orders_command.run()
-    list_all_orders = "Fabien: fish\nWill: burger"
+    list_all_orders = "fabien: fish\nwill: burger"
     expect(response).to eq(list_all_orders)
   end
 
   it "the order are returned sorted by name" do
-    order("asdf", "Will", "burger")
-    order("qwer", "Fabien", "fish")
+    Helper.order({user_id: "asdf", user_name: "will", user_message: "burger"})
+    Helper.order({user_id: "qwer", user_name: "fabien", user_message: "fish"})
 
     response = get_all_orders_command.run()
-    list_all_orders = "Fabien: fish\nWill: burger"
+    list_all_orders = "fabien: fish\nwill: burger"
     expect(response).to eq(list_all_orders)
-  end
-
-  private
-
-  def order(user_id, name, meal)
-    event_data = {user_id: user_id, user_name: name, user_message: meal}
-    set_order_command = SetOrderCommand.new
-    set_order_command.prepare(event_data)
-    set_order_command.run
   end
 end
