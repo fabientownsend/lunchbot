@@ -1,79 +1,61 @@
-require 'commands/order/get_all_guests'
-require 'commands/order/get_all_orders_command'
 require 'commands/order/remove_guest_order'
-require 'commands/order/set_order_command'
+require 'models/order'
+require 'spec_helper'
 
-RSpec.describe GetAllGuests do
-  let (:event_data_from_will) { {user_id: "asdf", user_name: "will", user_message: "burger"} }
-  let (:guest_provider) { GetAllGuests.new }
-  let (:get_all_orders) { GetAllOrdersCommand.new }
+RSpec.describe RemoveGuestOrder do
+  let (:remove_guest_order) { RemoveGuestOrder.new }
 
   it "do nothing when the user name doesn't exist" do
-    remove_guest_order = RemoveGuestOrder.new
-    remove_guest_order.prepare({user_message: "remove guest: james smith"})
-    response = remove_guest_order.run
+    response = remove_guest("James Smith")
 
     expect(response).to eq("james smith doesn't exist!")
   end
 
   it "remove a guest" do
-    guest_order_for("james smith")
-    guest_order_for("jean bon")
-    remove_guest_order = RemoveGuestOrder.new
-    remove_guest_order.prepare({user_message: "remove guest: james smith"})
-    response = remove_guest_order.run
+    Helper.order_guest({name: "james smith", meal: "burger"})
+    Helper.order_guest({name: "jean bon", meal: "burger"})
 
-    expect(guest_provider.run).to eq("jean bon")
+    response = remove_guest("james smith")
+
+    expect(Order.last(:user_name => "james smith")).to be(nil)
     expect(response).to eq("james smith removed")
   end
 
   it "isn't case sensitive" do
-    guest_order_for("james smith")
-    guest_order_for("jean bon")
-    remove_guest_order = RemoveGuestOrder.new
-    remove_guest_order.prepare({user_message: "remove guest: James Smith"})
-    response = remove_guest_order.run
+    Helper.order_guest({name: "james smith", meal: "burger"})
+    Helper.order_guest({name: "jean bon", meal: "burger"})
 
-    expect(guest_provider.run).to eq("jean bon")
+    response = remove_guest("James Smith")
+
+    expect(Order.last(:user_name => "james smith")).to be(nil)
     expect(response).to eq("james smith removed")
   end
 
   it "isn't extra space sensitive" do
-    guest_order_for("james smith")
-    guest_order_for("jean bon")
-    remove_guest_order = RemoveGuestOrder.new
-    remove_guest_order.prepare({user_message: "remove guest: james smith "})
-    response = remove_guest_order.run
+    Helper.order_guest({name: "james smith", meal: "burger"})
+    Helper.order_guest({name: "jean bon", meal: "burger"})
 
-    remove_guest_order.prepare({user_message: "remove guest: jean bon"})
+    response = remove_guest("  James Smith  ")
+
     expect(response).to eq("james smith removed")
   end
 
   it "doesn't remove a crafter" do
-    guest_order_for("james smith")
-    guest_order_for("jean bon")
-    set_order_command = SetOrderCommand.new
-    set_order_command.prepare(event_data_from_will)
-    set_order_command.run
+    Helper.order_guest({name: "james smith", meal: "burger"})
+    Helper.order_guest({name: "jean bon", meal: "burger"})
+    Helper.order({user_id: "asdf", user_name: "will", user_message: "burger"})
 
-    remove_guest_order = RemoveGuestOrder.new
-    remove_guest_order.prepare({user_message: "remove guest: will"})
-    response = remove_guest_order.run
+    response = remove_guest("will")
 
-    expect(get_all_orders.run).to eq(
-      "james smith: burger\n" +
-      "jean bon: burger\n" +
-      "will: burger"
-    )
-
+    expect(Order.last(:user_name => "will")).not_to be(nil)
     expect(response).to eq("will isn't a guest!")
   end
 
   private
 
-  def guest_order_for(name)
-    place_order_guest = PlaceOrderGuest.new
-    place_order_guest.prepare({user_id: "host id", user_message: "order - #{name}-: burger"})
-    place_order_guest.run
+  def remove_guest(name)
+    name.downcase
+    remove_guest_order.prepare({user_message: "remove guest: #{name}"})
+    remove_guest_order.run
   end
 end
