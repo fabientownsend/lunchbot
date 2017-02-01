@@ -15,6 +15,11 @@ RSpec.describe RequestParser do
     expect(user_request.parse(request)).to be_a(SetMenuCommand)
   end
 
+  it "return copy order when the request is to copy an order" do
+    request = {user_message: "copy order: "}
+    expect(user_request.parse(request)).to be_a(CopyOrder)
+  end
+
   it "returns help when request is help" do
     request = {user_message: "help"}
     expect(user_request.parse(request)).to be_a(Help)
