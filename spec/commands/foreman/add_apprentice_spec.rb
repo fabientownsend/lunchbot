@@ -3,6 +3,8 @@ require 'models/apprentice'
 require 'spec_helper'
 
 RSpec.describe AddApprentice do
+  let (:add_apprentice) { AddApprentice.new }
+
   it "add a foreman to the database" do
     Helper.add_foreman({id: "id", name: "will"})
 
@@ -10,7 +12,7 @@ RSpec.describe AddApprentice do
     expect(Apprentice.last.slack_id).to eq("id")
   end
 
-  it "adds two different apprentices to the database when the command is run by two different people" do
+  it "add two different foreman" do
     Helper.add_foreman({id: "id one", name: "will"})
     Helper.add_foreman({id: "id two", name: "fabien"})
 
@@ -18,10 +20,41 @@ RSpec.describe AddApprentice do
     expect(Apprentice.last(:slack_id => "id two").user_name).to eq("fabien")
   end
 
-  it "can not add the same apprentice twice" do
+  it "can not add two foreman with the same id" do
     Helper.add_foreman({id: "id one", name: "will"})
-    Helper.add_foreman({id: "id one", name: "will"})
+    Helper.add_foreman({id: "id one", name: "fabien"})
 
     expect(Apprentice.count).to eq(1)
+  end
+
+  it "return a message when foreman already exist" do
+    Helper.add_foreman({id: "id one", name: "will"})
+    response = Helper.add_foreman({id: "id one", name: "fabien"})
+
+    expect(response).to eq("fabien is already in the database.")
+  end
+
+  it "return a message when foreman added" do
+    response = Helper.add_foreman({id: "id one", name: "will"})
+
+    expect(response).to eq("will has been added to apprentices.")
+  end
+
+  it "return true when it's a valid command" do
+    response = add_apprentice.applies_to("add apprentice")
+
+    expect(response).to be true
+  end
+
+  it "isn't case sensitive" do
+    response = add_apprentice.applies_to("Add apPrentice")
+
+    expect(response).to be true
+  end
+
+  it "isn't spaces sensitive" do
+    response = add_apprentice.applies_to("  Add apPrentice  ")
+
+    expect(response).to be true
   end
 end
