@@ -1,6 +1,9 @@
 require 'coveralls'
 require 'data_mapper'
 require 'commands/order/set_order_command'
+require 'commands/order/place_order_guest'
+require 'commands/order/add_guest'
+require 'commands/foreman/add_apprentice'
 
 Coveralls.wear!
 
@@ -25,6 +28,14 @@ class Helper
       user_id: "host id"
     })
     place_order_guest.run
+  end
+
+  def self.add_foreman(data)
+    id = data[:id]
+    user_name = data[:name]
+    add_apprentice = AddApprentice.new
+    add_apprentice.prepare({user_id: id, user_name: user_name})
+    add_apprentice.run
   end
 end
 

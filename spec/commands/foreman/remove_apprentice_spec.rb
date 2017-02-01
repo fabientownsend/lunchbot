@@ -1,36 +1,34 @@
-require "commands/foreman/add_apprentice"
-require "commands/foreman/remove_apprentice"
+require 'commands/foreman/remove_apprentice'
+require 'models/apprentice'
+require 'spec_helper'
 
 RSpec.describe RemoveApprentice do
-  let(:fake_data) {{user_id: "id", user_name: "Will"}}
-  let(:fake_data2) {{user_id: "id2", user_name: "Will2"}}
-
   it "removes apprentice from the database when the command is run" do
-    add_apprentice = AddApprentice.new
-    add_apprentice.prepare(fake_data)
-    add_apprentice.run()
+    Helper.add_foreman({id: "id two", name: "fabien"})
 
-    remove_apprentice = RemoveApprentice.new
-    remove_apprentice.prepare(fake_data)
-    remove_apprentice.run()
+    remove_foreman({id: "id two", name: "fabien"})
 
     expect(Apprentice.count).to eq(0)
   end
 
   it "removes the correct apprentice" do
-    add_apprentice = AddApprentice.new
-    add_apprentice.prepare(fake_data)
-    add_apprentice.run()
+    Helper.add_foreman({id: "id one", name: "will"})
+    Helper.add_foreman({id: "id two", name: "fabien"})
 
-    add_apprentice = AddApprentice.new
-    add_apprentice.prepare(fake_data2)
-    add_apprentice.run()
-
-    remove_apprentice = RemoveApprentice.new
-    remove_apprentice.prepare(fake_data)
-    remove_apprentice.run()
+    remove_foreman({id: "id two", name: "fabien"})
 
     expect(Apprentice.count).to eq(1)
-    expect(Apprentice.first.slack_id).to eq("id2")
+    expect(Apprentice.last(:slack_id => "id two")).to be(nil)
+  end
+
+  private
+
+  def remove_foreman(data)
+    id = data[:id]
+    name = data[:name]
+
+    remove_apprentice = RemoveApprentice.new
+    remove_apprentice.prepare({user_id: id, user_name: name})
+    remove_apprentice.run
   end
 end
