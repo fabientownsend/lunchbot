@@ -1,4 +1,4 @@
-require 'commands/place_order_guest'
+require 'commands/order/place_order_guest'
 
 RSpec.describe PlaceOrderGuest do
   let (:event_data_from_will) { {user_id: "asdf", user_name: "Will", user_message: "order -james smith-: burger" } }

@@ -2,8 +2,8 @@ require 'fake_response'
 require 'message_handler'
 require 'fake_user_info_provider'
 require 'fake_channel_info_provider'
-require 'commands/add_guest'
-require 'commands/add_apprentice'
+require 'commands/order/add_guest'
+require 'commands/foreman/add_apprentice'
 
 RSpec.describe MessageHandler do
   let (:fake_response) { FakeResponse.new }

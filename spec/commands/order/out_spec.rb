@@ -1,4 +1,4 @@
-require 'commands/out'
+require 'commands/order/out'
 
 RSpec.describe Out do
   it "should place an out order when command is run" do

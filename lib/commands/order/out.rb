@@ -1,3 +1,5 @@
+require 'models/order'
+
 class Out
   def applies_to(request)
     request == "out"

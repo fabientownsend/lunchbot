@@ -1,5 +1,5 @@
-require 'commands/get_all_orders_command'
-require 'commands/set_order_command'
+require 'commands/order/get_all_orders_command'
+require 'commands/order/set_order_command'
 
 RSpec.describe GetAllOrdersCommand do
   let (:get_all_orders_command) { GetAllOrdersCommand.new }

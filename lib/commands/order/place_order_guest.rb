@@ -1,3 +1,5 @@
+require 'models/order'
+
 class PlaceOrderGuest
   def initialize(lunch_order = nil, name = nil, host_id = nil)
     @lunch_order = lunch_order

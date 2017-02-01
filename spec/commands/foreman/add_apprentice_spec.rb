@@ -1,4 +1,4 @@
-require "commands/add_apprentice"
+require "commands/foreman/add_apprentice"
 
 RSpec.describe AddApprentice do
   let(:fake_data) {{user_id: "id", user_name: "Will"}}

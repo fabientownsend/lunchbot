@@ -1,7 +1,7 @@
-require 'commands/get_all_guests'
-require 'commands/get_all_orders_command'
-require 'commands/remove_guest_order'
-require 'commands/set_order_command'
+require 'commands/order/get_all_guests'
+require 'commands/order/get_all_orders_command'
+require 'commands/order/remove_guest_order'
+require 'commands/order/set_order_command'
 
 RSpec.describe GetAllGuests do
   let (:event_data_from_will) { {user_id: "asdf", user_name: "will", user_message: "burger"} }

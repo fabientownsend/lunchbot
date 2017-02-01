@@ -1,3 +1,5 @@
+require "models/apprentice"
+
 class ForemanCommand
   def applies_to(request)
     request.start_with?("foreman")

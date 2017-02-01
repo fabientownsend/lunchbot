@@ -1,4 +1,4 @@
-require 'commands/reminder'
+require 'commands/order/reminder'
 require 'fake_channel_info_provider'
 
 RSpec.describe Reminder do

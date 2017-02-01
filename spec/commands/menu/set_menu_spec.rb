@@ -1,4 +1,4 @@
-require 'commands/set_menu_command'
+require 'commands/menu/set_menu_command'
 require 'models/menu'
 require 'spec_helper'
 

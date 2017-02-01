@@ -1,4 +1,4 @@
-require 'models/apprentice'
+require "models/apprentice"
 
 class NextForeman
   def run

@@ -1,3 +1,5 @@
+require 'models/order'
+
 class GetAllOrdersCommand
   def run
     format_response(orders)
