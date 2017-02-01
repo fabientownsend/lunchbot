@@ -1,14 +1,10 @@
 require "models/apprentice"
 
 class ForemanCommand
-  def applies_to(request)
-    request.start_with?("foreman")
-  end
-
   def prepare(data)
   end
 
-  def run()
+  def run
     apprentice = Apprentice.first
     if apprentice
       "The foreman for this week is #{Apprentice.first.user_name}"
@@ -18,6 +14,6 @@ class ForemanCommand
   end
 
   def applies_to(request)
-    request.start_with?("foreman")
+    request.downcase.strip == "foreman"
   end
 end
