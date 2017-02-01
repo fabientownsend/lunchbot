@@ -1,7 +1,4 @@
-Dir["commands/foreman/*.rb"].each {|command_file| require command_file}
-Dir["commands/menu/*.rb"].each {|command_file| require command_file}
-Dir["commands/order/*.rb"].each {|command_file| require command_file}
-Dir["commands/*.rb"].each {|command_file| require command_file}
+Dir["#{File.dirname(__FILE__)}/commands/**/*.rb"].each {|file| require file }
 
 class RequestParser
   def initialize()
@@ -21,6 +18,7 @@ class RequestParser
       RemoveGuestOrder.new,
       SetMenuCommand.new,
       SetOrderCommand.new,
+      Help.new
     ]
   end
 
