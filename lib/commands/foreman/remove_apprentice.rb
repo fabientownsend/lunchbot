@@ -10,9 +10,9 @@ class RemoveApprentice
       "#{@user_name} has been removed from apprentices."
     end
   end
-  
+
   def applies_to(request)
-    request == "remove apprentice"
+    request.downcase.strip == "remove apprentice"
   end
 
   def prepare(data)
