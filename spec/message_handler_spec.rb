@@ -16,6 +16,14 @@ RSpec.describe MessageHandler do
   let (:recipient) { "D3S6XE6SZ" }
   let (:channel_id) { "CHANNELID" }
 
+  before(:each) do
+    foreman = Apprentice.new(
+      user_name: "Will",
+      slack_id: "D3S6XE6SZ"
+    )
+    foreman.save
+  end
+
   it "return error when message doesn't mean anything" do
     message_from_slack("invalid request")
 
