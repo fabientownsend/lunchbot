@@ -1,4 +1,6 @@
 require 'commands/order/add_guest'
+require 'models/order'
+require 'spec_helper'
 
 RSpec.describe AddGuest do
   let (:event_data_from_will) { {user_id: "asdf", user_name: "Will" } }
@@ -6,7 +8,7 @@ RSpec.describe AddGuest do
   it "save a guest" do
     response = add_guest("james smith")
 
-     expect(Order.count).to eq(1)
+     expect(Order.last(:user_name => "james smith")).not_to be(nil)
      expect(response).to eq("james smith added")
   end
 
@@ -26,13 +28,13 @@ RSpec.describe AddGuest do
   end
 
   it "remove the spaces before and after names" do
-    add_guest("james smith  ")
+    add_guest("  james smith  ")
 
     expect(Order.last.user_name).to eq("james smith")
   end
 
   it "reccord the name in lowercase" do
-    add_guest("James Smith")
+    add_guest("JAMES SMITH")
 
     expect(Order.last.user_name).to eq("james smith")
   end

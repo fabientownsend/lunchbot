@@ -17,6 +17,15 @@ class Helper
     place_order_guest.prepare({user_id: from, user_message: "order -#{data[:name]}-: #{data[:meal]}"})
     place_order_guest.run
   end
+
+  def self.add_guest(name)
+    place_order_guest = AddGuest.new
+    place_order_guest.prepare({
+      user_message: "add guest: #{name}",
+      user_id: "host id"
+    })
+    place_order_guest.run
+  end
 end
 
 RSpec.configure do |config|

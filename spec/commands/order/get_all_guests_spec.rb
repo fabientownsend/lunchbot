@@ -1,4 +1,5 @@
 require 'commands/order/get_all_guests'
+require 'models/order'
 require 'spec_helper'
 
 RSpec.describe GetAllGuests do

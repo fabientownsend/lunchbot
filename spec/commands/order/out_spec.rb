@@ -1,4 +1,6 @@
 require 'commands/order/out'
+require 'models/order'
+require 'spec_helper'
 
 RSpec.describe Out do
   it "should place an out order when command is run" do
