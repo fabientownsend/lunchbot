@@ -1,17 +1,4 @@
-require 'commands/apprentice_rota'
-require 'commands/error_command'
-require 'commands/get_order_command'
-require 'commands/foreman_command'
-require 'commands/get_menu_command'
-require 'commands/get_all_guests'
-require 'commands/get_all_orders_command'
-require 'commands/reminder'
-require 'commands/set_menu_command'
-require 'commands/set_order_command'
-require 'commands/place_order_guest'
-require 'commands/remove_guest_order'
-require 'commands/add_guest'
-require 'commands/out'
+Dir["commands/*.rb"].each {|command_file| require command_file}
 
 class RequestParser
   def initialize()
