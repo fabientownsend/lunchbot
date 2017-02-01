@@ -15,6 +15,11 @@ RSpec.describe RequestParser do
     expect(user_request.parse(request)).to be_a(SetMenuCommand)
   end
 
+  it "returns help when request is help" do
+    request = {user_message: "help"}
+    expect(user_request.parse(request)).to be_a(Help)
+  end
+
   it "return out when the request is to be marked out" do
     request = {user_message: "out"}
     expect(user_request.parse(request)).to be_a(Out)

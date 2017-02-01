@@ -4,6 +4,8 @@ require 'fake_user_info_provider'
 require 'fake_channel_info_provider'
 require 'commands/order/add_guest'
 require 'commands/foreman/add_apprentice'
+require 'commands/help'
+
 
 RSpec.describe MessageHandler do
   let (:fake_response) { FakeResponse.new }
@@ -18,6 +20,16 @@ RSpec.describe MessageHandler do
     message_from_slack("invalid request")
 
     expect(fake_response.message).to eq("This isn't a valid request")
+    expect(fake_response.team_id).to eq(team_id)
+    expect(fake_response.user_id).to eq(channel_id)
+  end
+
+  include CommandInfo
+
+  it "return all commands info when request is for help" do
+    message_from_slack("help")
+
+    expect(fake_response.message).to eq(all_command_info)
     expect(fake_response.team_id).to eq(team_id)
     expect(fake_response.user_id).to eq(channel_id)
   end
