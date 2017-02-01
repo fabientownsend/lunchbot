@@ -15,6 +15,7 @@ class CopyOrder
     order_to_copy = Order.last(:user_id => @user_to_copy)
     if order_to_copy
       place_order(order_to_copy.lunch)
+      "#{@user_name} just copied <@#{@user_to_copy}>'s order!"
     else
       "That is not a valid user!"
     end
