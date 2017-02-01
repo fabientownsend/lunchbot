@@ -18,7 +18,8 @@ class RequestParser
       RemoveGuestOrder.new,
       SetMenuCommand.new,
       SetOrderCommand.new,
-      Help.new
+      Help.new,
+      CopyOrder.new
     ]
   end
 
