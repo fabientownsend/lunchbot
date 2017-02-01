@@ -2,8 +2,16 @@ require 'commands/order/reminder'
 require 'fake_channel_info_provider'
 
 RSpec.describe Reminder do
+  before (:each) do
+    foreman = Apprentice.new(
+      user_name: "Will",
+      slack_id: "user id"
+    )
+    foreman.save
+  end
 
   it "return all the person that didn't order" do
+
     data = {
       user_message: "message",
       user_id: "user id",

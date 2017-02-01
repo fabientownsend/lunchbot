@@ -12,7 +12,26 @@ class MessageHandler
   end
 
   def handle(team_id, event_data)
+    data = format_data(team_id, event_data)
+    returned_command = @request_parser.parse(data)
+    response = returned_command.run()
 
+    if response
+      if respond_privately(event_data['text'])
+        respond(response, team_id, event_data['user'])
+      else
+        respond(response, team_id, event_data['user'], event_data['channel'])
+      end
+    end
+  end
+
+  private
+
+  def respond_privately(message)
+    message.downcase.end_with?(" private")
+  end
+
+  def format_data(team_id, event_data)
     data = {
       user_message: event_data['text'],
       user_id: event_data['user'],
@@ -21,17 +40,6 @@ class MessageHandler
       channel_id: event_data['channel'],
       team_id: team_id
     }
-
-    returned_command = @request_parser.parse(data)
-    response = returned_command.run
-
-    if response || !returned_command.is_a?(ErrorCommand)
-      if returned_command.is_a?(Reminder) && event_data['text'].downcase.end_with?(" private")
-        respond(response, team_id, event_data['user'])
-      else
-        respond(response, team_id, event_data['user'], event_data['channel'])
-      end
-    end
   end
 
   def respond(bot_answer, team_id, user_id, channel = user_id)
