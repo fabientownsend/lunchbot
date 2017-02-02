@@ -19,23 +19,26 @@ export SLACK_REDIRECT_URI="XXXX"
 User can set a url to the new menu, this will alert all the user present in the
 channel about the new menu url.
 
+This command is only for the foreman
 
 ``` bash
-new menu www.new_menu.com // will set the url of the new menu
+new menu www.new_menu.com
+// will set the url of the new menu
 ```
 
 The current menu url can be then asked by the user.
 
 ``` bash
-menu? // will return the url of the menu
+menu?
+// will return the url of the menu
 ```
 
 ## Order
-User can order their meal, for each meal ordered the bot will confirm the
+User can order their own meal, for each meal ordered the bot will confirm the
 order.
 
 ``` bash
-order me: burger
+order: burger
 ```
 
 You can also ask what meal has been ordered by a person. Note that if the
@@ -45,9 +48,32 @@ person isn't in the channel or didn't order anything, the bot will not reply.
 order: @name_of_the_person
 ```
 
-You can display all the orders
+You can order the same meal than someone else
 ``` bash
+copy order: @name_of_the_person
+```
+
+You can set youself out for the meal with
+``` bash
+out
+```
+
+You can display all the orders of the current week.
+``` bash example
 all orders?
+
+// example of return
+James Bond: burger
+Harry Potter: fish
+```
+
+You can have the total sort by kind of food
+``` bash example
+all food orders
+
+// willl return
+burger: 5
+fish: 3
 ```
 
 ## Guest
@@ -65,16 +91,23 @@ remove guest: Harry Potter
 
 You can place an order for a guest
 ``` bash
-order -name of the guest-: his meal
+order -name of the guest-: some food
 ```
 
 ## Remind
 Thid command will remind all the people that didn't order their meal.
 The people displayed are those in the channel without any meal and
-the added customer without a meal.
+the hosts of customer without a meal.
+
+This command is only for the foreman
 
 ``` bash
 remind
+```
+
+This can also send the list in private message with this command
+``` bash
+remind private
 ```
 
 ## Foreman
@@ -88,3 +121,21 @@ Set the next person as the foreman of the week
 ``` bash
 next foreman
 ```
+
+You can yourself in the list of the foremans
+``` bash
+add apprentice
+```
+
+###
+
+Development
+
+You can add a new command with
+``` bash
+ruby ./bin/command_creator.rb
+```
+
+this will create a command with the method need in: `lib/commands` and its test in `spec/commands`
+
+To make your new command effective you simply need to add your class to `lib/request_parser`
