@@ -76,7 +76,7 @@ RSpec.describe MessageHandler do
 
   it "return the order of a person" do
     message_from_slack("order me: hamburger")
-    message_from_slack("order: <@#{recipient}>")
+    message_from_slack("order? <@#{recipient}>")
 
     expect(fake_response.message).to eq("<@D3S6XE6SZ> ordered: `hamburger`")
     expect(fake_response.team_id).to eq(team_id)
