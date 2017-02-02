@@ -11,24 +11,31 @@ class SetOrderCommand
   def run()
     order = Order.last(:user_id => @user_id)
 
+    if @lunch
+      place_order(order)
+    else
+      "That is not a valid order."
+    end
+  end
+
+  def applies_to(request)
+    request.start_with?("order:") 
+  end
+
+  private
+
+  def place_order(order)
     if order
       update(order)
     else
       place_new_order
     end
-
-    "Your order `#{Order.first(:user_id => @user_id).lunch}` is updated"
   end
-
-  def applies_to(request)
-    request.start_with?("order: ") && request.split.size > 1
-  end
-
-  private
 
   def update(order)
     order.lunch = @lunch
     order.save
+    "#{@user_name} updated their order to`#{@lunch}`."
   end
 
   def place_new_order
@@ -39,5 +46,6 @@ class SetOrderCommand
       :date => Time.now
     )
     order.save
+    "#{@user_name} just ordered `#{@lunch}`."
   end
 end

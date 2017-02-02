@@ -63,12 +63,17 @@ RSpec.describe MessageHandler do
     expect(fake_response.user_id).to eq(channel_id)
   end
 
-  it "set a new menu for a user" do
-    message_from_slack("order: humberger")
+  it "responds with the order you just placed" do
+    message_from_slack("order: hamburger")
 
-    expect(fake_response.message).to eq("Your order `humberger` is updated")
+    expect(fake_response.message).to eq("Will just ordered `hamburger`.")
     expect(fake_response.team_id).to eq(team_id)
     expect(fake_response.user_id).to eq(channel_id)
+  end
+
+  it "tells you if your order is invalid" do
+    message_from_slack("order:")
+    expect(fake_response.message).to eq("That is not a valid order.")
   end
 
   it "return the order of a person" do
