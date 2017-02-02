@@ -18,7 +18,7 @@ module CommandInfo
   end
 
   def order
-    "To place an order| order me: food \nTo see someone elses order | order @name_of_person \nTo see all orders | all orders? \nTo copy someones order | copy order: @username"
+    "To place an order| order me: food \nTo see someone elses order | order: @name_of_person \nTo see all orders | all orders? \nTo copy someones order | copy order: @username"
   end
 
   def guest

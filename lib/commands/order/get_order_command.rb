@@ -13,7 +13,7 @@ class GetOrderCommand
     if the_order
       "<@#{user_id_meal_researched}> ordered: `#{the_order}`"
     else
-      "<@#{user_id_meal_researched}> does not have an order!"
+      "That person does not have an order!"
     end
   end
 
