@@ -10,7 +10,11 @@ class GetOrderCommand
     user_id_meal_researched = user_message[/(?<=\<@)(\w+)(?=>)/]
 
     the_order = Order.last(:user_id => user_id_meal_researched).lunch
-    "<@#{user_id_meal_researched}> ordered: `#{the_order}`"
+    if the_order
+      "<@#{user_id_meal_researched}> ordered: `#{the_order}`"
+    else
+      "<@#{user_id_meal_researched}> does not have an order!"
+    end
   end
 
   def applies_to(request)
