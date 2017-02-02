@@ -17,7 +17,7 @@ class CopyOrder
       place_order(order_to_copy.lunch)
       "#{@user_name} just copied <@#{@user_to_copy}>'s order!"
     else
-      "That is not a valid user!"
+      "That user does not have an order!"
     end
   end
 

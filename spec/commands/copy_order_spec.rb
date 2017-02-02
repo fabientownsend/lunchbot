@@ -26,7 +26,7 @@ RSpec.describe CopyOrder do
   it "should know if a user specified is invalid" do
     copy_order = CopyOrder.new
     copy_order.prepare({user_id: "id", user_name: "Will", user_message: "order me: @lz"})
-    expect(copy_order.run).to eq("That is not a valid user!")
+    expect(copy_order.run).to eq("That user does not have an order!")
   end
 
   it "should update a users order to the person they are copying" do
