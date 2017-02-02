@@ -19,7 +19,7 @@ class SetOrderCommand
   end
 
   def applies_to(request)
-    request.start_with?("order:") 
+    request.start_with?("order:")
   end
 
   private
