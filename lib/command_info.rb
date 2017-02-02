@@ -6,7 +6,7 @@ module CommandInfo
   private
 
   def info_array
-    info = [menu, order, foreman, other]
+    info = [menu, order, foreman, other, guest]
   end
 
   def menu

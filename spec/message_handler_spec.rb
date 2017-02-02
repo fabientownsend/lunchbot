@@ -146,7 +146,7 @@ RSpec.describe MessageHandler do
   it "return confirmation guest order" do
     message_from_slack("order -james smith-: burger")
 
-    expect(fake_response.message).to eq("james smith order saved")
+    expect(fake_response.message).to eq("james smith's order for burger has been placed!")
   end
 
   it "return no guest when empty" do
