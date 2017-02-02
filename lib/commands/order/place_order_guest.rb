@@ -2,12 +2,12 @@ require 'models/order'
 
 class PlaceOrderGuest
   def applies_to(request)
-    request.start_with?("order -") && get_string_betwee_dash(request) 
+    request.start_with?("order -") && get_string_between_dash(request)
   end
 
   def prepare(data)
     @lunch_order = get_string_after_collon(data[:user_message])
-    @name = get_string_betwee_dash(data[:user_message])
+    @name = get_string_between_dash(data[:user_message])
     @host_id = data[:user_id]
   end
 
@@ -48,7 +48,7 @@ class PlaceOrderGuest
     new_order.save
   end
 
-  def get_string_betwee_dash(message)
+  def get_string_between_dash(message)
     message[/(?<=\-)(.+?)(?=\-)/]
   end
 
