@@ -66,7 +66,7 @@ RSpec.describe MessageHandler do
   end
 
   it "set a new menu for a user" do
-    message_from_slack("order me: humberger")
+    message_from_slack("order: humberger")
 
     expect(fake_response.message).to eq("Your order `humberger` is updated")
     expect(fake_response.team_id).to eq(team_id)
@@ -74,7 +74,7 @@ RSpec.describe MessageHandler do
   end
 
   it "return the order of a person" do
-    message_from_slack("order me: hamburger")
+    message_from_slack("order: hamburger")
     message_from_slack("order? <@#{recipient}>")
 
     expect(fake_response.message).to eq("<@D3S6XE6SZ> ordered: `hamburger`")
@@ -95,9 +95,9 @@ RSpec.describe MessageHandler do
   end
 
   it "return list of different orders" do
-    message_from_slack("order me: hamburger")
+    message_from_slack("order: hamburger")
     recipient = "asdf"
-    message_from_slack("order me: fish", "Fabien", recipient)
+    message_from_slack("order: fish", "Fabien", recipient)
     message_from_slack("all orders?")
 
     expect(fake_response.message).to eq("Fabien: fish\nWill: hamburger")
@@ -122,7 +122,7 @@ RSpec.describe MessageHandler do
   end
 
   it "return a list without the people who ordered" do
-    message_from_slack("order me: fish", "Fabien", "FabienUserId")
+    message_from_slack("order: fish", "Fabien", "FabienUserId")
     message_from_slack("order -james-: fish")
     message_from_slack("all orders?")
     message_from_slack("remind")
@@ -155,7 +155,7 @@ RSpec.describe MessageHandler do
   end
 
   it "return list of guests" do
-    message_from_slack("order me: burger")
+    message_from_slack("order: burger")
     message_from_slack("order -james smith-: burger")
     message_from_slack("order -jean bon-: burger")
     message_from_slack("guests?")
@@ -164,7 +164,7 @@ RSpec.describe MessageHandler do
   end
 
   it "return list of order guest included" do
-    message_from_slack("order me: burger")
+    message_from_slack("order: burger")
     message_from_slack("order -james smith-: burger")
     message_from_slack("order -jean bon-: burger")
     message_from_slack("add guest: harry potter")
@@ -178,7 +178,7 @@ RSpec.describe MessageHandler do
   end
 
   it "return list of guests after guest removed" do
-    message_from_slack("order me: burger")
+    message_from_slack("order: burger")
     message_from_slack("order -james smith-: burger")
     message_from_slack("order -jean bon-: burger")
     message_from_slack("guests?")
