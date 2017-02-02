@@ -18,6 +18,6 @@ class GetOrderCommand
   end
 
   def applies_to(request)
-    request.start_with?("order?") && request.split.size > 1
+    request.start_with?("order?")
   end
 end

@@ -3,7 +3,7 @@ require 'models/order'
 class SetOrderCommand
   def prepare(data)
     request = data[:user_message]
-    @lunch = request.gsub("order: ", "")
+    @lunch = format_lunch(request)
     @user_id = data[:user_id]
     @user_name = data[:user_name]
   end
@@ -11,10 +11,10 @@ class SetOrderCommand
   def run()
     order = Order.last(:user_id => @user_id)
 
-    if @lunch
-      place_order(order)
-    else
+    if @lunch.empty?
       "That is not a valid order."
+    else
+      place_order(order)
     end
   end
 
@@ -23,6 +23,14 @@ class SetOrderCommand
   end
 
   private
+
+  def format_lunch(request)
+    order = request.gsub("order:", "")
+    if order[0] == " "
+      order[0] = ""
+    end
+    order
+  end
 
   def place_order(order)
     if order

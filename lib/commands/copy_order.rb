@@ -1,6 +1,6 @@
 class CopyOrder
   def applies_to(request)
-    request.start_with?("copy order: ")
+    request.start_with?("copy order:")
   end
 
   def prepare(data)
