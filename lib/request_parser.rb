@@ -32,7 +32,5 @@ class RequestParser
         return command
       end
     end
-
-    ErrorCommand.new
   end
 end

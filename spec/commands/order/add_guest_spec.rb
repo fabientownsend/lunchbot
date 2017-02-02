@@ -9,7 +9,7 @@ RSpec.describe AddGuest do
     response = add_guest("james smith")
 
      expect(Order.last(:user_name => "james smith")).not_to be(nil)
-     expect(response).to eq("james smith added")
+     expect(response).to eq("james smith has been added as a guest!")
   end
 
   it "said if a guest already exist" do

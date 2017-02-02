@@ -25,14 +25,6 @@ RSpec.describe MessageHandler do
     foreman.save
   end
 
-  it "return error when message doesn't mean anything" do
-    message_from_slack("invalid request")
-
-    expect(fake_response.message).to eq("This isn't a valid request")
-    expect(fake_response.team_id).to eq(team_id)
-    expect(fake_response.user_id).to eq(channel_id)
-  end
-
   include CommandInfo
 
   it "return all commands info when request is for help" do
@@ -51,6 +43,11 @@ RSpec.describe MessageHandler do
     expect(fake_response.user_id).to eq(channel_id)
   end
 
+  it "should say that the url is invalid if the url is invalid" do
+    message_from_slack("new menu: invalid")
+    expect(fake_response.message).to eq("That is not a valid URL!")
+  end
+
   it "return the url when you ask the menu which is not provided" do
     message_from_slack("menu?")
 
@@ -66,21 +63,17 @@ RSpec.describe MessageHandler do
     expect(fake_response.user_id).to eq(channel_id)
   end
 
-  it "set a new menu for a user" do
-    message_from_slack("order: humberger")
+  it "responds with the order you just placed" do
+    message_from_slack("order: hamburger")
 
-    expect(fake_response.message).to eq("Your order `humberger` is updated")
+    expect(fake_response.message).to eq("Will just ordered `hamburger`.")
     expect(fake_response.team_id).to eq(team_id)
     expect(fake_response.user_id).to eq(channel_id)
   end
 
-  it "return the order of a person" do
-    message_from_slack("order: hamburger")
-    message_from_slack("order? <@#{recipient}>")
-
-    expect(fake_response.message).to eq("<@D3S6XE6SZ> ordered: `hamburger`")
-    expect(fake_response.team_id).to eq(team_id)
-    expect(fake_response.user_id).to eq(channel_id)
+  it "tells you if your order is invalid" do
+    message_from_slack("order:")
+    expect(fake_response.message).to eq("That is not a valid order.")
   end
 
   it "return the foreman of the week" do

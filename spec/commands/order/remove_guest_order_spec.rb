@@ -8,7 +8,7 @@ RSpec.describe RemoveGuestOrder do
   it "do nothing when the user name doesn't exist" do
     response = remove_guest("James Smith")
 
-    expect(response).to eq("james smith doesn't exist!")
+    expect(response).to eq("There is no such guest!")
   end
 
   it "remove a guest" do
@@ -18,7 +18,7 @@ RSpec.describe RemoveGuestOrder do
     response = remove_guest("james smith")
 
     expect(Order.last(:user_name => "james smith")).to be(nil)
-    expect(response).to eq("james smith removed")
+    expect(response).to eq("james smith has been removed.")
   end
 
   it "isn't case sensitive" do
@@ -28,7 +28,7 @@ RSpec.describe RemoveGuestOrder do
     response = remove_guest("James Smith")
 
     expect(Order.last(:user_name => "james smith")).to be(nil)
-    expect(response).to eq("james smith removed")
+    expect(response).to eq("james smith has been removed.")
   end
 
   it "isn't extra space sensitive" do
@@ -37,7 +37,7 @@ RSpec.describe RemoveGuestOrder do
 
     response = remove_guest("  James Smith  ")
 
-    expect(response).to eq("james smith removed")
+    expect(response).to eq("james smith has been removed.")
   end
 
   it "doesn't remove a crafter" do
@@ -48,7 +48,7 @@ RSpec.describe RemoveGuestOrder do
     response = remove_guest("will")
 
     expect(Order.last(:user_name => "will")).not_to be(nil)
-    expect(response).to eq("will isn't a guest!")
+    expect(response).to eq("There is no such guest!")
   end
 
   private

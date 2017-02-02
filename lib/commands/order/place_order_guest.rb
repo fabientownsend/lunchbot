@@ -2,7 +2,7 @@ require 'models/order'
 
 class PlaceOrderGuest
   def applies_to(request)
-    get_string_betwee_dash(request) && get_string_after_collon(request)
+    request.start_with?("order -") && get_string_betwee_dash(request) 
   end
 
   def prepare(data)
@@ -12,18 +12,26 @@ class PlaceOrderGuest
   end
 
   def run
-    lunch_order = Order.last(:user_name => @name)
+    if @lunch_order
+      place_order
+    else
+      "That is not a valid order."
+    end
+  end
 
-    if lunch_order
-      update_order(lunch_order)
+  private
+
+  def place_order
+    existing_order = Order.last(:user_name => @name)
+
+    if existing_order
+      update_order(existing_order)
       "#{@name}'s order has been updated to #{@lunch_order}!"
     else
       place_new_order
       "#{@name}'s order for #{@lunch_order} has been placed!"
     end
   end
-
-  private
 
   def update_order(lunch_order)
     lunch_order.lunch = @lunch_order

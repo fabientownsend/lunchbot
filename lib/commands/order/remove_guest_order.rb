@@ -14,14 +14,12 @@ class RemoveGuestOrder
   def run
     order = Order.last(:user_name => @name)
 
-    if order.nil?
-      "#{@name} doesn't exist!"
-    elsif !guest_order?(order)
-      "#{@name} isn't a guest!"
+    if order.nil? or !guest_order?(order)
+      "There is no such guest!"
     elsif order.destroy
-      "#{@name} removed"
+      "#{@name} has been removed."
     else
-      "error when deleting"
+      "Error when deleting!"
     end
   end
 
