@@ -1,3 +1,5 @@
+require 'models/order'
+
 class CopyOrder
   def applies_to(request)
     request.start_with?("copy order:")
@@ -13,6 +15,7 @@ class CopyOrder
 
   def run
     order_to_copy = Order.last(:user_id => @user_to_copy)
+
     if order_to_copy
       place_order(order_to_copy.lunch)
       "#{@user_name} just copied <@#{@user_to_copy}>'s order!"
@@ -25,6 +28,7 @@ class CopyOrder
 
   def place_order(copied_lunch)
     existing_order = Order.last(:user_id => @user_id)
+
     if existing_order
       update(existing_order, copied_lunch)
     else
@@ -38,12 +42,12 @@ class CopyOrder
   end
 
   def place_new_order(lunch)
-      order = Order.new(
-        :user_id => @user_id,
-        :user_name => @user_name,
-        :lunch => lunch,
-        :date => Time.now
-      )
-      order.save
+    order = Order.new(
+      :user_id => @user_id,
+      :user_name => @user_name,
+      :lunch => lunch,
+      :date => Time.now
+    )
+    order.save
   end
 end

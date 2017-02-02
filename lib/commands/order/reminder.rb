@@ -1,6 +1,6 @@
 require 'channel_info_provider'
 require 'models/order'
-require_relative '../../foreman_checker'
+require 'foreman_checker'
 
 class Reminder
   include ForemanChecker
@@ -15,7 +15,7 @@ class Reminder
 
   def run
     if is_foreman(@user_id)
-      format_response(not_ordered_members)
+      format_response(not_ordered_members).strip
     else
       "You are not the foreman!"
     end
@@ -36,34 +36,27 @@ class Reminder
   end
 
   def not_ordered_members
-      crafter_wihtout_order + guest_without_order
+    crafter_wihtout_order + guest_without_order
   end
 
   def crafter_wihtout_order
-      not_ordered_members = []
-
-      @members.each do |member_id|
-        if !has_ordered(member_id)
-          not_ordered_members << "<@#{member_id}>"
-        end
-      end
-
-      not_ordered_members.sort
+    @members.map { |member_id| "<@#{member_id}>" if !has_ordered(member_id) }
   end
+
+  def guest_without_order
+    Order.map { |order|
+      "#{order.user_name} host: <@#{order.host}>" if has_ordered?(order)
+    }
+  end
+
+  private
 
   def has_ordered(user_id)
     Order.last(:user_id => user_id)
   end
 
-  def guest_without_order
-      not_ordered_members = []
 
-      Order.each do |order|
-        if order.host && order.lunch.nil?
-            not_ordered_members << "#{order.user_name} host: <@#{order.host}>"
-        end
-      end
-
-      not_ordered_members.sort
+  def has_ordered?(order)
+    order.host && order.lunch.nil?
   end
 end

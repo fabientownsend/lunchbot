@@ -118,7 +118,6 @@ RSpec.describe MessageHandler do
   it "return a list without the people who ordered" do
     message_from_slack("order: fish", "Fabien", "FabienUserId")
     message_from_slack("order -james-: fish")
-    message_from_slack("all orders?")
     message_from_slack("remind")
 
     expect(fake_response.message).to eq("<@WillUserId>")
