@@ -1,12 +1,6 @@
 require 'models/order'
 
 class PlaceOrderGuest
-  def initialize(lunch_order = nil, name = nil, host_id = nil)
-    @lunch_order = lunch_order
-    @name = name
-    @host_id = host_id
-  end
-
   def applies_to(request)
     get_string_betwee_dash(request) && get_string_after_collon(request)
   end
@@ -21,22 +15,30 @@ class PlaceOrderGuest
     lunch_order = Order.last(:user_name => @name)
 
     if lunch_order
-      lunch_order.lunch = @lunch_order
-      lunch_order.save
+      update_order(lunch_order)
+      "#{@name}'s order has been updated to #{@lunch_order}!"
     else
-      new_order = Order.new(
-        :user_name => @name.strip,
-        :lunch => @lunch_order,
-        :date => Time.now,
-        :host => @host_id
-      )
-      new_order.save
+      place_new_order
+      "#{@name}'s order for #{@lunch_order} has been placed!"
     end
-
-    "#{@name} order saved"
   end
 
   private
+
+  def update_order(lunch_order)
+    lunch_order.lunch = @lunch_order
+    lunch_order.save
+  end
+
+  def place_new_order
+    new_order = Order.new(
+      :user_name => @name.strip,
+      :lunch => @lunch_order,
+      :date => Time.now,
+      :host => @host_id
+    )
+    new_order.save
+  end
 
   def get_string_betwee_dash(message)
     message[/(?<=\-)(.+?)(?=\-)/]
