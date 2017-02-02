@@ -45,19 +45,9 @@ RSpec.describe RequestParser do
     expect(user_request.parse(request)).to be_a(ErrorCommand)
   end
 
-  it "return error when the request doesn't provide an url" do
-    request = {user_message: "new menu no-an-url"}
-    expect(user_request.parse(request)).to be_a(ErrorCommand)
-  end
-
   it "return get_menu when the person request for a menu" do
     request = {user_message: "menu?"}
     expect(user_request.parse(request)).to be_a(GetMenuCommand)
-  end
-
-  it "return error when get_menu request has more than one argument" do
-    request = {user_message: "menu? ?"}
-    expect(user_request.parse(request)).to be_a(ErrorCommand)
   end
 
   it "return set_order when it's a correct order request" do
@@ -65,24 +55,9 @@ RSpec.describe RequestParser do
     expect(user_request.parse(request)).to be_a(SetOrderCommand)
   end
 
-  it "return error when there is no space between colon and order" do
-    request = {user_message: "order:my meal"}
-    expect(user_request.parse(request)).to be_a(ErrorCommand)
-  end
-
-  it "return error when the user order nothing" do
-    request = {user_message: "order me:"}
-    expect(user_request.parse(request)).to be_a(ErrorCommand)
-  end
-
   it "return get_order when it's a correct request" do
     request = {user_message: "order? Fabien Townsend"}
     expect(user_request.parse(request)).to be_a(GetOrderCommand)
-  end
-
-  it "return error when it's a incorrect request" do
-    request = {user_message: "order"}
-    expect(user_request.parse(request)).to be_a(ErrorCommand)
   end
 
   it "return foreman when it's a correct request" do

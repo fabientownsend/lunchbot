@@ -18,8 +18,7 @@ class SetMenuCommand
   end
 
   def applies_to(request)
-    request = request.downcase.strip
-    extract_url(request) &&
+    request = request.downcase.strip 
     request.split.size == 3 &&
     request.include?("new menu")
   end
@@ -27,8 +26,12 @@ class SetMenuCommand
   private
 
   def update_url
-    set_url(extract_url(@user_message))
-    "<!here> Menu has been set: #{extract_url(@user_message)}"
+    if extract_url(@user_message)
+      set_url(extract_url(@user_message))
+      "<!here> Menu has been set: #{extract_url(@user_message)}"
+    else
+      "That is not a valid URL!"
+    end
   end
 
   def extract_url(request)

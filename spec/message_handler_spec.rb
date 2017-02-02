@@ -25,14 +25,6 @@ RSpec.describe MessageHandler do
     foreman.save
   end
 
-  it "return error when message doesn't mean anything" do
-    message_from_slack("invalid request")
-
-    expect(fake_response.message).to eq("This isn't a valid request")
-    expect(fake_response.team_id).to eq(team_id)
-    expect(fake_response.user_id).to eq(channel_id)
-  end
-
   include CommandInfo
 
   it "return all commands info when request is for help" do
@@ -49,6 +41,11 @@ RSpec.describe MessageHandler do
     expect(fake_response.message).to eq("<!here> Menu has been set: http://www.test.com")
     expect(fake_response.team_id).to eq(team_id)
     expect(fake_response.user_id).to eq(channel_id)
+  end
+
+  it "should say that the url is invalid if the url is invalid" do
+    message_from_slack("new menu: invalid")
+    expect(fake_response.message).to eq("That is not a valid URL!")
   end
 
   it "return the url when you ask the menu which is not provided" do
