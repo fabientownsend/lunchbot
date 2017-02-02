@@ -12,6 +12,27 @@ RSpec.describe SetMenuCommand do
     foreman.save
   end
 
+  it "applies to the command" do
+    menu = SetMenuCommand.new
+    response = menu.applies_to("new menu www.menu.com")
+
+    expect(response).to be true
+  end
+
+  it "is not case sensitive" do
+    menu = SetMenuCommand.new
+    response = menu.applies_to("New Menu www.menu.com")
+
+    expect(response).to be true
+  end
+
+  it "is not space sensitive" do
+    menu = SetMenuCommand.new
+    response = menu.applies_to("  new menu    www.menu.com   ")
+
+    expect(response).to be true
+  end
+
   it "we can change the default url" do
     response = set_menu("www.menu.com")
     expect(response).to eq("<!here> Menu has been set: www.menu.com")

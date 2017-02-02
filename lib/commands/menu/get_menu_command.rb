@@ -13,6 +13,6 @@ class GetMenuCommand
   end
 
   def applies_to(request)
-    request == "menu?"
+    request.downcase.strip == "menu?"
   end
 end

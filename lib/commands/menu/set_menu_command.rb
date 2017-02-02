@@ -1,5 +1,5 @@
 require 'models/menu'
-require_relative '../../foreman_checker'
+require 'foreman_checker'
 
 class SetMenuCommand
   include ForemanChecker
@@ -18,9 +18,10 @@ class SetMenuCommand
   end
 
   def applies_to(request)
+    request = request.downcase.strip
+    extract_url(request) &&
     request.split.size == 3 &&
-    request.include?("new menu") &&
-    extract_url(request)
+    request.include?("new menu")
   end
 
   private
