@@ -17,12 +17,11 @@ class AddGuest
 
     return "#{@name} already exist" if !guest_exist?(guest_order)
 
-    guest = add_guest
-
-    if guest.save
-      "#{@name} added"
+    if @name.empty?
+      "That is not a valid name."
     else
-      "error occured"
+      add_guest
+      "#{@name} has been added as a guest!"
     end
   end
 
@@ -38,6 +37,6 @@ class AddGuest
       :date => Time.now,
       :host => @host_id
     )
-    new_order
+    new_order.save
   end
 end
