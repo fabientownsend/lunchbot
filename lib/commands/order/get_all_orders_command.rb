@@ -1,4 +1,5 @@
 require 'models/order'
+require 'days'
 
 class GetAllOrdersCommand
   def run
@@ -15,7 +16,11 @@ class GetAllOrdersCommand
   private
 
   def orders
-    Order.all.map { |order| "#{order.user_name}: #{order.lunch}" if !order.lunch.nil?}.compact.sort
+    orders_of_the_week = Order.all(:date => (Days.from_monday_to_friday))
+
+    orders_of_the_week.map { |order|
+      "#{order.user_name}: #{order.lunch}" if !order.lunch.nil?
+    }.compact.sort
   end
 
   def format_response(orders)

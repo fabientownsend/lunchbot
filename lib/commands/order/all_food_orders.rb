@@ -1,4 +1,5 @@
 require 'models/order'
+require 'days'
 
 class AllFoodOrders
   def applies_to(request)
@@ -9,7 +10,11 @@ class AllFoodOrders
   end
 
   def run
-    total_each_meal = Order.aggregate(:lunch, :all.count)
+    total_each_meal = Order.aggregate(
+      :lunch,
+      :all.count,
+      :date => (Days.from_monday_to_friday))
+
     format_list(total_each_meal)
   end
 
