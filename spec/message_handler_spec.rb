@@ -11,7 +11,11 @@ RSpec.describe MessageHandler do
   let (:fake_response) { FakeResponse.new }
   let (:fake_user_info_provider) { FakeUserInfoProvider.new }
   let (:fake_channel_info_provider) { FakeChannelInfoProvider.new }
-  let (:message_handler) { MessageHandler.new(fake_response, fake_user_info_provider, fake_channel_info_provider) }
+  let (:message_handler) { MessageHandler.new(
+    fake_response,
+    fake_user_info_provider,
+    fake_channel_info_provider
+  ) }
   let (:team_id) { "T026MULUJ" }
   let (:recipient) { "D3S6XE6SZ" }
   let (:channel_id) { "CHANNELID" }
@@ -191,7 +195,14 @@ RSpec.describe MessageHandler do
   end
 
   def create_event_data(message, recipient, name)
-    {"type"=>"message", "user"=>"#{recipient}", "text"=>"#{message}", "ts"=>"1484928006.000013", "channel"=>"#{channel_id}", "event_ts"=>"1484928006.000013"}
+    {
+      "type"=>"message",
+      "user"=>"#{recipient}",
+      "text"=>"#{message}",
+      "ts"=>"1484928006.000013",
+      "channel"=>"#{channel_id}",
+      "event_ts"=>"1484928006.000013"
+    }
   end
 
   def add_guest(name)

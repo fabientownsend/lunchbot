@@ -1,7 +1,7 @@
 require 'models/apprentice'
 
 class RemoveApprentice
-  def run()
+  def run
     apprentice = Apprentice.last(:slack_id => @user_id)
     if apprentice.nil?
       "#{@user_name} is not an apprentice!"

@@ -1,7 +1,7 @@
 require "models/apprentice"
 
 class AddApprentice
-  def run()
+  def run
     if Apprentice.first(:slack_id => @user_id)
       "#{@user_name} is already in the database."
     else

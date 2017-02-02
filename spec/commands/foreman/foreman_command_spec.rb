@@ -12,7 +12,7 @@ RSpec.describe ForemanCommand do
   end
 
   it "freman comman isn't spaces sensitive" do
-    expect(foreman.applies_to("Foreman")).to be true
+    expect(foreman.applies_to("  foreman  ")).to be true
   end
 
   it "return a message when no foreman found" do

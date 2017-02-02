@@ -1,7 +1,7 @@
 require 'models/order'
 
 class GetAllGuests
-  def run()
+  def run
     format_response(guests)
   end
 

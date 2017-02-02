@@ -11,21 +11,28 @@ RSpec.describe CopyOrder do
     order_to_copy.save
   end
 
-  let (:fake_data) {{user_id: "id2", user_name: "Will", user_message: 
-  "copy order: <@id>"}}
+  let (:fake_data) { {
+    user_id: "id2",
+    user_name: "Will",
+    user_message: "copy order: <@id>"
+  } }
 
   it "should copy the order of the person specified" do
     copy_order = CopyOrder.new
     copy_order.prepare(fake_data)
     copy_order.run
-    
+
     expect(Order.count).to eq(2)
     expect(Order.last.lunch).to eq("sandwhich")
   end
 
   it "should know if a user specified is invalid" do
     copy_order = CopyOrder.new
-    copy_order.prepare({user_id: "id", user_name: "Will", user_message: "order me: @lz"})
+    copy_order.prepare({
+      user_id: "id",
+      user_name: "Will",
+      user_message: "order me: @lz"
+    })
     expect(copy_order.run).to eq("That user does not have an order!")
   end
 
@@ -41,7 +48,7 @@ RSpec.describe CopyOrder do
     copy_order = CopyOrder.new
     copy_order.prepare(fake_data)
     copy_order.run
-    
+
     expect(Order.count).to eq(2)
     expect(Order.last.lunch).to eq("sandwhich")
   end

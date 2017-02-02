@@ -4,7 +4,10 @@ require 'user_info_provider'
 require 'channel_info_provider'
 
 class MessageHandler
-  def initialize(response = Response.new, user_info = UserInfoProvider.new, channel_info = ChannelInfoProvider.new)
+  def initialize(response = Response.new,
+                 user_info = UserInfoProvider.new,
+                 channel_info = ChannelInfoProvider.new)
+
     @user_info = user_info
     @channel_info = channel_info
     @response = response
@@ -32,7 +35,7 @@ class MessageHandler
   end
 
   def format_data(team_id, event_data)
-    data = {
+    {
       user_message: event_data['text'],
       user_id: event_data['user'],
       user_name: @user_info.real_name(event_data['user'], team_id),

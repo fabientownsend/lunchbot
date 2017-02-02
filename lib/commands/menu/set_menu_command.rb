@@ -18,7 +18,7 @@ class SetMenuCommand
   end
 
   def applies_to(request)
-    request = request.downcase.strip 
+    request = request.downcase.strip
     request.split.size == 3 &&
     request.include?("new menu")
   end

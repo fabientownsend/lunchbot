@@ -17,7 +17,9 @@ class Helper
   def self.order_guest(data)
     from = data[:from] || "host id"
     place_order_guest = PlaceOrderGuest.new
-    place_order_guest.prepare({user_id: from, user_message: "order -#{data[:name]}-: #{data[:meal]}"})
+    place_order_guest.prepare({
+      user_id: from, user_message: "order -#{data[:name]}-: #{data[:meal]}"
+    })
     place_order_guest.run
   end
 

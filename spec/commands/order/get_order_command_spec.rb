@@ -1,7 +1,11 @@
 require 'commands/order/get_order_command'
 
 RSpec.describe GetOrderCommand do
-  let (:fake_data) {{user_name: "Will", user_id: "w_id", user_message: "order? <@f_id>"}}
+  let (:fake_data) { {
+    user_name: "Will",
+    user_id: "w_id",
+    user_message: "order? <@f_id>"
+  } }
 
   it "returns the user specified order" do
     order = Order.new(
