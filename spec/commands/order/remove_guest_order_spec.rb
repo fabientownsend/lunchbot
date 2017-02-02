@@ -1,6 +1,5 @@
 require 'commands/order/remove_guest_order'
 require 'models/order'
-require 'spec_helper'
 
 RSpec.describe RemoveGuestOrder do
   let (:remove_guest_order) { RemoveGuestOrder.new }

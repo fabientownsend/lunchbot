@@ -1,6 +1,5 @@
 require 'commands/foreman/add_apprentice'
 require 'models/apprentice'
-require 'spec_helper'
 
 RSpec.describe AddApprentice do
   let (:add_apprentice) { AddApprentice.new }

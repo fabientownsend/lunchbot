@@ -1,6 +1,5 @@
 require 'commands/order/add_guest'
 require 'models/order'
-require 'spec_helper'
 
 RSpec.describe AddGuest do
   let (:event_data_from_will) { {user_id: "asdf", user_name: "Will" } }

@@ -1,5 +1,4 @@
 require 'request_parser'
-require 'spec_helper'
 require 'fake_channel_info_provider'
 
 RSpec.describe RequestParser do

@@ -1,6 +1,5 @@
 require 'commands/order/reminder'
 require 'fake_channel_info_provider'
-require 'spec_helper'
 
 RSpec.describe Reminder do
   before (:each) do

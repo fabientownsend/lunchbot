@@ -1,6 +1,5 @@
 require 'commands/foreman/next_foreman_command'
 require 'models/apprentice'
-require 'spec_helper'
 
 RSpec.describe NextForeman do
   let (:next_foreman) { NextForeman.new }

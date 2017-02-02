@@ -1,6 +1,5 @@
 require 'commands/order/place_order_guest'
 require 'models/order'
-require 'spec_helper'
 
 RSpec.describe PlaceOrderGuest do
   it "save the order of a guest" do

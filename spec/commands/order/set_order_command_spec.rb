@@ -1,6 +1,5 @@
 require 'commands/order/set_order_command'
 require 'models/order'
-require 'spec_helper'
 
 RSpec.describe SetOrderCommand do
   it "reccord an order in the database" do

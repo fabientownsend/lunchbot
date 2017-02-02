@@ -1,4 +1,3 @@
-require 'spec_helper'
 require 'fake_response'
 require 'message_handler'
 require 'fake_user_info_provider'

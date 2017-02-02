@@ -1,5 +1,4 @@
 require 'commands/order/all_food_orders'
-require 'spec_helper'
 require 'date'
 
 RSpec.describe AllFoodOrders do

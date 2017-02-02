@@ -1,6 +1,5 @@
 require 'commands/foreman/remove_apprentice'
 require 'models/apprentice'
-require 'spec_helper'
 
 RSpec.describe RemoveApprentice do
   it "applies to the command remove apprentice" do

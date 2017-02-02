@@ -1,7 +1,6 @@
 require 'commands/menu/set_menu_command'
 require 'models/apprentice'
 require 'models/menu'
-require 'spec_helper'
 
 RSpec.describe SetMenuCommand do
   before(:each) do

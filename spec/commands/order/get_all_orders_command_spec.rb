@@ -1,5 +1,4 @@
 require 'commands/order/get_all_orders_command'
-require 'spec_helper'
 require 'models/order'
 require 'date'
 
