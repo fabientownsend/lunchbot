@@ -18,11 +18,11 @@ module CommandInfo
   end
 
   def order
-    "To place an order| order: food \nTo see someone elses order | order? @name_of_person \nTo see all orders | all orders? \nTo copy someones order | copy order: @username"
+    "To place an order | order: food \nTo see someone elses order | order? @name_of_person \nTo see all orders | all orders? \nTo copy someones order | copy order: @username"
   end
 
   def guest
-    "To add a guest with no order | add guest: name of guest \nTo remove a guest | remove guest: name of guest \nTo place an order for a guest (this also creates if the name does not exist) | order -name of guest-: food"
+    "To add a guest with no order | add guest: name of guest \nTo remove a guest | remove guest: name of guest \nTo place an order for a guest (this also creates a guest if the name given does not exist) | order -name of guest-: food"
   end
 
   def foreman
