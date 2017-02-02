@@ -61,12 +61,12 @@ RSpec.describe RequestParser do
   end
 
   it "return set_order when it's a correct order request" do
-    request = {user_message: "order me: name_of_the_menu"}
+    request = {user_message: "order: name_of_the_menu"}
     expect(user_request.parse(request)).to be_a(SetOrderCommand)
   end
 
   it "return error when there is no space between colon and order" do
-    request = {user_message: "order me:my meal"}
+    request = {user_message: "order:my meal"}
     expect(user_request.parse(request)).to be_a(ErrorCommand)
   end
 
@@ -76,7 +76,7 @@ RSpec.describe RequestParser do
   end
 
   it "return get_order when it's a correct request" do
-    request = {user_message: "order: Fabien Townsend"}
+    request = {user_message: "order? Fabien Townsend"}
     expect(user_request.parse(request)).to be_a(GetOrderCommand)
   end
 

@@ -3,7 +3,7 @@ require 'models/order'
 class SetOrderCommand
   def prepare(data)
     request = data[:user_message]
-    @lunch = request.gsub("order me: ", "")
+    @lunch = request.gsub("order: ", "")
     @user_id = data[:user_id]
     @user_name = data[:user_name]
   end
@@ -21,7 +21,7 @@ class SetOrderCommand
   end
 
   def applies_to(request)
-    request.start_with?("order me: ") && request.split.size > 2
+    request.start_with?("order: ") && request.split.size > 1
   end
 
   private
