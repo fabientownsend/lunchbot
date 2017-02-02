@@ -1,4 +1,4 @@
-require_relative '../command_info'
+require 'command_info'
 
 class Help
   include CommandInfo
