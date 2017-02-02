@@ -30,21 +30,6 @@ RSpec.describe RequestParser do
     expect(user_request.parse(request)).to be_a(Out)
   end
 
-  it "return error when the menu request has too munch arguments" do
-    request = {user_message: "new menu www.menu.com bla"}
-    expect(user_request.parse(request)).to be_a(ErrorCommand)
-  end
-
-  it "return error when the menu request hasn't enough arguments " do
-    request = {user_message: "new www.menu.com"}
-    expect(user_request.parse(request)).to be_a(ErrorCommand)
-  end
-
-  it "return error when the request keywork aren't correct" do
-    request = {user_message: "lol menu www.menu.com"}
-    expect(user_request.parse(request)).to be_a(ErrorCommand)
-  end
-
   it "return get_menu when the person request for a menu" do
     request = {user_message: "menu?"}
     expect(user_request.parse(request)).to be_a(GetMenuCommand)
