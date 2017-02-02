@@ -11,6 +11,27 @@ class Out
   end
 
   def run
+    mark_out
+  end
+
+  private
+
+  def mark_out
+    existing_order = Order.last(:user_id => @user_id)
+    if existing_order
+      update(existing_order)
+    else
+      create_new_order
+    end
+    "You have been marked out!"
+  end
+
+  def update(order)
+    order.lunch = "out"
+    order.save
+  end
+
+  def create_new_order
     mark_out = Order.new(
       :user_id => @user_id,
       :user_name => @user_name,
