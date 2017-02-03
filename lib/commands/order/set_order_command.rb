@@ -6,9 +6,10 @@ class SetOrderCommand
     @lunch = format_lunch(request)
     @user_id = data[:user_id]
     @user_name = data[:user_name]
+    @date = data[:date] || Time.now
   end
 
-  def run()
+  def run
     order = Order.last(:user_id => @user_id)
 
     if @lunch.empty?
@@ -51,7 +52,7 @@ class SetOrderCommand
       :user_name => @user_name,
       :user_id => @user_id,
       :lunch => @lunch,
-      :date => Time.now
+      :date => @date
     )
     order.save
     "#{@user_name} just ordered `#{@lunch}`."

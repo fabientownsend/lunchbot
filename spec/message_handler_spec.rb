@@ -91,15 +91,6 @@ RSpec.describe MessageHandler do
     expect(fake_response.user_id).to eq(channel_id)
   end
 
-  it "return list of different orders" do
-    message_from_slack("order: hamburger")
-    recipient = "asdf"
-    message_from_slack("order: fish", "Fabien", recipient)
-    message_from_slack("all orders?")
-
-    expect(fake_response.message).to eq("Fabien: fish\nWill: hamburger")
-  end
-
   it "return list of users that doesn't ordered yet" do
     add_guest("james smith")
     message_from_slack("remind")
@@ -157,20 +148,6 @@ RSpec.describe MessageHandler do
     message_from_slack("guests?")
 
     expect(fake_response.message).to eq("james smith\njean bon")
-  end
-
-  it "return list of order guest included" do
-    message_from_slack("order: burger")
-    message_from_slack("order -james smith-: burger")
-    message_from_slack("order -jean bon-: burger")
-    message_from_slack("add guest: harry potter")
-    message_from_slack("all orders?")
-
-    expect(fake_response.message).to eq(
-      "Will: burger\n" +
-      "james smith: burger\n" +
-      "jean bon: burger"
-    )
   end
 
   it "return list of guests after guest removed" do

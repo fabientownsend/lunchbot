@@ -4,12 +4,14 @@ require 'date'
 
 RSpec.describe GetAllOrdersCommand do
   let (:get_all_orders_command) { GetAllOrdersCommand.new }
+  let (:my_date) { Date.today - 3 }
+
   it "returns no orders" do
     expect(get_all_orders_command.run).to eq("no orders")
   end
 
   it "returns all orders when its returned" do
-    Helper.order({user_id: "asdf", user_name: "will", user_message: "burger"})
+    Helper.order({user_id: "asdf", user_name: "will", user_message: "burger", date: my_date})
 
     response = get_all_orders_command.run()
     list_all_orders = "will: burger"
@@ -17,8 +19,8 @@ RSpec.describe GetAllOrdersCommand do
   end
 
   it "return all order with a new line for each orders" do
-    Helper.order({user_id: "qwer", user_name: "fabien", user_message: "fish"})
-    Helper.order({user_id: "asdf", user_name: "will", user_message: "burger"})
+    Helper.order({user_id: "qwer", user_name: "fabien", user_message: "fish", date: my_date})
+    Helper.order({user_id: "asdf", user_name: "will", user_message: "burger", date: my_date})
 
     response = get_all_orders_command.run()
     list_all_orders = "fabien: fish\nwill: burger"
@@ -26,8 +28,8 @@ RSpec.describe GetAllOrdersCommand do
   end
 
   it "the order are returned sorted by name" do
-    Helper.order({user_id: "asdf", user_name: "will", user_message: "burger"})
-    Helper.order({user_id: "qwer", user_name: "fabien", user_message: "fish"})
+    Helper.order({user_id: "asdf", user_name: "will", user_message: "burger", date: my_date})
+    Helper.order({user_id: "qwer", user_name: "fabien", user_message: "fish", date: my_date})
 
     response = get_all_orders_command.run()
     list_all_orders = "fabien: fish\nwill: burger"
@@ -35,8 +37,8 @@ RSpec.describe GetAllOrdersCommand do
   end
 
   it "return only the orders of the current week" do
-    Helper.order({user_id: "asdf", user_name: "will", user_message: "burger"})
-    Helper.order({user_id: "qwer", user_name: "fabien", user_message: "fish"})
+    Helper.order({user_id: "asdf", user_name: "will", user_message: "burger", date: my_date})
+    Helper.order({user_id: "qwer", user_name: "fabien", user_message: "fish", date: my_date})
 
     previous_week_order = Order.create(
       :user_name => "james",
