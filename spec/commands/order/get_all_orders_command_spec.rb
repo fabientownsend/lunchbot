@@ -1,6 +1,7 @@
 require 'commands/order/get_all_orders_command'
 require 'models/order'
 require 'date'
+require 'days'
 
 RSpec.describe GetAllOrdersCommand do
   let (:get_all_orders_command) { GetAllOrdersCommand.new }
@@ -24,6 +25,15 @@ RSpec.describe GetAllOrdersCommand do
 
     response = get_all_orders_command.run()
     list_all_orders = "fabien: fish\nwill: burger"
+    expect(response).to eq(list_all_orders)
+  end
+
+
+  it "returns orders passed the monday" do
+    Helper.order({user_id: "asdf", user_name: "will", user_message: "burger", date: Days.monday})
+
+    response = get_all_orders_command.run()
+    list_all_orders = "will: burger"
     expect(response).to eq(list_all_orders)
   end
 

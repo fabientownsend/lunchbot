@@ -6,7 +6,7 @@ class SetOrderCommand
     @lunch = format_lunch(request)
     @user_id = data[:user_id]
     @user_name = data[:user_name]
-    @date = data[:date] || Time.now
+    @date = data[:date] || Date.today
   end
 
   def run

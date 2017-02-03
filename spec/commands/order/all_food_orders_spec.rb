@@ -34,6 +34,21 @@ RSpec.describe AllFoodOrders do
     expect(all_food_orders.run).to eq(all_food)
   end
 
+  it "return monday orders" do
+    Helper.order({user_id: "asdf", user_name: "will", user_message: "burger"})
+
+    all_food = "burger: 1"
+    expect(all_food_orders.run).to eq(all_food)
+  end
+
+  it "return friday orders" do
+    puts Days.friday
+    Helper.order({user_id: "asdf", user_name: "will", user_message: "burger", date: Days.friday})
+
+    all_food = "burger: 1"
+    expect(all_food_orders.run).to eq(all_food)
+  end
+
   private
 
   def previous_week
