@@ -1,4 +1,6 @@
 require 'models/order'
+require 'date'
+require 'days'
 
 class CopyOrder
   def applies_to(request)
@@ -6,15 +8,18 @@ class CopyOrder
   end
 
   def prepare(data)
-    request = data[:user_message]
     @user_id = data[:user_id]
     @user_name = data[:user_name]
+    request = data[:user_message]
     find_user_to_copy = request.gsub("copy order: ", "")
     @user_to_copy = find_user_to_copy[/(?<=\<@)(\w+)(?=>)/]
   end
 
   def run
-    order_to_copy = Order.last(:user_id => @user_to_copy)
+    order_to_copy = Order.last(
+      :user_id => @user_to_copy,
+      :date => Days.from_monday_to_friday
+    )
 
     if order_to_copy
       place_order(order_to_copy.lunch)
@@ -46,7 +51,7 @@ class CopyOrder
       :user_id => @user_id,
       :user_name => @user_name,
       :lunch => lunch,
-      :date => Time.now
+      :date => Date.today
     )
     order.save
   end
