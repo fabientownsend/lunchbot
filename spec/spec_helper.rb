@@ -4,6 +4,8 @@ require 'commands/order/set_order_command'
 require 'commands/order/place_order_guest'
 require 'commands/order/add_guest'
 require 'commands/foreman/add_apprentice'
+require 'date'
+require 'days'
 
 Coveralls.wear!
 
@@ -14,11 +16,29 @@ class Helper
     set_order_command.run
   end
 
+  def self.order_previous_monday(data)
+    data[:date] = Days.monday - 8
+    set_order_command = SetOrderCommand.new
+    set_order_command.prepare(data)
+    set_order_command.run
+  end
+
   def self.order_guest(data)
     from = data[:from] || "host id"
     place_order_guest = PlaceOrderGuest.new
     place_order_guest.prepare({
       user_id: from, user_message: "order -#{data[:name]}-: #{data[:meal]}"
+    })
+    place_order_guest.run
+  end
+
+  def self.order_guest_previous_monday(data)
+    from = data[:from] || "host id"
+    place_order_guest = PlaceOrderGuest.new
+    place_order_guest.prepare({
+      user_id: from,
+      user_message: "order -#{data[:name]}-: #{data[:meal]}",
+      date: Days.monday - 8
     })
     place_order_guest.run
   end

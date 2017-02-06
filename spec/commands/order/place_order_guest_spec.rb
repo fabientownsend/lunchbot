@@ -15,7 +15,12 @@ RSpec.describe PlaceOrderGuest do
     expect(Order.last(:user_name => "james smith").host).to eq(slack_id)
   end
 
-  it "updates guest order when new order is placed for same guest" do
+  it "update the meal of a guest in the current week" do
+    Helper.order_guest_previous_monday({
+      name: "james smith",
+      meal: "fish",
+      from: "slack id"
+    })
     Helper.order_guest({name: "james smith", meal: "burger", from: "slack id"})
     Helper.order_guest({name: "james smith", meal: "fish", from: "slack id"})
 
@@ -28,6 +33,18 @@ RSpec.describe PlaceOrderGuest do
 
     expect(Order.last(:user_name => "james smith").lunch).to eq("burger")
     expect(Order.last(:user_name => "jean bon").lunch).to eq("fish")
+  end
+
+  it "save new order when similar name hasn't order in the current week" do
+    Helper.order_guest_previous_monday({
+      name: "james smith",
+      meal: "fish",
+      from: "slack id"
+    })
+    Helper.order_guest({name: "james smith", meal: "burger", from: "slack id"})
+
+    expect(Order.first(:user_name => "james smith").lunch).to eq("fish")
+    expect(Order.last(:user_name => "james smith").lunch).to eq("burger")
   end
 end
 

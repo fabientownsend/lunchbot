@@ -8,7 +8,12 @@ RSpec.describe SetOrderCommand do
     expect(Order.last(:user_name => "will").lunch).to eq("burger")
   end
 
-  it "update the order when the user id already exist" do
+  it "udpate the order of the current week" do
+    Helper.order_previous_monday({
+      user_id: "asdf",
+      user_name: "james",
+      user_message: "fish"
+      })
     Helper.order({user_id: "asdf", user_name: "will", user_message: "burger"})
     Helper.order({user_id: "asdf", user_name: "will", user_message: "fish"})
 
@@ -21,5 +26,17 @@ RSpec.describe SetOrderCommand do
 
     expect(Order.last(:user_name => "will").lunch).to eq("burger")
     expect(Order.last(:user_name => "fabien").lunch).to eq("fish")
+  end
+
+  it "create a new order if none this current week" do
+    Helper.order_previous_monday({
+      user_id: "asdf",
+      user_name: "james",
+      user_message: "fish"
+    })
+    Helper.order({user_id: "asdf", user_name: "james", user_message: "burger"})
+
+    expect(Order.first(:user_name => "james").lunch).to eq("fish")
+    expect(Order.last(:user_name => "james").lunch).to eq("burger")
   end
 end

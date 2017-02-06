@@ -1,5 +1,6 @@
 require 'models/order'
 require 'date'
+require 'days'
 
 class SetOrderCommand
   def prepare(data)
@@ -11,7 +12,10 @@ class SetOrderCommand
   end
 
   def run
-    order = Order.last(:user_id => @user_id)
+    order = Order.last(
+      :user_id => @user_id,
+      :date => (Days.from_monday_to_friday)
+    )
 
     if @lunch.empty?
       "That is not a valid order."

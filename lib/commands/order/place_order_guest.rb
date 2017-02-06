@@ -1,4 +1,5 @@
 require 'models/order'
+require 'date'
 
 class PlaceOrderGuest
   def applies_to(request)
@@ -9,6 +10,7 @@ class PlaceOrderGuest
     @lunch_order = get_string_after_collon(data[:user_message])
     @name = get_string_between_dash(data[:user_message])
     @host_id = data[:user_id]
+    @date = data[:date] || Date.today
   end
 
   def run
@@ -22,7 +24,10 @@ class PlaceOrderGuest
   private
 
   def place_order
-    existing_order = Order.last(:user_name => @name)
+    existing_order = Order.last(
+      :user_name => @name,
+      :date => (Days.from_monday_to_friday)
+    )
 
     if existing_order
       update_order(existing_order)
@@ -42,7 +47,7 @@ class PlaceOrderGuest
     new_order = Order.new(
       :user_name => @name.strip,
       :lunch => @lunch_order,
-      :date => Time.now,
+      :date => @date,
       :host => @host_id
     )
     new_order.save
