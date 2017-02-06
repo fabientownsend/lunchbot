@@ -50,6 +50,14 @@ RSpec.describe RemoveGuestOrder do
     expect(response).to eq("There is no such guest!")
   end
 
+  it "doesn't remove the guest from the previous weeks" do
+    Helper.add_guest_previous_monday("will")
+    response = remove_guest("will")
+
+    expect(Order.last(:user_name => "will")).not_to be(nil)
+    expect(response).to eq("There is no such guest!")
+  end
+
   private
 
   def remove_guest(name)

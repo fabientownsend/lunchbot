@@ -1,4 +1,5 @@
 require 'models/order'
+require 'Days'
 
 class RemoveGuestOrder
   def applies_to(request)
@@ -12,7 +13,7 @@ class RemoveGuestOrder
   end
 
   def run
-    order = Order.last(:user_name => @name)
+    order = Order.last(:user_name => @name, :date => Days.from_monday_to_friday)
 
     if order.nil? or !guest_order?(order)
       "There is no such guest!"
