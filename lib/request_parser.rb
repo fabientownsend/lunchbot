@@ -19,7 +19,8 @@ class RequestParser
       SetMenuCommand.new,
       SetOrderCommand.new,
       Help.new,
-      CopyOrder.new
+      CopyOrder.new,
+      AllFoodOrders.new
     ]
   end
 
