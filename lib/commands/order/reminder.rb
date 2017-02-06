@@ -1,6 +1,7 @@
 require 'channel_info_provider'
 require 'models/order'
 require 'foreman_checker'
+require 'days'
 
 class Reminder
   include ForemanChecker

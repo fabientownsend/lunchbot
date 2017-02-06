@@ -1,5 +1,5 @@
 require 'models/order'
-require 'Days'
+require 'days'
 
 class RemoveGuestOrder
   def applies_to(request)

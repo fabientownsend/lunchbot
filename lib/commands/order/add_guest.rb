@@ -16,7 +16,10 @@ class AddGuest
   end
 
   def run
-    guest_order = Order.last(:user_name => @name, :date => Days.from_monday_to_friday)
+    guest_order = Order.last(
+      :user_name => @name,
+      :date => Days.from_monday_to_friday
+    )
 
     return "#{@name} already exist" if !guest_exist?(guest_order)
 
