@@ -1,5 +1,6 @@
 require 'models/order'
 require 'date'
+require 'days'
 
 class AddGuest
   def applies_to(request)
@@ -15,7 +16,7 @@ class AddGuest
   end
 
   def run
-    guest_order = Order.last(:user_name => @name)
+    guest_order = Order.last(:user_name => @name, :date => Days.from_monday_to_friday)
 
     return "#{@name} already exist" if !guest_exist?(guest_order)
 

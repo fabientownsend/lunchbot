@@ -37,4 +37,12 @@ RSpec.describe AddGuest do
 
     expect(Order.last.user_name).to eq("james smith")
   end
+
+  it "add the guest for the current week" do
+    Helper.add_guest_previous_monday("JAMES SMITH")
+    response = Helper.add_guest("JAMES SMITH")
+
+    expect(response).to eq("james smith has been added as a guest!")
+    expect(Order.count(:user_name)).to eq(2)
+  end
 end
