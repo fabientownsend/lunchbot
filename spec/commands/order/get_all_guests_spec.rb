@@ -29,4 +29,12 @@ RSpec.describe GetAllGuests do
     expect(guest_provider.run).to eq("james smith\njean bon")
     expect(Order.last(:user_id => "asdf")).not_to be_nil
   end
+
+  it "return the guest of the current week" do
+    Helper.order_guest_previous_monday({name: "jean gaston", meal: "burger"})
+    Helper.order_guest({name: "james smith", meal: "burger"})
+    Helper.order_guest({name: "jean bon", meal: "burger"})
+
+    expect(guest_provider.run).to eq("james smith\njean bon")
+  end
 end

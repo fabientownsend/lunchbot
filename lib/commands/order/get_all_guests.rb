@@ -15,7 +15,8 @@ class GetAllGuests
   private
 
   def guests
-    Order.all.map { |order| "#{order.user_name}" if order.host }.compact
+    guests = Order.all(:date => (Days.from_monday_to_friday))
+    guests.all.map { |order| "#{order.user_name}" if order.host }.compact
   end
 
   def format_response(guest)
