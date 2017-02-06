@@ -1,4 +1,5 @@
 require 'models/order'
+require 'days'
 
 class GetOrderCommand
   def prepare(data)
@@ -9,7 +10,11 @@ class GetOrderCommand
     user_message = @user_message.gsub("order? ", "")
     user_id_meal_researched = user_message[/(?<=\<@)(\w+)(?=>)/]
 
-    the_order = Order.last(:user_id => user_id_meal_researched)
+    the_order = Order.last(
+      :user_id => user_id_meal_researched,
+      :date => Days.from_monday_to_friday
+    )
+
     if the_order
       "<@#{user_id_meal_researched}> ordered: `#{the_order.lunch}`."
     else
