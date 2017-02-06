@@ -44,7 +44,8 @@ class Reminder
   end
 
   def guest_without_order
-    Order.map { |order|
+    orders_current_week = Order.all(:date => Days.from_monday_to_friday)
+    orders_current_week.map { |order|
       "#{order.user_name} host: <@#{order.host}>" if has_ordered?(order)
     }
   end
@@ -52,7 +53,7 @@ class Reminder
   private
 
   def has_ordered(user_id)
-    Order.last(:user_id => user_id)
+    Order.last(:user_id => user_id, :date => Days.from_monday_to_friday)
   end
 
 

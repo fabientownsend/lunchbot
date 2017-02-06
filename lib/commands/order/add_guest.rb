@@ -11,6 +11,7 @@ class AddGuest
     message = data[:user_message]
     name = message.gsub("add guest:", "")
     @name = name.strip.downcase
+    @date = data[:date] || Date.today
   end
 
   def run
@@ -35,7 +36,7 @@ class AddGuest
   def add_guest
     new_order = Order.new(
       :user_name => @name,
-      :date => Date.today,
+      :date => @date,
       :host => @host_id
     )
     new_order.save

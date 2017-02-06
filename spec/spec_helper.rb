@@ -52,6 +52,16 @@ class Helper
     place_order_guest.run
   end
 
+  def self.add_guest_previous_monday(name)
+    place_order_guest = AddGuest.new
+    place_order_guest.prepare({
+      user_message: "add guest: #{name}",
+      user_id: "host id",
+      date: Days.monday - 8
+    })
+    place_order_guest.run
+  end
+
   def self.add_foreman(data)
     id = data[:id]
     user_name = data[:name]
