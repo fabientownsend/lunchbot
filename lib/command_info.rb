@@ -6,26 +6,35 @@ module CommandInfo
   private
 
   def info_array
-    info = [menu, order, foreman, other, guest]
+    [menu, order, foreman, other, guest]
   end
 
   def menu
-    "To set a menu | new menu www.menu-url.com \nTo get this weeks menu | menu?"
+    "To set a menu | `new menu www.menu-url.com`\n" +
+    "To get this weeks menu | `menu?`"
   end
 
   def other
-    "To remind everyone who hasn't ordered | remind \nTo mark yourself as out | out"
+    "To remind everyone who hasn't ordered | `remind`\n" +
+    "To mark yourself as out | `out`"
   end
 
   def order
-    "To place an order | order: food \nTo see someone elses order | order? @name_of_person \nTo see all orders | all orders? \nTo copy someones order | copy order: @username"
+    "To place an order | `order: food`\n" +
+    "To see someone elses order | `order? @name_of_person`\n" +
+    "To see all orders | `all orders?`\n" +
+    "To see sum of orders | `all food orders`\n" +
+    "To copy someones order | `copy order: @username`"
   end
 
   def guest
-    "To add a guest with no order | add guest: name of guest \nTo remove a guest | remove guest: name of guest \nTo place an order for a guest (this also creates a guest if the name given does not exist) | order -name of guest-: food"
+    "To add a guest with no order | `add guest: name of guest`\n" +
+    "To remove a guest | `remove guest: name of guest`\n" +
+    "To place an order for a guest (this also creates a guest if the name given does not exist) | `order -name of guest-: food`"
   end
 
   def foreman
-    "To find out this weeks foreman | foreman \nTo change this weeks foreman to the next in line | next foreman"
+    "To find out this weeks foreman | `foreman`\n" +
+    "To change this weeks foreman to the next in line | `next foreman`"
   end
 end
