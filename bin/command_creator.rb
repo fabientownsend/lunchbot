@@ -18,7 +18,6 @@ end
 def create_folder(path)
   unless File.exists?(path)
     Dir.mkdir(folder_name)
-    puts "#{path} created!"
   end
 end
 
@@ -27,7 +26,6 @@ if verb == 'new' && subject == 'command'
   create_folder(path)
   file_path_name = path + "/" + format_file_name(file_name) + ".rb"
   file = File.new(file_path_name, "w+")
-  puts "#{file_path_name} created"
 
   file << "class #{file_name}\n"
   file << "  def applies_to(request)\n"

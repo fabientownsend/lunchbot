@@ -42,7 +42,6 @@ RSpec.describe AllFoodOrders do
   end
 
   it "return friday orders" do
-    puts Days.friday
     Helper.order({user_id: "asdf", user_name: "will", user_message: "burger", date: Days.friday})
 
     all_food = "burger: 1"
