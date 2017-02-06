@@ -1,4 +1,5 @@
 require 'models/order'
+require 'date'
 
 class SetOrderCommand
   def prepare(data)
