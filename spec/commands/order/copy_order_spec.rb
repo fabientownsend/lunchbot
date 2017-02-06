@@ -1,4 +1,4 @@
-require 'commands/copy_order'
+require 'commands/order/copy_order'
 require 'days'
 
 RSpec.describe CopyOrder do
