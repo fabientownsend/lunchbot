@@ -1,4 +1,5 @@
 require 'models/order'
+require 'date'
 
 class AddGuest
   def applies_to(request)
@@ -34,7 +35,7 @@ class AddGuest
   def add_guest
     new_order = Order.new(
       :user_name => @name,
-      :date => Time.now,
+      :date => Date.today,
       :host => @host_id
     )
     new_order.save
