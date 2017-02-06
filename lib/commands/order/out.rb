@@ -1,4 +1,5 @@
 require 'models/order'
+require 'date'
 
 class Out
   def applies_to(request)
@@ -17,7 +18,10 @@ class Out
   private
 
   def mark_out
-    existing_order = Order.last(:user_id => @user_id)
+    existing_order = Order.last(
+      :user_id => @user_id,
+      :date => Days.from_monday_to_friday
+    )
     if existing_order
       update(existing_order)
     else
@@ -36,7 +40,7 @@ class Out
       :user_id => @user_id,
       :user_name => @user_name,
       :lunch => "out",
-      :date => Time.now
+      :date => Date.today
     )
     mark_out.save
   end
