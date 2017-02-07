@@ -13,6 +13,7 @@ class EventController < Sinatra::Base
 
   post '/events' do
     request_data = JSON.parse(request.body.read)
+    puts request_data
 
     verify_token(request_data)
     verify_url(request_data)
