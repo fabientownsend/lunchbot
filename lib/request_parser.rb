@@ -20,6 +20,7 @@ class RequestParser
       SetOrderCommand.new,
       Help.new,
       CopyOrder.new,
+      Wake.new,
       AllFoodOrders.new
     ]
   end

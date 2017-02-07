@@ -14,10 +14,20 @@ class MessageHandler
     @request_parser = RequestParser.new()
   end
 
+  def start_to_ping(response, team_id, event_data)
+      respond(response, team_id, event_data['user'], event_data['channel'])
+      sleep 600
+      start_to_ping(response, team_id, event_data)
+  end
+
   def handle(team_id, event_data)
     data = format_data(team_id, event_data)
     returned_command = @request_parser.parse(data)
     response = returned_command.run()
+
+    if response == "ping"
+      start_to_ping(response, team_id, event_data)
+    end
 
     if response
       if respond_privately(event_data['text'])
