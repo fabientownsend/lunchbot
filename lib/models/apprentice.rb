@@ -4,6 +4,6 @@ class Apprentice
   include DataMapper::Resource
 
   property :id, Serial
-  property :user_name, String
-  property :slack_id, String
+  property :user_name, String, :length => 255
+  property :slack_id, String, :length => 255
 end
