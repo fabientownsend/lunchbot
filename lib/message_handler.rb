@@ -30,7 +30,7 @@ class MessageHandler
     end
 
     if response
-      if respond_privately(event_data['text'])
+      if respond_privately(returned_command)
         respond(response, team_id, event_data['user'])
       else
         respond(response, team_id, event_data['user'], event_data['channel'])
@@ -40,8 +40,8 @@ class MessageHandler
 
   private
 
-  def respond_privately(message)
-    message.downcase.end_with?(" private")
+  def respond_privately(command)
+    command.kind_of? GetAllOrdersCommand or command.kind_of? Help
   end
 
   def format_data(team_id, event_data)
