@@ -21,6 +21,7 @@ class RequestParser
       Help.new,
       CopyOrder.new,
       Ping.new,
+      SetForeman.new,
       AllFoodOrders.new
     ]
   end
