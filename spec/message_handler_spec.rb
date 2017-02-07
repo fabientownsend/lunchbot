@@ -35,7 +35,6 @@ RSpec.describe MessageHandler do
 
     expect(fake_response.message).to eq(all_command_info)
     expect(fake_response.team_id).to eq(team_id)
-    expect(fake_response.user_id).to eq(channel_id)
   end
 
   it "should return a message for a new menu" do
@@ -121,12 +120,6 @@ RSpec.describe MessageHandler do
     message_from_slack("remind")
 
     expect(fake_response.user_id).to eq(channel_id)
-  end
-
-  it "return the list in private when asked" do
-    message_from_slack("remind private")
-
-    expect(fake_response.user_id).to eq("D3S6XE6SZ")
   end
 
   it "return confirmation guest order" do
