@@ -1,6 +1,6 @@
-class Wake
+class Ping
   def applies_to(request)
-    request == "wake"
+    request == "ping"
   end
 
   def prepare(data)
@@ -8,7 +8,6 @@ class Wake
   end
 
   def run
-    "Hello"
+    "ping"
   end
-
 end
