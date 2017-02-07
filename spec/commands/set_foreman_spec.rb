@@ -10,11 +10,17 @@ RSpec.describe SetForeman do
     )
     apprentice.save
 
-    foreman = Apprentice.new(
+    apprentice2 = Apprentice.new(
+      :user_name => "Andrea",
+      :slack_id => "a_id",
+    )
+    apprentice2.save
+
+    apprentice3 = Apprentice.new(
       :user_name => "Will",
       :slack_id => "w_id",
     )
-    foreman.save
+    apprentice3.save
   end
 
   it "should respond invalid if its not a valid userid" do
@@ -34,5 +40,12 @@ RSpec.describe SetForeman do
     set_foreman.prepare(fake_data)
     set_foreman.run
     expect(Apprentice.first.slack_id).to eq("w_id")
+  end
+
+  it "should shuffle second apprentice down by one" do
+    set_foreman = SetForeman.new
+    set_foreman.prepare(fake_data)
+    set_foreman.run
+    expect(Apprentice.last.slack_id).to eq("a_id")
   end
 end
