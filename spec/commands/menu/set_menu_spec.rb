@@ -32,33 +32,46 @@ RSpec.describe SetMenuCommand do
     expect(response).to be true
   end
 
-  it "we can change the default url" do
-    response = set_menu("www.menu.com")
-    expect(response).to eq("<!here> Menu has been set: www.menu.com")
-    expect(Menu.last.url).to eq("www.menu.com")
-  end
+  it "tell you if you don't have the right to set a new url" do
+    url = "no an url"
+    response = change_url(url, "invalid id")
 
-  it "return the url without the www" do
-    response = set_menu("sdf fdas fsa www.menu.com asdfas")
-    expect(response).to eq("<!here> Menu has been set: www.menu.com")
-  end
-
-  it "does not work if you are not the foreman" do
-    response = set_menu("sdf fdas fsa www.menu.com asdfas", "invalid id")
     expect(response).to eq("You are not the foreman!")
   end
 
-  it "return deliveroo url" do
+  it "tell you when the url isn't valid" do
+    url = "no an url"
+    response = change_url(url)
+
+    expect(response).to eq("That is not a valid URL!")
+  end
+
+  it "return a message with a message" do
+    url = "http://www.deliveroo.co.uk/menu/london/holborn/itsu-fleet-street"
+    response = change_url(url)
+
+    expect(response).to eq("<!here> Menu has been set: #{url}")
+  end
+
+  it "save url in database" do
+    url = "http://www.deliveroo.co.uk/menu/london/holborn/itsu-fleet-street"
+    change_url(url)
+
+    expect(Menu.last.url).to eq("http://www.deliveroo.co.uk/menu/london/holborn/itsu-fleet-street")
+  end
+
+  it "remove useless information from url" do
     url = "https://deliveroo.co.uk/menu/london/covent-garden/the-real-greek-covent-garden?day=today&rpos=0&time=1130"
-    response = set_menu(url)
-    expect(response).to eq("<!here> Menu has been set: https://deliveroo.co.uk/menu/london/covent-garden/the-real-greek-covent-garden")
+    change_url(url)
+
+    expect(Menu.last.url).to eq("https://deliveroo.co.uk/menu/london/covent-garden/the-real-greek-covent-garden")
   end
 
   private
 
-  def set_menu(url, id = "valid id")
+  def change_url(url, from_id = "valid id")
     menu = SetMenuCommand.new
-    menu.prepare({user_message: "sdf fdas fsa #{url} asdfas", user_id: id})
+    menu.prepare({user_message: url, user_id: from_id})
     menu.run
   end
 end
