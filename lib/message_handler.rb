@@ -31,6 +31,7 @@ class MessageHandler
 
     if response
       if respond_privately(returned_command)
+        respond("I sent you a private message.", team_id, event_data['user'], event_data['channel'])
         respond(response, team_id, event_data['user'])
       else
         respond(response, team_id, event_data['user'], event_data['channel'])
