@@ -163,6 +163,16 @@ RSpec.describe MessageHandler do
     expect(fake_response.message).to eq("james smith")
   end
 
+  it "return the sum of food by type" do
+    message_from_slack("order: burger")
+    message_from_slack("order -james smith-: burger")
+    message_from_slack("order -jean bon-: burger")
+    message_from_slack("order -harry potter-: fish")
+
+    message_from_slack("all food orders")
+    expect(fake_response.message).to eq("burger: 3\nfish: 1")
+  end
+
   private
 
   def message_from_slack(request, name = "Will", new_recipient = recipient)
