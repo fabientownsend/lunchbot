@@ -12,6 +12,7 @@ RSpec.describe Reminder do
       channel_info: FakeChannelInfoProvider.new
     }
   }
+
   before (:each) do
     foreman = Apprentice.new(
       user_name: "Will",
@@ -26,6 +27,17 @@ RSpec.describe Reminder do
     response = reminder.run
 
     expect(response).to eq("<@FabienUserId>\n<@WillUserId>")
+  end
+
+  it "tell you when there is no orders" do
+    Helper.order({user_id: "FabienUserId", user_name: "fabien", user_message: "burger"})
+    Helper.order({user_id: "WillUserId", user_name: "will", user_message: "burger"})
+
+    reminder = Reminder.new
+    reminder.prepare(data)
+    response = reminder.run
+
+    expect(response).to eq("everyone have an order")
   end
 
   it "doesn't remind people who placed an order" do
@@ -68,5 +80,13 @@ RSpec.describe Reminder do
     response = reminder.run
 
     expect(response).to eq("<@FabienUserId>\n<@WillUserId>")
+  end
+
+  it "return a message when you are not allowed to see the result" do
+    reminder = Reminder.new
+    reminder.prepare(data.merge(user_id: "another id"))
+    response = reminder.run
+
+    expect(response).to eq("You are not the foreman!")
   end
 end

@@ -30,7 +30,7 @@ class Reminder
 
   def format_response(orders)
     if orders.empty?
-      "no orders"
+      "everyone have an order"
     else
       orders.join("\n")
     end
@@ -42,13 +42,14 @@ class Reminder
 
   def crafter_wihtout_order
     @members.map { |member_id| "<@#{member_id}>" if !has_ordered(member_id) }
+      .compact
   end
 
   def guest_without_order
     orders_current_week = Order.all(:date => Days.from_monday_to_friday)
     orders_current_week.map { |order|
       "#{order.user_name} host: <@#{order.host}>" if has_ordered?(order)
-    }
+    }.compact
   end
 
   private
