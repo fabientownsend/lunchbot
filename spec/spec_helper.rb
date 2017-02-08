@@ -1,9 +1,10 @@
-require 'coveralls'
-require 'data_mapper'
-require 'commands/order/set_order_command'
-require 'commands/order/place_order_guest'
-require 'commands/order/add_guest'
 require 'commands/foreman/add_apprentice'
+require 'commands/order/add_guest'
+require 'commands/order/place_order_guest'
+require 'commands/order/set_order_command'
+require 'coveralls'
+require 'models/crafter'
+require 'data_mapper'
 require 'date'
 require 'days'
 
@@ -76,6 +77,18 @@ RSpec.configure do |config|
 
   config.before(:each) do
     DataMapper.finalize.auto_migrate!
+
+    crafter = Crafter.new(
+      user_name: "Fabien",
+      slack_id: "FabienUserId"
+    )
+    crafter.save
+
+    crafter = Crafter.new(
+      user_name: "Will",
+      slack_id: "WillUserId"
+    )
+    crafter.save
   end
 end
 

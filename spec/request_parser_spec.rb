@@ -1,5 +1,4 @@
 require 'request_parser'
-require 'fake_channel_info_provider'
 
 RSpec.describe RequestParser do
   let(:user_request) { RequestParser.new }
@@ -97,7 +96,6 @@ RSpec.describe RequestParser do
   it "return remind command when it's a remind request" do
     request = {
       user_message: "remind",
-      channel_info: FakeChannelInfoProvider.new,
       channel_id: "asdf", team_id: "team id"
     }
 

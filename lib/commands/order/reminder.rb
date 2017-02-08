@@ -1,4 +1,3 @@
-require 'channel_info_provider'
 require 'models/order'
 require 'foreman_checker'
 require 'days'
@@ -7,7 +6,6 @@ class Reminder
   include ForemanChecker
 
   def prepare(data)
-    @channel_info = data[:channel_info]
     @channel_id = data[:channel_id]
     @team_id = data[:team_id]
     @user_id = data[:user_id]

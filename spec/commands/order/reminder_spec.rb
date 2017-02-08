@@ -1,5 +1,4 @@
 require 'commands/order/reminder'
-require 'fake_channel_info_provider'
 
 RSpec.describe Reminder do
   let (:data) {
@@ -9,7 +8,6 @@ RSpec.describe Reminder do
       user_name: "user name",
       channel_id: "channel id",
       team_id: "team id",
-      channel_info: FakeChannelInfoProvider.new
     }
   }
 

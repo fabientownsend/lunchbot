@@ -1,7 +1,6 @@
 require 'fake_response'
 require 'message_handler'
 require 'fake_user_info_provider'
-require 'fake_channel_info_provider'
 require 'commands/order/add_guest'
 require 'commands/foreman/add_apprentice'
 require 'commands/help'
@@ -10,11 +9,9 @@ require 'commands/help'
 RSpec.describe MessageHandler do
   let (:fake_response) { FakeResponse.new }
   let (:fake_user_info_provider) { FakeUserInfoProvider.new }
-  let (:fake_channel_info_provider) { FakeChannelInfoProvider.new }
   let (:message_handler) { MessageHandler.new(
     fake_response,
     fake_user_info_provider,
-    fake_channel_info_provider
   ) }
   let (:team_id) { "T026MULUJ" }
   let (:recipient) { "D3S6XE6SZ" }
