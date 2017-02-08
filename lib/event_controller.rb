@@ -13,7 +13,6 @@ class EventController < Sinatra::Base
 
   post '/events' do
     request_data = JSON.parse(request.body.read)
-    puts request_data
 
     verify_token(request_data)
     verify_url(request_data)
@@ -36,7 +35,7 @@ class EventController < Sinatra::Base
 
   def verify_url(data)
     if data['type'] == 'url_verification'
-      data['challenge']
+      body "#{data['challenge']}"
     end
   end
 
