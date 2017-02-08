@@ -11,7 +11,6 @@ class Reminder
     @channel_id = data[:channel_id]
     @team_id = data[:team_id]
     @user_id = data[:user_id]
-    @members = @channel_info.members(@channel_id, @team_id)
   end
 
   def run
@@ -41,7 +40,8 @@ class Reminder
   end
 
   def crafter_wihtout_order
-    @members.map { |member_id| "<@#{member_id}>" if !has_ordered(member_id) }
+    @members = Crafter.all(:fields => [:slack_id])
+    @members.map { |member_id| "<@#{member_id.slack_id}>" if !has_ordered(member_id.slack_id) }
       .compact
   end
 
