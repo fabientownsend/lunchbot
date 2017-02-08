@@ -47,6 +47,7 @@ class MessageHandler
       user_message: event_data['text'],
       user_id: event_data['user'],
       user_name: @user_info.real_name(event_data['user'], team_id),
+      user_email: @user_info.email(event_data['user'], team_id),
       channel_id: event_data['channel'],
       team_id: team_id
     }

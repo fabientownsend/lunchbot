@@ -8,10 +8,14 @@ class SetOrderCommand
     @lunch = format_lunch(request)
     @user_id = data[:user_id]
     @user_name = data[:user_name]
+    @user_email = data[:user_email]
     @date = data[:date] || Date.today
   end
 
   def run
+
+    create_user if !user_exist?
+
     order = Order.last(
       :user_id => @user_id,
       :date => (Days.from_monday_to_friday)
@@ -29,6 +33,19 @@ class SetOrderCommand
   end
 
   private
+
+  def create_user
+    new_user = Crafter.new(
+      :user_name => @user_name,
+      :slack_id => @user_id,
+      :email => @user_email
+    )
+    new_user.save
+  end
+
+  def user_exist?
+    Crafter.last(:slack_id => @user_id)
+  end
 
   def format_lunch(request)
     order = request.gsub("order:", "")

@@ -16,4 +16,20 @@ class UserInfoProvider
 
       real_name
     end
+
+    def email(user_id, team_id)
+      token = $teams[team_id][:bot_access_token]
+      email = "no email provided"
+
+      url = URI("https://slack.com/api/users.info?token=#{token}&user=#{user_id}&pretty=1")
+
+      begin
+        response = Net::HTTP.get(url)
+        deserialized_response = JSON.parse(response)
+        puts deserialized_response
+        email = deserialized_response['user']['profile']['email']
+      end
+
+      email
+    end
 end

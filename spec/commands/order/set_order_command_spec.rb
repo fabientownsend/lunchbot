@@ -1,5 +1,6 @@
 require 'commands/order/set_order_command'
 require 'models/order'
+require 'models/crafter'
 
 RSpec.describe SetOrderCommand do
   it "reccord an order in the database" do
@@ -38,5 +39,17 @@ RSpec.describe SetOrderCommand do
 
     expect(Order.first(:user_name => "james").lunch).to eq("fish")
     expect(Order.last(:user_name => "james").lunch).to eq("burger")
+  end
+
+  it "save the user in the database if he doesn't exist" do
+    Helper.order({
+      user_id: "asdf",
+      user_name: "crouton",
+      user_message: "burger",
+      user_email: "email@email.com"
+    })
+
+    expect(Crafter.last(:slack_id => "asdf")).not_to eq(nil)
+    expect(Crafter.last(:email => "email@email.com")).not_to eq(nil)
   end
 end
