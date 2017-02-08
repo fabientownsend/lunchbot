@@ -1,6 +1,7 @@
-require 'models/order'
-require 'foreman_checker'
 require 'days'
+require 'foreman_checker'
+require 'models/crafter'
+require 'models/order'
 
 class Reminder
   include ForemanChecker
@@ -38,9 +39,10 @@ class Reminder
   end
 
   def crafter_wihtout_order
-    @members = Crafter.all(:fields => [:slack_id])
-    @members.map { |member_id| "<@#{member_id.slack_id}>" if !has_ordered(member_id.slack_id) }
-      .compact
+    members = Crafter.all(:fields => [:slack_id])
+    members.map { |member_id|
+      "<@#{member_id.slack_id}>" if !has_ordered(member_id.slack_id)
+    }.compact
   end
 
   def guest_without_order

@@ -9,4 +9,8 @@ class FakeUserInfoProvider
   def real_name(user_id, team_id)
     @names.reverse!.first
   end
+
+  def email(user_id, team_id)
+    "email@email.com"
+  end
 end
