@@ -1,6 +1,6 @@
 require 'httparty'
 
-class BambooHR
+class BambooInfoProvider
   include HTTParty
 
   base_uri "https://api.bamboohr.com"
@@ -22,6 +22,10 @@ class BambooHR
     JSON.parse(time_off_data.body)
   end
 
+  def whos_out
+    JSON.parse(whos_out_data.body)
+  end
+
   private
 
   def employees_data
@@ -30,6 +34,10 @@ class BambooHR
 
   def time_off_data
     self.class.get("/api/gateway.php/#{@subdomain}/v1/time_off/requests", basic_auth: auth_info, headers: headers)
+  end
+
+  def whos_out_data
+    self.class.get("/api/gateway.php/#{@subdomain}/v1/time_off/whos_out", basic_auth: auth_info, headers: headers)
   end
 
   def headers
