@@ -1,4 +1,4 @@
-require 'commands/get_everyone'
+require 'commands/order/get_everyone'
 
 RSpec.describe GetEveryone do
   let (:data) {
