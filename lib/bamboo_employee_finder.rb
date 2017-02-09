@@ -1,34 +1,34 @@
 require 'bamboo_hr'
 
-class BambooEmployeeFinder //TODO REFACTOR
+class BambooEmployeeFinder
   def initialize(channel_users, bamboo_employees)
     @channel_users = channel_users
     @bamboo_employees = bamboo_employees
   end
 
-  def find_employee(slack_id)
-    @channel_users.each do |user|
-      if find_bamboo_info(user, slack_id)
-        return true
-      end
-      return false
-    end
+  def employee_id(slack_id)
+    return employee_data(slack_id)["employeeId"]
   end
 
   private
 
-  def find_bamboo_info(user, slack_id)
-    @bamboo_employees.each do |employee|
-      if user[:user_id] == slack_id and are_match(user, employee)
-        return true
+  def employee_data(slack_id)
+    @channel_users.each do |user|
+      if user[:user_id] == slack_id
+        return employee_data_for(user)
       end
-      return false
-    end 
+    end
+  end
+
+  def employee_data_for(user)
+    @bamboo_employees.each do |employee|
+      if are_match(user, employee) 
+        return employee
+      end
+    end
   end
 
   def are_match(user, employee)
-    if user[:email] == employee["workEmail"]
-      return true
-    end
+    return user[:email] == employee["workEmail"]
   end
 end
