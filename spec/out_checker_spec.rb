@@ -2,7 +2,7 @@ require 'out_checker'
 
 class FakeBambooInfoProvider
   def whos_out
-    [{"employeeId" => "99", "end" => "2017-02-10", "start" => "2017-02-10"}]
+    [{"employeeId" => "99", "end" => "2017-02-05", "start" => "2017-02-12"}]
   end
 end
 

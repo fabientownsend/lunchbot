@@ -23,11 +23,14 @@ class OutChecker
     end
   end
 
-  def contains_a_friday(start_date, end_date)
+  def date_range(start_date, end_date)
     start = Date.parse(start_date) 
     endd = Date.parse(end_date)
-    days_off = start..endd
-    days_off.each do |day|
+    start..endd
+  end
+
+  def contains_a_friday(start_date, end_date)
+    date_range(start_date, end_date).each do |day|
       if Days.friday == day
         return true
       end
