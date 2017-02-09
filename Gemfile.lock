@@ -80,11 +80,14 @@ GEM
     fastercsv (1.5.5)
     gli (2.15.0)
     hashie (3.4.6)
+    httparty (0.14.0)
+      multi_xml (>= 0.5.2)
     i18n (0.7.0)
     json (1.8.6)
     json_pure (1.8.6)
     minitest (5.10.1)
     multi_json (1.12.1)
+    multi_xml (0.6.0)
     multipart-post (2.0.0)
     pg (0.19.0)
     public_suffix (2.0.5)
@@ -146,6 +149,7 @@ DEPENDENCIES
   dm-core
   dm-postgres-adapter
   dm-sqlite-adapter (= 1.2.0)
+  httparty
   pg
   rake
   rspec (~> 3.0)
