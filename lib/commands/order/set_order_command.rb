@@ -15,6 +15,7 @@ class SetOrderCommand
   def run
 
     create_user if !user_exist?
+    update_user if user_exist? && !user_dont_have_email?
 
     order = Order.last(
       :user_id => @user_id,
@@ -43,8 +44,19 @@ class SetOrderCommand
     new_user.save
   end
 
+  def update_user
+    user = Crafter.last(:slack_id => @user_id)
+    user.email = @user_email
+    user.save
+  end
+
   def user_exist?
     Crafter.last(:slack_id => @user_id)
+  end
+
+  def user_dont_have_email?
+    crafter = Crafter.last(:slack_id => @user_id)
+    crafter.email
   end
 
   def format_lunch(request)
