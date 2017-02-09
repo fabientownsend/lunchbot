@@ -26,6 +26,25 @@ class Reminder
 
   private
 
+  def mark_outs
+    out_checker = OutChecker.new(Crafter.all, BambooInfoProvider.new)
+    Crafter.all.each do |crafter|
+      if out_checker.is_out?(crafter.slack_id)
+        mark_out(crafter.user_name, crafter.slack_id)
+      end
+    end
+  end
+
+  def mark_out(name, slack_id)
+    order = Order.new(
+      :lunch => "out",
+      :user_id => slack_id,
+      :date => Time.now,
+      :user_name => name
+    )
+    order.save
+  end
+
   def format_response(orders)
     if orders.empty?
       "everyone have an order"
@@ -52,12 +71,9 @@ class Reminder
     }.compact
   end
 
-  private
-
   def has_ordered(user_id)
     Order.last(:user_id => user_id, :date => Days.from_monday_to_friday)
   end
-
 
   def has_ordered?(order)
     order.host && order.lunch.nil?

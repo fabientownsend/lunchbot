@@ -2,9 +2,9 @@ require 'bamboo_employee_finder'
 require 'days'
 
 class OutChecker
-  def initialize(slack_users, bamboo_employees, bamboo_info_provider)
+  def initialize(slack_users, bamboo_info_provider)
     @bamboo_info_provider = bamboo_info_provider
-    @employee_finder = BambooEmployeeFinder.new(slack_users, bamboo_employees)
+    @employee_finder = BambooEmployeeFinder.new(slack_users, bamboo_info_provider.employees)
   end
 
   def is_out?(slack_id)
