@@ -26,7 +26,6 @@ class UserInfoProvider
       begin
         response = Net::HTTP.get(url)
         deserialized_response = JSON.parse(response)
-        puts deserialized_response
         email = deserialized_response['user']['profile']['email']
       end
 
