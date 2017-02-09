@@ -47,7 +47,7 @@ class Reminder
 
   def format_response(orders)
     if orders.empty?
-      "everyone have an order"
+      "Everyone has an order."
     else
       orders.join("\n")
     end
