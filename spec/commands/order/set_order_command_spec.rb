@@ -52,4 +52,17 @@ RSpec.describe SetOrderCommand do
     expect(Crafter.last(:slack_id => "asdf")).not_to eq(nil)
     expect(Crafter.last(:email => "email@email.com")).not_to eq(nil)
   end
+
+  it "update users without email" do
+    expect(Crafter.last(:slack_id => "FabienUserId").email).to eq(nil)
+
+    Helper.order({
+      user_id: "FabienUserId",
+      user_name: "Fabien",
+      user_message: "burger",
+      user_email: "fabien@email.com"
+    })
+
+    expect(Crafter.last(:slack_id => "FabienUserId").email).to eq("fabien@email.com")
+  end
 end
