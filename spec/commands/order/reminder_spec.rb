@@ -35,7 +35,7 @@ RSpec.describe Reminder do
     reminder.prepare(data)
     response = reminder.run
 
-    expect(response).to eq("everyone have an order")
+    expect(response).to eq("Everyone has an order.")
   end
 
   it "doesn't remind people who placed an order" do
