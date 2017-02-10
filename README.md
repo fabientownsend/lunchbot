@@ -12,9 +12,11 @@ export SLACK_CLIENT_ID="XXXX.XXXX"
 export SLACK_API_SECRET="XXXX"
 export SLACK_VERIFICATION_TOKEN="XXXX"
 export SLACK_REDIRECT_URI="XXXX"
+```
 
 If you want BambooHR to automatically mark people out:
 
+``` bash
 export BAMBOO_HR_API_KEY="XXXX"
 ```
 
