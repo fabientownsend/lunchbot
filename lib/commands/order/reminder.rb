@@ -3,7 +3,7 @@ require 'foreman_checker'
 require 'models/crafter'
 require 'models/order'
 require 'mark_all_out'
-require 'customer_provider'
+require 'commands/order/customer_provider'
 
 class Reminder
   include ForemanChecker
