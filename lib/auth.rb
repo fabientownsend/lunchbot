@@ -87,7 +87,7 @@ class Auth < Sinatra::Base
       $teams[team_id]['client'] = create_slack_client(response['bot']['bot_access_token'])
       # Be sure to let the user know that auth succeeded.
       status 200
-      body "Yay! Auth succeeded! You're awesome!"
+      body "Authentication Succeeded"
     rescue Slack::Web::Api::Error => e
       # Failure:
       # D'oh! Let the user know that something went wrong and output the error message returned by the Slack client.
