@@ -4,8 +4,7 @@ require 'response'
 require 'user_info_provider'
 
 class MessageHandler
-  def initialize(args)
-
+  def initialize(args = {})
     @mark_all_out = args[:mark_all_out] || MarkAllOut.new
     @request_parser = RequestParser.new
     @response = args[:response] || Response.new
@@ -13,9 +12,9 @@ class MessageHandler
   end
 
   def start_to_ping(response, team_id, event_data)
-      respond(response, team_id, event_data['user'], event_data['channel'])
-      sleep 600
-      start_to_ping(response, team_id, event_data)
+    respond(response, team_id, event_data['user'], event_data['channel'])
+    sleep 600
+    start_to_ping(response, team_id, event_data)
   end
 
   def handle(team_id, event_data)
