@@ -9,7 +9,7 @@ class RequestParser
       GetAllGuests.new,
       GetAllOrders.new,
       GetMenu.new,
-      GetOrderCommand.new,
+      GetOrder.new,
       NextForeman.new,
       Out.new,
       PlaceOrderGuest.new,

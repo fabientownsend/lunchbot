@@ -1,7 +1,7 @@
 require 'models/order'
 require 'days'
 
-class GetOrderCommand
+class GetOrder
   def prepare(data)
     @user_message = data[:user_message]
   end
