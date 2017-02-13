@@ -16,7 +16,7 @@ class RequestParser
       Reminder.new,
       RemoveApprentice.new,
       RemoveGuestOrder.new,
-      SetMenuCommand.new,
+      SetMenu.new,
       PlaceOrder.new,
       Help.new,
       CopyOrder.new,

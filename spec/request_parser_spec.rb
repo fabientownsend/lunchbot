@@ -5,12 +5,12 @@ RSpec.describe RequestParser do
 
   it "is not case sensitive" do
     request = {user_message: "NEW mEnU www.mENU.CoM"}
-    expect(user_request.parse(request)).to be_a(SetMenuCommand)
+    expect(user_request.parse(request)).to be_a(SetMenu)
   end
 
   it "return menu when the request is a menu" do
     request = {user_message: "new menu www.menu.com"}
-    expect(user_request.parse(request)).to be_a(SetMenuCommand)
+    expect(user_request.parse(request)).to be_a(SetMenu)
   end
 
   it "returns set foreman when the request is to a set the foreman" do
