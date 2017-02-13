@@ -38,9 +38,9 @@ RSpec.describe RequestParser do
     expect(user_request.parse(request)).to be_a(GetMenuCommand)
   end
 
-  it "return set_order when it's a correct order request" do
+  it "return place_order when it's a correct order request" do
     request = {user_message: "order: name_of_the_menu"}
-    expect(user_request.parse(request)).to be_a(SetOrderCommand)
+    expect(user_request.parse(request)).to be_a(PlaceOrder)
   end
 
   it "return get_order when it's a correct request" do
