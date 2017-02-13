@@ -45,7 +45,7 @@ RSpec.describe RequestParser do
 
   it "return get_order when it's a correct request" do
     request = {user_message: "order? Fabien Townsend"}
-    expect(user_request.parse(request)).to be_a(GetOrderCommand)
+    expect(user_request.parse(request)).to be_a(GetOrder)
   end
 
   it "return foreman when it's a correct request" do
