@@ -1,7 +1,7 @@
 require 'models/order'
 require 'days'
 
-class GetAllOrdersCommand
+class GetAllOrders
   def run
     format_response(orders)
   end

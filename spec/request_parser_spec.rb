@@ -55,7 +55,7 @@ RSpec.describe RequestParser do
 
   it "return all orders command  when it's a correct request" do
     request = {user_message: "all orders?"}
-    expect(user_request.parse(request)).to be_a(GetAllOrdersCommand)
+    expect(user_request.parse(request)).to be_a(GetAllOrders)
   end
 
   it "return PlaceOrderGuest when it's a correct request" do
