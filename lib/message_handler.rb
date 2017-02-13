@@ -5,7 +5,6 @@ require 'user_info_provider'
 
 class MessageHandler
   def initialize(args = {})
-
     @mark_all_out = args[:mark_all_out] || MarkAllOut.new
     @request_parser = RequestParser.new
     @response = args[:response] || Response.new
