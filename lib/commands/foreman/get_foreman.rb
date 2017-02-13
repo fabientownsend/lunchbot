@@ -1,6 +1,6 @@
 require "models/apprentice"
 
-class ForemanCommand
+class GetForeman
   def prepare(data)
   end
 

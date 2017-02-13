@@ -50,7 +50,7 @@ RSpec.describe RequestParser do
 
   it "return foreman when it's a correct request" do
     request = {user_message: "foreman"}
-    expect(user_request.parse(request)).to be_a(ForemanCommand)
+    expect(user_request.parse(request)).to be_a(GetForeman)
   end
 
   it "return all orders command  when it's a correct request" do
