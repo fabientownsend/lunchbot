@@ -1,10 +1,10 @@
-require 'commands/order/out'
+require 'commands/order/mark_out'
 require 'models/order'
 require 'date'
 
-RSpec.describe Out do
+RSpec.describe MarkOut do
   it "should place an out order when command is run" do
-    out = Out.new
+    out = MarkOut.new
     out.prepare({user_id: "id", user_name: "Will"})
     out.run
 
@@ -20,7 +20,7 @@ RSpec.describe Out do
       date: Days.monday
     })
 
-    out = Out.new
+    out = MarkOut.new
     out.prepare({user_id: "id", user_name: "Will"})
     out.run
 
@@ -36,7 +36,7 @@ RSpec.describe Out do
       user_message: "burger"
     })
 
-    out = Out.new
+    out = MarkOut.new
     out.prepare({user_id: "id", user_name: "Will"})
     out.run
 

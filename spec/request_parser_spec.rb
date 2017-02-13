@@ -30,7 +30,7 @@ RSpec.describe RequestParser do
 
   it "return out when the request is to be marked out" do
     request = {user_message: "out"}
-    expect(user_request.parse(request)).to be_a(Out)
+    expect(user_request.parse(request)).to be_a(MarkOut)
   end
 
   it "return get_menu when the person request for a menu" do

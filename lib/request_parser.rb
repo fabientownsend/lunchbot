@@ -11,7 +11,7 @@ class RequestParser
       GetMenu.new,
       GetOrder.new,
       NextForeman.new,
-      Out.new,
+      MarkOut.new,
       PlaceOrderGuest.new,
       Reminder.new,
       RemoveApprentice.new,

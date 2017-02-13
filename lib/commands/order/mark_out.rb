@@ -2,7 +2,7 @@ require 'models/order'
 require 'date'
 require 'days'
 
-class Out
+class MarkOut
   def applies_to(request)
     request == "out"
   end
