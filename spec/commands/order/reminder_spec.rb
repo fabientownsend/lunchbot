@@ -1,6 +1,8 @@
 require 'commands/order/reminder'
+require 'fake_mark_all_out'
 
 RSpec.describe Reminder do
+  let (:reminder) { Reminder.new }
   let (:data) {
     {
       user_message: "message",
@@ -8,6 +10,7 @@ RSpec.describe Reminder do
       user_name: "user name",
       channel_id: "channel id",
       team_id: "team id",
+      mark_all_out: FakeMarkAllOut.new
     }
   }
 
@@ -20,7 +23,6 @@ RSpec.describe Reminder do
   end
 
   it "return all the person that didn't order" do
-    reminder = Reminder.new
     reminder.prepare(data)
     response = reminder.run
 
@@ -31,7 +33,6 @@ RSpec.describe Reminder do
     Helper.order({user_id: "FabienUserId", user_name: "fabien", user_message: "burger"})
     Helper.order({user_id: "WillUserId", user_name: "will", user_message: "burger"})
 
-    reminder = Reminder.new
     reminder.prepare(data)
     response = reminder.run
 
@@ -41,7 +42,6 @@ RSpec.describe Reminder do
   it "doesn't remind people who placed an order" do
     Helper.order({user_id: "FabienUserId", user_name: "will", user_message: "burger"})
 
-    reminder = Reminder.new
     reminder.prepare(data)
     response = reminder.run
 
@@ -55,7 +55,6 @@ RSpec.describe Reminder do
       user_message: "burger"
     })
 
-    reminder = Reminder.new
     reminder.prepare(data)
     response = reminder.run
 
@@ -64,7 +63,6 @@ RSpec.describe Reminder do
 
   it "remind the guest's host if they don't have an order" do
     Helper.add_guest("jean gaston")
-    reminder = Reminder.new
     reminder.prepare(data)
     response = reminder.run
 
@@ -73,7 +71,6 @@ RSpec.describe Reminder do
 
   it "doesn't remind guest form the previous weeks" do
     Helper.add_guest_previous_monday("jean gaston")
-    reminder = Reminder.new
     reminder.prepare(data)
     response = reminder.run
 
@@ -81,7 +78,6 @@ RSpec.describe Reminder do
   end
 
   it "return a message when you are not allowed to see the result" do
-    reminder = Reminder.new
     reminder.prepare(data.merge(user_id: "another id"))
     response = reminder.run
 

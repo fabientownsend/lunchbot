@@ -2,6 +2,7 @@ require 'days'
 require 'foreman_checker'
 require 'models/crafter'
 require 'models/order'
+require 'mark_all_out'
 
 class Reminder
   include ForemanChecker
@@ -10,10 +11,12 @@ class Reminder
     @channel_id = data[:channel_id]
     @team_id = data[:team_id]
     @user_id = data[:user_id]
+    @mark_all_out = data[:mark_all_out]
   end
 
   def run
     if is_foreman(@user_id)
+      @mark_all_out.update
       format_response(not_ordered_members).strip
     else
       "You are not the foreman!"
@@ -25,25 +28,6 @@ class Reminder
   end
 
   private
-
-  def mark_outs
-    out_checker = OutChecker.new(Crafter.all, BambooInfoProvider.new)
-    Crafter.all.each do |crafter|
-      if out_checker.is_out?(crafter.slack_id)
-        mark_out(crafter.user_name, crafter.slack_id)
-      end
-    end
-  end
-
-  def mark_out(name, slack_id)
-    order = Order.new(
-      :lunch => "out",
-      :user_id => slack_id,
-      :date => Time.now,
-      :user_name => name
-    )
-    order.save
-  end
 
   def format_response(orders)
     if orders.empty?

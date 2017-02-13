@@ -1,6 +1,7 @@
 require 'fake_response'
 require 'message_handler'
 require 'fake_user_info_provider'
+require 'fake_mark_all_out'
 require 'commands/order/add_guest'
 require 'commands/foreman/add_apprentice'
 require 'commands/help'
@@ -8,11 +9,17 @@ require 'commands/help'
 
 RSpec.describe MessageHandler do
   let (:fake_response) { FakeResponse.new }
+  let (:fake_mark_all_out) { FakeMarkAllOut.new }
   let (:fake_user_info_provider) { FakeUserInfoProvider.new }
+
   let (:message_handler) { MessageHandler.new(
-    fake_response,
-    fake_user_info_provider,
+    {
+      mark_all_out: fake_mark_all_out,
+      response: fake_response,
+      user_info_provider: fake_user_info_provider,
+    }
   ) }
+
   let (:team_id) { "T026MULUJ" }
   let (:recipient) { "D3S6XE6SZ" }
   let (:channel_id) { "CHANNELID" }
