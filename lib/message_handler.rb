@@ -20,22 +20,25 @@ class MessageHandler
   def handle(team_id, event_data)
     data = format_data(team_id, event_data)
     returned_command = @request_parser.parse(data)
-    response = returned_command.run()
-
-    if response == "ping"
-      start_to_ping(response, team_id, event_data)
-    end
-
-    if response
-      if respond_privately(returned_command)
-        respond(response, team_id, event_data['user'])
-      else
-        respond(response, team_id, event_data['user'], event_data['channel'])
-      end
+    if returned_command 
+      deal_with_response(returned_command, team_id, event_data)
     end
   end
 
   private
+
+  def deal_with_response(returned_command, team_id, event_data)
+    response = returned_command.run
+    if response == "ping"
+      start_to_ping(response, team_id, event_data)
+    end
+
+    if respond_privately(returned_command)
+      respond(response, team_id, event_data['user'])
+    else
+      respond(response, team_id, event_data['user'], event_data['channel'])
+    end
+  end
 
   def respond_privately(command)
     command.kind_of? GetAllOrders or command.kind_of? Help
