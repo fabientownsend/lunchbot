@@ -5,12 +5,12 @@ RSpec.describe RequestParser do
 
   it "is not case sensitive" do
     request = {user_message: "NEW mEnU www.mENU.CoM"}
-    expect(user_request.parse(request)).to be_a(SetMenuCommand)
+    expect(user_request.parse(request)).to be_a(SetMenu)
   end
 
   it "return menu when the request is a menu" do
     request = {user_message: "new menu www.menu.com"}
-    expect(user_request.parse(request)).to be_a(SetMenuCommand)
+    expect(user_request.parse(request)).to be_a(SetMenu)
   end
 
   it "returns set foreman when the request is to a set the foreman" do
@@ -38,9 +38,9 @@ RSpec.describe RequestParser do
     expect(user_request.parse(request)).to be_a(GetMenuCommand)
   end
 
-  it "return set_order when it's a correct order request" do
+  it "return place_order when it's a correct order request" do
     request = {user_message: "order: name_of_the_menu"}
-    expect(user_request.parse(request)).to be_a(SetOrderCommand)
+    expect(user_request.parse(request)).to be_a(PlaceOrder)
   end
 
   it "return get_order when it's a correct request" do

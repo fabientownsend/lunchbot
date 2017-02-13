@@ -1,7 +1,7 @@
 require 'commands/foreman/add_apprentice'
 require 'commands/order/add_guest'
 require 'commands/order/place_order_guest'
-require 'commands/order/set_order_command'
+require 'commands/order/place_order'
 require 'coveralls'
 require 'models/crafter'
 require 'data_mapper'
@@ -12,14 +12,14 @@ Coveralls.wear!
 
 class Helper
   def self.order(data)
-    set_order_command = SetOrderCommand.new
+    set_order_command = PlaceOrder.new
     set_order_command.prepare(data)
     set_order_command.run
   end
 
   def self.order_previous_monday(data)
     data[:date] = Days.monday - 8
-    set_order_command = SetOrderCommand.new
+    set_order_command = PlaceOrder.new
     set_order_command.prepare(data)
     set_order_command.run
   end
