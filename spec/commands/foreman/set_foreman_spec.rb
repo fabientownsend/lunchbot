@@ -1,4 +1,4 @@
-require 'commands/set_foreman'
+require 'commands/foreman/set_foreman'
 
 RSpec.describe SetForeman do
   let (:fake_data) {{user_id: "id", user_name: "name", user_message: "set foreman: <@w_id>"}}
