@@ -5,10 +5,10 @@ class RequestParser
     @commands = [
       AddApprentice.new,
       AddGuest.new,
-      ForemanCommand.new,
+      GetForeman.new,
       GetAllGuests.new,
-      GetAllOrdersCommand.new,
-      GetMenuCommand.new,
+      GetAllOrders.new,
+      GetMenu.new,
       GetOrderCommand.new,
       NextForeman.new,
       Out.new,

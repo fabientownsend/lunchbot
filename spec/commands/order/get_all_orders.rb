@@ -1,10 +1,10 @@
-require 'commands/order/get_all_orders_command'
+require 'commands/order/get_all_orders'
 require 'models/order'
 require 'date'
 require 'days'
 
 RSpec.describe GetAllOrdersCommand do
-  let (:get_all_orders_command) { GetAllOrdersCommand.new }
+  let (:get_all_orders_command) { GetAllOrders.new }
 
   it "returns no orders" do
     expect(get_all_orders_command.run).to eq("no orders")

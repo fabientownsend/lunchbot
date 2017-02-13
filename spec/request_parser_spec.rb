@@ -35,7 +35,7 @@ RSpec.describe RequestParser do
 
   it "return get_menu when the person request for a menu" do
     request = {user_message: "menu?"}
-    expect(user_request.parse(request)).to be_a(GetMenuCommand)
+    expect(user_request.parse(request)).to be_a(GetMenu)
   end
 
   it "return place_order when it's a correct order request" do
@@ -50,12 +50,12 @@ RSpec.describe RequestParser do
 
   it "return foreman when it's a correct request" do
     request = {user_message: "foreman"}
-    expect(user_request.parse(request)).to be_a(ForemanCommand)
+    expect(user_request.parse(request)).to be_a(GetForeman)
   end
 
   it "return all orders command  when it's a correct request" do
     request = {user_message: "all orders?"}
-    expect(user_request.parse(request)).to be_a(GetAllOrdersCommand)
+    expect(user_request.parse(request)).to be_a(GetAllOrders)
   end
 
   it "return PlaceOrderGuest when it's a correct request" do
