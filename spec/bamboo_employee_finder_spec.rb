@@ -1,8 +1,9 @@
 require 'bamboo_employee_finder'
+require 'fake_slack_info'
 
 RSpec.describe BambooEmployeeFinder do
-  let (:fake_data_slack) {[{user_id: "id", email: "email"}]}
-  let (:fake_data_bamboo) {[{"workEmail" => "email", "employeeId" => "99"}]}
+  let (:fake_data_slack) {[FakeSlackInfo.new]}
+  let (:fake_data_bamboo) {[{"workEmail" => "email", "id" => "99"}]}
 
   it "it can find a bamboo employeeId with a slack id" do
     user_finder = BambooEmployeeFinder.new(fake_data_slack, fake_data_bamboo)

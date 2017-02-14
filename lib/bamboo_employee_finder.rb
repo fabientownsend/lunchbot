@@ -5,32 +5,28 @@ class BambooEmployeeFinder
   end
 
   def employee_id(slack_id)
-    return employee_data(slack_id, "employeeId")
+    return employee_data(slack_id, "id")
   end
 
   private
 
   def employee_data(slack_id, data_wanted)
     @channel_users.each do |user|
-      if user[:user_id] == slack_id
-        return specific_data(user, data_wanted)
+      if user.slack_id == slack_id
+        user_data = employee_data_for(user)
+        if user_data
+          return user_data[data_wanted]
+        end
       end
-      return "User does not exist in the channel!"
     end
-  end
-
-  def specific_data(user, data_wanted)
-    employee = employee_data_for(user)
-    return employee[data_wanted]
+    "User does not exist in the channel!"
   end
 
   def employee_data_for(user)
-    @bamboo_employees.each do |employee|
-      return employee if have_same_email(user, employee) 
-    end
+    @bamboo_employees.find {|employee| have_same_email(user, employee)}
   end
 
   def have_same_email(user, employee)
-    return user[:email] == employee["workEmail"]
+    user.email == employee["workEmail"]
   end
 end
