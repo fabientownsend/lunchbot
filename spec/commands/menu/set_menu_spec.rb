@@ -67,6 +67,13 @@ RSpec.describe SetMenu do
     expect(Menu.last.url).to eq("https://deliveroo.co.uk/menu/london/covent-garden/the-real-greek-covent-garden")
   end
 
+  it "accept subdomain" do
+    url = "https://arancinibrothers-catering.orderswift.com/menu/re_0UVbTREuhk8Bi9b"
+    change_url(url)
+
+    expect(Menu.last.url).to eq("https://arancinibrothers-catering.orderswift.com/menu/re_0UVbTREuhk8Bi9b")
+  end
+
   private
 
   def change_url(url, from_id = "valid id")

@@ -35,7 +35,11 @@ class SetMenu
   end
 
   def extract_url(request)
-    request[/((http|https):\/\/)?(w{3}.)?[A-Za-z0-9-]+.(com|co.uk)([a-zA-Z0-9\.\/\-]+)?/]
+    protocol = "((http|https):\/\/)?(w{3}.)"
+    subdomain = "[A-Za-z0-9-]+."
+    domain = "[A-Za-z0-9-]+.(com|co.uk)"
+    path = "([a-zA-Z0-9_\.\/\-]+)"
+    request[/#{protocol}?#{subdomain}?#{domain}#{path}?/]
   end
 
   def set_url(url)
