@@ -1,6 +1,6 @@
 class BambooEmployeeFinder
-  def initialize(channel_users, bamboo_employees)
-    @channel_users = channel_users
+  def initialize(slack_users, bamboo_employees)
+    @slack_users = slack_users
     @bamboo_employees = bamboo_employees
   end
 
@@ -11,7 +11,7 @@ class BambooEmployeeFinder
   private
 
   def employee_data(slack_id, data_wanted)
-    @channel_users.each do |user|
+    @slack_users.each do |user|
       if user.slack_id == slack_id
         employee = @bamboo_employees.find {|employee| have_same_email(user, employee)}
         return employee[data_wanted] if !employee.nil?

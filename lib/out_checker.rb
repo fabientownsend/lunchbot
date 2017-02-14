@@ -16,11 +16,13 @@ class OutChecker
 
   def is_out_on_friday(requests, employee_id)
     requests.each do |request|
-      if request["employeeId"].to_s == employee_id and contains_a_friday(request["start"], request["end"])
-        return true
-      end
-      return false
+      return true if request_for_friday?(request, employee_id)
     end
+    false
+  end
+
+  def request_for_friday?(request, employee_id)
+    return request["employeeId"].to_s == employee_id && contains_a_friday(request["start"], request["end"])
   end
 
   def date_range(start_date, end_date)
