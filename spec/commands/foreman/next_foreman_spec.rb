@@ -2,7 +2,7 @@ require 'commands/foreman/next_foreman_command'
 require 'models/apprentice'
 
 RSpec.describe NextForeman do
-  let (:next_foreman) { NextForeman.new }
+  let(:next_foreman) { NextForeman.new }
 
   it "apply to the command next foreman" do
     response = next_foreman.applies_to("next foreman")
@@ -20,7 +20,7 @@ RSpec.describe NextForeman do
   end
 
   it "foreman remain the same when he is the only one" do
-    Helper.add_foreman({id: "id one", name: "will"})
+    Helper.add_foreman(id: "id one", name: "will")
 
     expect(Apprentice.first.user_name).to eq("will")
     next_foreman.run
@@ -28,8 +28,8 @@ RSpec.describe NextForeman do
   end
 
   it "set the second apprentice at the first position" do
-    Helper.add_foreman({id: "id one", name: "will"})
-    Helper.add_foreman({id: "id two", name: "fabien"})
+    Helper.add_foreman(id: "id one", name: "will")
+    Helper.add_foreman(id: "id two", name: "fabien")
 
     expect(Apprentice.first.user_name).to eq("will")
     next_foreman.run
@@ -37,8 +37,8 @@ RSpec.describe NextForeman do
   end
 
   it "put the first apprentice to the last position" do
-    Helper.add_foreman({id: "id one", name: "will"})
-    Helper.add_foreman({id: "id two", name: "fabien"})
+    Helper.add_foreman(id: "id one", name: "will")
+    Helper.add_foreman(id: "id two", name: "fabien")
 
     expect(Apprentice.first.user_name).to eq("will")
     next_foreman.run
@@ -51,7 +51,7 @@ RSpec.describe NextForeman do
   end
 
   it "return the new foreman" do
-    Helper.add_foreman({id: "id one", name: "will"})
+    Helper.add_foreman(id: "id one", name: "will")
     response = next_foreman.run
     expect(response).to eq("The new foreman is <@id one>")
   end

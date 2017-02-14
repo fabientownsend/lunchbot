@@ -1,13 +1,13 @@
 class FakeUserInfoProvider
   def initialize
-    @names = ["Fabien", "Will"]
+    @names = %w(Fabien Will)
   end
 
-  def real_name(user_id)
+  def real_name(_user_id)
     @names.reverse!.first
   end
 
-  def email(user_id)
+  def email(_user_id)
     "email@email.com"
   end
 end

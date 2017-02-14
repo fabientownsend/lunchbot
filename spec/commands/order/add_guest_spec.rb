@@ -2,17 +2,17 @@ require 'commands/order/add_guest'
 require 'models/order'
 
 RSpec.describe AddGuest do
-  let (:event_data_from_will) { {user_id: "asdf", user_name: "Will" } }
+  let(:event_data_from_will) { { user_id: "asdf", user_name: "Will" } }
 
   it "save a guest" do
     response = Helper.add_guest("james smith")
 
-     expect(Order.last(:user_name => "james smith")).not_to be(nil)
-     expect(response).to eq("james smith has been added as a guest!")
+    expect(Order.last(user_name: "james smith")).not_to eq(nil)
+    expect(response).to eq("james smith has been added as a guest!")
   end
 
   it "said if a guest already exist" do
-    response = Helper.add_guest("james smith")
+    Helper.add_guest("james smith")
     response = Helper.add_guest("james smith")
 
     expect(Order.count).to eq(1)

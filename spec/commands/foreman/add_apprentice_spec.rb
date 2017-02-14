@@ -2,39 +2,39 @@ require 'commands/foreman/add_apprentice'
 require 'models/apprentice'
 
 RSpec.describe AddApprentice do
-  let (:add_apprentice) { AddApprentice.new }
+  let(:add_apprentice) { AddApprentice.new }
 
   it "add a foreman to the database" do
-    Helper.add_foreman({id: "id", name: "will"})
+    Helper.add_foreman(id: "id", name: "will")
 
     expect(Apprentice.last.user_name).to eq("will")
     expect(Apprentice.last.slack_id).to eq("id")
   end
 
   it "add two different foreman" do
-    Helper.add_foreman({id: "id one", name: "will"})
-    Helper.add_foreman({id: "id two", name: "fabien"})
+    Helper.add_foreman(id: "id one", name: "will")
+    Helper.add_foreman(id: "id two", name: "fabien")
 
-    expect(Apprentice.last(:slack_id => "id one").user_name).to eq("will")
-    expect(Apprentice.last(:slack_id => "id two").user_name).to eq("fabien")
+    expect(Apprentice.last(slack_id: "id one").user_name).to eq("will")
+    expect(Apprentice.last(slack_id: "id two").user_name).to eq("fabien")
   end
 
   it "can not add two foreman with the same id" do
-    Helper.add_foreman({id: "id one", name: "will"})
-    Helper.add_foreman({id: "id one", name: "fabien"})
+    Helper.add_foreman(id: "id one", name: "will")
+    Helper.add_foreman(id: "id one", name: "fabien")
 
     expect(Apprentice.count).to eq(1)
   end
 
   it "return a message when foreman already exist" do
-    Helper.add_foreman({id: "id one", name: "will"})
-    response = Helper.add_foreman({id: "id one", name: "fabien"})
+    Helper.add_foreman(id: "id one", name: "will")
+    response = Helper.add_foreman(id: "id one", name: "fabien")
 
     expect(response).to eq("fabien is already in the database.")
   end
 
   it "return a message when foreman added" do
-    response = Helper.add_foreman({id: "id one", name: "will"})
+    response = Helper.add_foreman(id: "id one", name: "will")
 
     expect(response).to eq("will has been added to apprentices.")
   end

@@ -4,92 +4,92 @@ RSpec.describe RequestParser do
   let(:user_request) { RequestParser.new }
 
   it "is not case sensitive" do
-    request = {user_message: "NEW mEnU www.mENU.CoM"}
+    request = { user_message: "NEW mEnU www.mENU.CoM" }
     expect(user_request.parse(request)).to be_a(SetMenu)
   end
 
   it "return menu when the request is a menu" do
-    request = {user_message: "new menu www.menu.com"}
+    request = { user_message: "new menu www.menu.com" }
     expect(user_request.parse(request)).to be_a(SetMenu)
   end
 
   it "returns set foreman when the request is to a set the foreman" do
-    request = {user_message: "set foreman: "}
+    request = { user_message: "set foreman: " }
     expect(user_request.parse(request)).to be_a(SetForeman)
   end
 
   it "return copy order when the request is to copy an order" do
-    request = {user_message: "copy order: "}
+    request = { user_message: "copy order: " }
     expect(user_request.parse(request)).to be_a(CopyOrder)
   end
 
   it "returns help when request is help" do
-    request = {user_message: "help"}
+    request = { user_message: "help" }
     expect(user_request.parse(request)).to be_a(Help)
   end
 
   it "return out when the request is to be marked out" do
-    request = {user_message: "out"}
+    request = { user_message: "out" }
     expect(user_request.parse(request)).to be_a(MarkOut)
   end
 
   it "return get_menu when the person request for a menu" do
-    request = {user_message: "menu?"}
+    request = { user_message: "menu?" }
     expect(user_request.parse(request)).to be_a(GetMenu)
   end
 
   it "return place_order when it's a correct order request" do
-    request = {user_message: "order: name_of_the_menu"}
+    request = { user_message: "order: name_of_the_menu" }
     expect(user_request.parse(request)).to be_a(PlaceOrder)
   end
 
   it "return get_order when it's a correct request" do
-    request = {user_message: "order? Fabien Townsend"}
+    request = { user_message: "order? Fabien Townsend" }
     expect(user_request.parse(request)).to be_a(GetOrder)
   end
 
   it "return foreman when it's a correct request" do
-    request = {user_message: "foreman"}
+    request = { user_message: "foreman" }
     expect(user_request.parse(request)).to be_a(GetForeman)
   end
 
   it "return all orders command  when it's a correct request" do
-    request = {user_message: "all orders?"}
+    request = { user_message: "all orders?" }
     expect(user_request.parse(request)).to be_a(GetAllOrders)
   end
 
   it "return PlaceOrderGuest when it's a correct request" do
-    request = {user_message: "order -james smith-: burger"}
+    request = { user_message: "order -james smith-: burger" }
     expect(user_request.parse(request)).to be_a(PlaceOrderGuest)
   end
 
   it "return GetAllGuests" do
-    request = {user_message: "guests?"}
+    request = { user_message: "guests?" }
     expect(user_request.parse(request)).to be_a(GetAllGuests)
   end
 
   it "return GetAllGuests" do
-    request = {user_message: "remove guest: james"}
+    request = { user_message: "remove guest: james" }
     expect(user_request.parse(request)).to be_a(RemoveGuestOrder)
   end
 
   it "return GetAllGuests" do
-    request = {user_message: "add guest: james"}
+    request = { user_message: "add guest: james" }
     expect(user_request.parse(request)).to be_a(AddGuest)
   end
 
   it "returns NextForeman" do
-    request = {user_message: "next foreman"}
+    request = { user_message: "next foreman" }
     expect(user_request.parse(request)).to be_a(NextForeman)
   end
 
   it "returns AddApprentice" do
-    request = {user_message: "add apprentice"}
+    request = { user_message: "add apprentice" }
     expect(user_request.parse(request)).to be_a(AddApprentice)
   end
 
   it "returns RemoveApprentice" do
-    request = {user_message: "remove apprentice"}
+    request = { user_message: "remove apprentice" }
     expect(user_request.parse(request)).to be_a(RemoveApprentice)
   end
 

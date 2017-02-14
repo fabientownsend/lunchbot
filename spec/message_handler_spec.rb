@@ -6,23 +6,21 @@ require 'commands/order/add_guest'
 require 'commands/foreman/add_apprentice'
 require 'commands/help'
 
-
 RSpec.describe MessageHandler do
-  let (:fake_response) { FakeResponse.new }
-  let (:fake_mark_all_out) { FakeMarkAllOut.new }
-  let (:fake_user_info_provider) { FakeUserInfoProvider.new }
+  let(:fake_response) { FakeResponse.new }
+  let(:fake_mark_all_out) { FakeMarkAllOut.new }
+  let(:fake_user_info_provider) { FakeUserInfoProvider.new }
+  let(:team_id) { "T026MULUJ" }
+  let(:recipient) { "D3S6XE6SZ" }
+  let(:channel_id) { "CHANNELID" }
 
-  let (:message_handler) { MessageHandler.new(
-    {
+  let(:message_handler) do
+    MessageHandler.new(
       mark_all_out: fake_mark_all_out,
       response: fake_response,
-      user_info_provider: fake_user_info_provider,
-    }
-  ) }
-
-  let (:team_id) { "T026MULUJ" }
-  let (:recipient) { "D3S6XE6SZ" }
-  let (:channel_id) { "CHANNELID" }
+      user_info_provider: fake_user_info_provider
+    )
+  end
 
   before(:each) do
     foreman = Apprentice.new(
@@ -44,7 +42,8 @@ RSpec.describe MessageHandler do
   it "should return a message for a new menu" do
     message_from_slack("new menu: <http://www.test.com|www.test.com>")
 
-    expect(fake_response.message).to eq("<!here> Menu has been set: http://www.test.com")
+    bot_response = "<!here> Menu has been set: http://www.test.com"
+    expect(fake_response.message).to eq(bot_response)
     expect(fake_response.team_id).to eq(team_id)
     expect(fake_response.user_id).to eq(channel_id)
   end
@@ -57,14 +56,16 @@ RSpec.describe MessageHandler do
   it "return the url when you ask the menu which is not provided" do
     message_from_slack("menu?")
 
-    expect(fake_response.message).to eq("The menu for this week is: no url provided")
+    bot_response = "The menu for this week is: no url provided"
+    expect(fake_response.message).to eq(bot_response)
   end
 
   it "return the url when you ask the menu which is not provided" do
     message_from_slack("new menu: <http://www.test.com|www.test.com>")
     message_from_slack("menu?")
 
-    expect(fake_response.message).to eq("The menu for this week is: http://www.test.com")
+    bot_response = "The menu for this week is: http://www.test.com"
+    expect(fake_response.message).to eq(bot_response)
     expect(fake_response.team_id).to eq(team_id)
     expect(fake_response.user_id).to eq(channel_id)
   end
@@ -83,8 +84,8 @@ RSpec.describe MessageHandler do
   end
 
   it "return the foreman of the week" do
-    add_apprentice = AddApprentice.new()
-    add_apprentice.prepare({user_name: "Will", slack_id: "id"})
+    add_apprentice = AddApprentice.new
+    add_apprentice.prepare(user_name: "Will", slack_id: "id")
     add_apprentice.run
 
     message_from_slack("foreman")
@@ -98,14 +99,18 @@ RSpec.describe MessageHandler do
     add_guest("james smith")
     message_from_slack("remind")
 
-    expect(fake_response.message).to eq("<@FabienUserId>\n<@WillUserId>\njames smith host: <@id host>")
+    bot_response =
+      "<@FabienUserId>\n<@WillUserId>\njames smith host: <@id host>"
+    expect(fake_response.message).to eq(bot_response)
   end
 
   it "return list of users that doesn't ordered yet" do
     add_guest("james smith")
     message_from_slack("remind")
 
-    expect(fake_response.message).to eq("<@FabienUserId>\n<@WillUserId>\njames smith host: <@id host>")
+    bot_response =
+      "<@FabienUserId>\n<@WillUserId>\njames smith host: <@id host>"
+    expect(fake_response.message).to eq(bot_response)
 
     message_from_slack("remove guest: james smith")
     message_from_slack("remind")
@@ -113,7 +118,7 @@ RSpec.describe MessageHandler do
   end
 
   it "return a list without the people who ordered" do
-    message_from_slack("order: fish", "Fabien", "FabienUserId")
+    message_from_slack("order: fish", "FabienUserId")
     message_from_slack("order -james-: fish")
     message_from_slack("remind")
 
@@ -129,7 +134,8 @@ RSpec.describe MessageHandler do
   it "return confirmation guest order" do
     message_from_slack("order -james smith-: burger")
 
-    expect(fake_response.message).to eq("james smith's order for burger has been placed!")
+    bot_response = "james smith's order for burger has been placed!"
+    expect(fake_response.message).to eq(bot_response)
   end
 
   it "return no guest when empty" do
@@ -172,29 +178,29 @@ RSpec.describe MessageHandler do
 
   private
 
-  def message_from_slack(request, name = "Will", new_recipient = recipient)
+  def message_from_slack(request, new_recipient = recipient)
     user_message = request
-    event_data = create_event_data(user_message, new_recipient, name)
+    event_data = create_event_data(user_message, new_recipient)
     message_handler.handle(team_id, event_data)
   end
 
-  def create_event_data(message, recipient, name)
+  def create_event_data(message, recipient)
     {
-      "type"=>"message",
-      "user"=>"#{recipient}",
-      "text"=>"#{message}",
-      "ts"=>"1484928006.000013",
-      "channel"=>"#{channel_id}",
-      "event_ts"=>"1484928006.000013"
+      "type" => "message",
+      "user" => recipient,
+      "text" => message,
+      "ts" => "1484928006.000013",
+      "channel" => channel_id,
+      "event_ts" => "1484928006.000013"
     }
   end
 
   def add_guest(name)
     add_guest = AddGuest.new
-    add_guest.prepare({
+    add_guest.prepare(
       user_message: "add guest: #{name}",
       user_id: "id host"
-    })
+    )
     add_guest.run
   end
 end

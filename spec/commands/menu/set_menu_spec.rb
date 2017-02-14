@@ -57,28 +57,32 @@ RSpec.describe SetMenu do
     url = "http://www.deliveroo.co.uk/menu/london/holborn/itsu-fleet-street"
     change_url(url)
 
-    expect(Menu.last.url).to eq("http://www.deliveroo.co.uk/menu/london/holborn/itsu-fleet-street")
+    result = "http://www.deliveroo.co.uk/menu/london/holborn/itsu-fleet-street"
+    expect(Menu.last.url).to eq(result)
   end
 
   it "remove useless information from url" do
-    url = "https://deliveroo.co.uk/menu/london/covent-garden/the-real-greek-covent-garden?day=today&rpos=0&time=1130"
+    url = "https://deliveroo.co.uk/menu/london/covent-garden/the-real-greek \
+    ?day=today&rpos=0&time=1130"
     change_url(url)
 
-    expect(Menu.last.url).to eq("https://deliveroo.co.uk/menu/london/covent-garden/the-real-greek-covent-garden")
+    result = "https://deliveroo.co.uk/menu/london/covent-garden/the-real-greek"
+    expect(Menu.last.url).to eq(result)
   end
 
   it "accept subdomain" do
-    url = "https://arancinibrothers-catering.orderswift.com/menu/re_0UVbTREuhk8Bi9b"
+    url = "https://arancinibrothers-catering.orderswift.com/menu/re_0UV"
     change_url(url)
 
-    expect(Menu.last.url).to eq("https://arancinibrothers-catering.orderswift.com/menu/re_0UVbTREuhk8Bi9b")
+    result = "https://arancinibrothers-catering.orderswift.com/menu/re_0UV"
+    expect(Menu.last.url).to eq(result)
   end
 
   private
 
   def change_url(url, from_id = "valid id")
     menu = SetMenu.new
-    menu.prepare({user_message: url, user_id: from_id})
+    menu.prepare(user_message: url, user_id: from_id)
     menu.run
   end
 end

@@ -27,39 +27,40 @@ class Helper
   def self.order_guest(data)
     from = data[:from] || "host id"
     place_order_guest = PlaceOrderGuest.new
-    place_order_guest.prepare({
-      user_id: from, user_message: "order -#{data[:name]}-: #{data[:meal]}"
-    })
+    place_order_guest.prepare(
+      user_id: from,
+      user_message: "order -#{data[:name]}-: #{data[:meal]}"
+    )
     place_order_guest.run
   end
 
   def self.order_guest_previous_monday(data)
     from = data[:from] || "host id"
     place_order_guest = PlaceOrderGuest.new
-    place_order_guest.prepare({
+    place_order_guest.prepare(
       user_id: from,
       user_message: "order -#{data[:name]}-: #{data[:meal]}",
       date: Days.monday - 8
-    })
+    )
     place_order_guest.run
   end
 
   def self.add_guest(name)
     place_order_guest = AddGuest.new
-    place_order_guest.prepare({
+    place_order_guest.prepare(
       user_message: "add guest: #{name}",
       user_id: "host id"
-    })
+    )
     place_order_guest.run
   end
 
   def self.add_guest_previous_monday(name)
     place_order_guest = AddGuest.new
-    place_order_guest.prepare({
+    place_order_guest.prepare(
       user_message: "add guest: #{name}",
       user_id: "host id",
       date: Days.monday - 8
-    })
+    )
     place_order_guest.run
   end
 
@@ -67,13 +68,13 @@ class Helper
     id = data[:id]
     user_name = data[:name]
     add_apprentice = AddApprentice.new
-    add_apprentice.prepare({user_id: id, user_name: user_name})
+    add_apprentice.prepare(user_id: id, user_name: user_name)
     add_apprentice.run
   end
 end
 
 RSpec.configure do |config|
-  DataMapper.setup(:default, 'sqlite::memory:')
+  DataMapper.setup(:default, "sqlite::memory:")
 
   config.before(:each) do
     DataMapper.finalize.auto_migrate!
@@ -91,4 +92,3 @@ RSpec.configure do |config|
     crafter.save
   end
 end
-

@@ -1,7 +1,7 @@
 require 'commands/foreman/get_foreman'
 
 RSpec.describe GetForeman do
-  let (:foreman) { GetForeman.new }
+  let(:foreman) { GetForeman.new }
 
   it "applies to a foreman command" do
     expect(foreman.applies_to("foreman")).to be true
@@ -22,7 +22,7 @@ RSpec.describe GetForeman do
   end
 
   it "return the foreman of the week" do
-    Helper.add_foreman({id: "id one", name: "will"})
+    Helper.add_foreman(id: "id one", name: "will")
 
     response = foreman.run
 

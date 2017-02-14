@@ -1,4 +1,3 @@
 class FakeMarkAllOut
-  def update
-  end
+  def update; end
 end

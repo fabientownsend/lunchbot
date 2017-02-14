@@ -3,17 +3,17 @@ require 'fake_slack_info'
 
 class FakeBambooInfoProvider
   def whos_out
-    [{"employeeId" => "99", "end" => "2017-02-05", "start" => "2017-02-12"}]
+    [{ "employeeId" => "99", "end" => "2017-02-05", "start" => "2017-02-12" }]
   end
 
   def employees
-    [{"workEmail" => "email", "id" => "99"}]
+    [{ "workEmail" => "email", "id" => "99" }]
   end
 end
 
 RSpec.describe OutChecker do
-  let (:fake_data_slack) {[FakeSlackInfo.new]}
-  let (:fake_info_provider) {FakeBambooInfoProvider.new}
+  let(:fake_data_slack) { [FakeSlackInfo.new] }
+  let(:fake_info_provider) { FakeBambooInfoProvider.new }
 
   it "knows if a user is out on friday" do
     out_checker = OutChecker.new(fake_data_slack, fake_info_provider)

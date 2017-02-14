@@ -2,8 +2,8 @@ require 'commands/order/reminder'
 require 'fake_mark_all_out'
 
 RSpec.describe Reminder do
-  let (:reminder) { Reminder.new }
-  let (:data) {
+  let(:reminder) { Reminder.new }
+  let(:data) do
     {
       user_message: "message",
       user_id: "user id",
@@ -12,9 +12,9 @@ RSpec.describe Reminder do
       team_id: "team id",
       mark_all_out: FakeMarkAllOut.new
     }
-  }
+  end
 
-  before (:each) do
+  before(:each) do
     foreman = Apprentice.new(
       user_name: "Will",
       slack_id: "user id"
@@ -30,8 +30,16 @@ RSpec.describe Reminder do
   end
 
   it "tell you when there is no orders" do
-    Helper.order({user_id: "FabienUserId", user_name: "fabien", user_message: "burger"})
-    Helper.order({user_id: "WillUserId", user_name: "will", user_message: "burger"})
+    Helper.order(
+      user_id: "FabienUserId",
+      user_name: "fabien",
+      user_message: "burger"
+    )
+    Helper.order(
+      user_id: "WillUserId",
+      user_name: "will",
+      user_message: "burger"
+    )
 
     reminder.prepare(data)
     response = reminder.run
@@ -40,7 +48,11 @@ RSpec.describe Reminder do
   end
 
   it "doesn't remind people who placed an order" do
-    Helper.order({user_id: "FabienUserId", user_name: "will", user_message: "burger"})
+    Helper.order(
+      user_id: "FabienUserId",
+      user_name: "will",
+      user_message: "burger"
+    )
 
     reminder.prepare(data)
     response = reminder.run
@@ -49,11 +61,11 @@ RSpec.describe Reminder do
   end
 
   it "doesn't consider the order from the previous weeks" do
-    Helper.order_previous_monday({
+    Helper.order_previous_monday(
       user_id: "FabienUserId",
       user_name: "will",
       user_message: "burger"
-    })
+    )
 
     reminder.prepare(data)
     response = reminder.run
@@ -66,7 +78,8 @@ RSpec.describe Reminder do
     reminder.prepare(data)
     response = reminder.run
 
-    expect(response).to eq("<@FabienUserId>\n<@WillUserId>\njean gaston host: <@host id>")
+    expect(response)
+      .to eq("<@FabienUserId>\n<@WillUserId>\njean gaston host: <@host id>")
   end
 
   it "doesn't remind guest form the previous weeks" do
