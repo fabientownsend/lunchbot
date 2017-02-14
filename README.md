@@ -24,12 +24,9 @@ export BAMBOO_HR_API_KEY="XXXX"
 Type help or look in the command_info.rb file to view all commands.
 
 # TODO
-- Refactor reminder class.
 - Cache BambooAPI requests in memory.
 - Create an error message moudle.
-- Fix naming inconsistencies.
 - Emoji responses sepcific to lunch order.
-- General clean up of classes having more then one responsibility.
 
 # Development
 You can add a new command with
