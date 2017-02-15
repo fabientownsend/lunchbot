@@ -37,3 +37,13 @@ ruby ./bin/command_creator.rb new command ClassName
 This will create a command with the method need in: `lib/commands` and its test in `spec/commands`.
 
 To make your new command effective you simply need to add your commands class to the `lib/request_parser`.
+
+## Code Style
+To make the code consistant we enforce a commun style on our code with Rubocop.
+Note that Rubocop isn't configurate to be run on the pipeline, it's up to the
+developpers to take of the code they commit
+
+``` bash
+gem install rubocop
+rubocop
+```
