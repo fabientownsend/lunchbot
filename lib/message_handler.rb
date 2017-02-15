@@ -11,29 +11,24 @@ class MessageHandler
     @user_info = args[:user_info_provider] || UserInfoProvider.new
   end
 
-  def start_to_ping(response, team_id, event_data)
-    respond(response, team_id, event_data['user'], event_data['channel'])
+  def keep_alive(team_id, event_data)
+    @alive = true
+    respond("ping", team_id, event_data['user'], event_data['channel'])
     sleep 600
-    start_to_ping(response, team_id, event_data)
+    keep_alive(team_id, event_data)
   end
 
   def handle(team_id, event_data)
-    data = format_data(team_id, event_data)
-    returned_command = @request_parser.parse(data)
-    if returned_command 
-      deal_with_response(returned_command, team_id, event_data)
-    end
+    returned_command = @request_parser.parse(format_data(team_id, event_data))
+    deal_with_command(returned_command, team_id, event_data) unless returned_command.nil?
+    Thread.new {keep_alive(team_id, event_data)} if not @alive
   end
 
   private
 
-  def deal_with_response(returned_command, team_id, event_data)
-    response = returned_command.run
-    if response == "ping"
-      start_to_ping(response, team_id, event_data)
-    end
-
-    if respond_privately(returned_command)
+  def deal_with_command(command, team_id, event_data)
+    response = command.run
+    if respond_privately(command)
       respond(response, team_id, event_data['user'])
     else
       respond(response, team_id, event_data['user'], event_data['channel'])
