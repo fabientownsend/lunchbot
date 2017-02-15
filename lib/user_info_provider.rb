@@ -1,38 +1,27 @@
-require 'net/http'
 require 'json'
+require 'httparty'
 
 class UserInfoProvider
-    def real_name(user_id, team_id)
-      token = $teams[team_id][:bot_access_token]
-      url = URI("https://slack.com/api/users.info?token=#{token}&user=#{user_id}&pretty=1")
-      return get_real_name(url)
+    include HTTParty
+
+    base_uri "https://slack.com/api/users.info?token="
+
+    def real_name(user_id)
+      user_data(user_id)['user']['real_name']
     end
 
-    def email(user_id, team_id)
-      token = $teams[team_id][:bot_access_token]
-      url = URI("https://slack.com/api/users.info?token=#{token}&user=#{user_id}&pretty=1")
-      return get_email(url)
+    def email(user_id)
+      user_data(user_id)['user']['email']
     end
 
     private
 
-    def get_real_name(url)
-      begin
-        response = Net::HTTP.get(url)
-        deserialized_response = JSON.parse(response)
-        return deserialized_response['user']['real_name']
-      rescue
-        return "no user name provided"
-      end
+    def user_data(user_id)
+      data = self.class.get("#{token}&user=#{user_id}&pretty=1")
+      JSON.parse(data.body)
     end
 
-    def get_email(url)
-      begin
-        response = Net::HTTP.get(url)
-        deserialized_response = JSON.parse(response)
-        return deserialized_response['user']['profile']['email']
-      rescue
-        return "no email provided"
-      end
+    def token
+      ENV['BOT_ACCESS_TOKEN']
     end
 end

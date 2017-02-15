@@ -18,10 +18,6 @@ class BambooInfoProvider
     data["employees"]
   end
 
-  def time_off_requests
-    JSON.parse(time_off_data.body)
-  end
-
   def whos_out
     JSON.parse(whos_out_data.body)
   end
@@ -30,10 +26,6 @@ class BambooInfoProvider
 
   def employees_data
     self.class.get("/api/gateway.php/#{@subdomain}/v1/employees/directory", basic_auth: auth_info, headers: headers)
-  end
-
-  def time_off_data
-    self.class.get("/api/gateway.php/#{@subdomain}/v1/time_off/requests", basic_auth: auth_info, headers: headers)
   end
 
   def whos_out_data
