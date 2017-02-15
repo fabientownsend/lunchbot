@@ -1,6 +1,7 @@
 require 'commands/order/get_everyone'
 
-RSpec.describe GetEveryone do
+RSpec.describe Commands::GetEveryone do
+  let(:get_everyone) { Commands::GetEveryone.new }
   let(:data) do
     {
       user_message: "message",
@@ -13,28 +14,24 @@ RSpec.describe GetEveryone do
 
   it "apply to the command 'everyone'" do
     user_request = "everyone"
-    get_everyone = GetEveryone.new
 
     expect(get_everyone.applies_to(user_request)).to eq(true)
   end
 
   it "apply only only ton 'everyone' command" do
     user_request = "everyone and me"
-    get_everyone = GetEveryone.new
 
     expect(get_everyone.applies_to(user_request)).to eq(false)
   end
 
   it "is not case sensitive" do
     user_request = "Everyone"
-    get_everyone = GetEveryone.new
 
     expect(get_everyone.applies_to(user_request)).to eq(true)
   end
 
   it "is not spaces sensitive" do
     user_request = "  everyone  "
-    get_everyone = GetEveryone.new
 
     expect(get_everyone.applies_to(user_request)).to eq(true)
   end
@@ -43,7 +40,6 @@ RSpec.describe GetEveryone do
     Helper.add_guest("harry potter")
     Helper.order_guest(name: "james smith", meal: "burger", from: "slack id")
 
-    get_everyone = GetEveryone.new
     get_everyone.prepare(data)
     response = get_everyone.run
 
@@ -60,7 +56,6 @@ RSpec.describe GetEveryone do
       user_message: "fish"
     )
 
-    get_everyone = GetEveryone.new
     get_everyone.prepare(data)
     response = get_everyone.run
 

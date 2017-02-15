@@ -1,17 +1,19 @@
 require 'models/menu'
 
-class GetMenu
-  def run
-    if Menu.last
-      "The menu for this week is: #{Menu.last.url}"
-    else
-      "The menu for this week is: no url provided"
+module Commands
+  class GetMenu
+    def run
+      if Menu.last
+        "The menu for this week is: #{Menu.last.url}"
+      else
+        "The menu for this week is: no url provided"
+      end
     end
-  end
 
-  def prepare(data) end
+    def prepare(data) end
 
-  def applies_to(request)
-    request.downcase.strip == "menu?"
+    def applies_to(request)
+      request.downcase.strip == "menu?"
+    end
   end
 end

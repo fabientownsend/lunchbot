@@ -2,8 +2,8 @@ require 'commands/order/all_food_orders'
 require 'date'
 require 'days'
 
-RSpec.describe AllFoodOrders do
-  let(:all_food_orders) { AllFoodOrders.new }
+RSpec.describe Commands::AllFoodOrders do
+  let(:all_food_orders) { Commands::AllFoodOrders.new }
 
   it "return all food orders when asked" do
     expect(all_food_orders.applies_to("all food orders")).to eq(true)

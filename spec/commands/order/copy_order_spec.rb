@@ -1,7 +1,7 @@
 require 'commands/order/copy_order'
 require 'days'
 
-RSpec.describe CopyOrder do
+RSpec.describe Commands::CopyOrder do
   let(:id_user_reference) { "id_one" }
   let(:id_user_which_copy) { "id_two" }
 
@@ -67,7 +67,7 @@ RSpec.describe CopyOrder do
       user_message: "copy order: <@#{id_user_reference}>"
     }
 
-    copy_order = CopyOrder.new
+    copy_order = Commands::CopyOrder.new
     copy_order.prepare(fake)
     copy_order.run
   end

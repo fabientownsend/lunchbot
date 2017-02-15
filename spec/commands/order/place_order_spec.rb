@@ -2,7 +2,7 @@ require 'commands/order/place_order'
 require 'models/order'
 require 'models/crafter'
 
-RSpec.describe PlaceOrder do
+RSpec.describe Commands::PlaceOrder do
   it "reccord an order in the database" do
     Helper.order(user_id: "asdf", user_name: "will", user_message: "burger")
 

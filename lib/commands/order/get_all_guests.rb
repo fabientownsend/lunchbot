@@ -1,29 +1,31 @@
 require 'models/order'
 
-class GetAllGuests
-  def run
-    format_response(guests)
-  end
+module Commands
+  class GetAllGuests
+    def run
+      format_response(guests)
+    end
 
-  def applies_to(request)
-    request == "guests?"
-  end
+    def applies_to(request)
+      request == "guests?"
+    end
 
-  def prepare(data)
-  end
+    def prepare(data)
+    end
 
-  private
+    private
 
-  def guests
-    guests = Order.all(:date => (Days.from_monday_to_friday))
-    guests.all.map { |order| "#{order.user_name}" if order.host }.compact
-  end
+    def guests
+      guests = Order.all(:date => (Days.from_monday_to_friday))
+      guests.all.map { |order| "#{order.user_name}" if order.host }.compact
+    end
 
-  def format_response(guest)
-    if guest.empty?
-      "no guest"
-    else
-      guest.join("\n")
+    def format_response(guest)
+      if guest.empty?
+        "no guest"
+      else
+        guest.join("\n")
+      end
     end
   end
 end

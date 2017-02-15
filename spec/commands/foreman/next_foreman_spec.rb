@@ -1,8 +1,8 @@
 require 'commands/foreman/next_foreman_command'
 require 'models/apprentice'
 
-RSpec.describe NextForeman do
-  let(:next_foreman) { NextForeman.new }
+RSpec.describe Commands::NextForeman do
+  let(:next_foreman) { Commands::NextForeman.new }
 
   it "apply to the command next foreman" do
     response = next_foreman.applies_to("next foreman")

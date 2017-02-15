@@ -1,8 +1,8 @@
 require 'commands/foreman/add_apprentice'
 require 'models/apprentice'
 
-RSpec.describe AddApprentice do
-  let(:add_apprentice) { AddApprentice.new }
+RSpec.describe Commands::AddApprentice do
+  let(:add_apprentice) { Commands::AddApprentice.new }
 
   it "add a foreman to the database" do
     Helper.add_foreman(id: "id", name: "will")

@@ -1,7 +1,8 @@
 require 'commands/order/get_order'
 require 'days'
 
-RSpec.describe GetOrder do
+RSpec.describe Commands::GetOrder do
+  let(:get_order) { Commands::GetOrder.new }
   let(:fake_data) do
     {
       user_name: "Will",
@@ -17,14 +18,12 @@ RSpec.describe GetOrder do
       user_message: "fish",
       date: Days.monday
     )
-    get_order = GetOrder.new
     get_order.prepare(fake_data)
 
     expect(get_order.run).to eq("<@f_id> ordered: `fish`.")
   end
 
   it "lets user know if the user id give in invalid" do
-    get_order = GetOrder.new
     get_order.prepare(fake_data)
 
     expect(get_order.run).to eq("That person does not have an order!")
@@ -36,7 +35,6 @@ RSpec.describe GetOrder do
       user_name: "Fabien",
       user_message: "fish"
     )
-    get_order = GetOrder.new
     get_order.prepare(fake_data)
 
     expect(get_order.run).to eq("That person does not have an order!")

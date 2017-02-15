@@ -1,8 +1,8 @@
 require 'commands/order/reminder'
 require 'fake_mark_all_out'
 
-RSpec.describe Reminder do
-  let(:reminder) { Reminder.new }
+RSpec.describe Commands::Reminder do
+  let(:reminder) { Commands::Reminder.new }
   let(:data) do
     {
       user_message: "message",

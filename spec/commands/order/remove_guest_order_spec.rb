@@ -1,8 +1,8 @@
 require 'commands/order/remove_guest_order'
 require 'models/order'
 
-RSpec.describe RemoveGuestOrder do
-  let(:remove_guest_order) { RemoveGuestOrder.new }
+RSpec.describe Commands::RemoveGuestOrder do
+  let(:remove_guest_order) { Commands::RemoveGuestOrder.new }
 
   it "do nothing when the user name doesn't exist" do
     response = remove_guest("James Smith")

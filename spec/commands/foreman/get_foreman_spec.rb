@@ -1,7 +1,7 @@
 require 'commands/foreman/get_foreman'
 
-RSpec.describe GetForeman do
-  let(:foreman) { GetForeman.new }
+RSpec.describe Commands::GetForeman do
+  let(:foreman) { Commands::GetForeman.new }
 
   it "applies to a foreman command" do
     expect(foreman.applies_to("foreman")).to be true

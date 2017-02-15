@@ -1,40 +1,25 @@
-Dir["#{File.dirname(__FILE__)}/commands/**/*.rb"].each {|file| require file }
+Dir["#{File.dirname(__FILE__)}/commands/**/*.rb"].each { |file| require file }
 
 class RequestParser
-  def initialize()
-    @commands = [
-      AddApprentice.new,
-      AddGuest.new,
-      GetForeman.new,
-      GetAllGuests.new,
-      GetAllOrders.new,
-      GetMenu.new,
-      GetOrder.new,
-      NextForeman.new,
-      MarkOut.new,
-      PlaceOrderGuest.new,
-      Reminder.new,
-      RemoveApprentice.new,
-      RemoveGuestOrder.new,
-      SetMenu.new,
-      PlaceOrder.new,
-      Help.new,
-      CopyOrder.new,
-      Ping.new,
-      SetForeman.new,
-      AllFoodOrders.new,
-      GetEveryone.new
-    ]
+  def parse(data)
+    klass(requested_command(data)).prepare(data)
   end
 
-  def parse(data)
-    request = data[:user_message]
+  def requested_command(data)
+    Commands.constants.detect { |command| klass(command).requested?(data) }
+  end
 
-    for command in @commands
-      if command.applies_to(request.downcase)
-        command.prepare(data)
-        return command
-      end
-    end
+  def klass(command)
+    @kommand = Object.const_get("Commands::#{command}").new
+    self
+  end
+
+  def requested?(data)
+    @kommand.applies_to(data[:user_message])
+  end
+
+  def prepare(data)
+    @kommand.prepare(data)
+    @kommand
   end
 end

@@ -1,7 +1,7 @@
 require 'commands/order/place_order_guest'
 require 'models/order'
 
-RSpec.describe PlaceOrderGuest do
+RSpec.describe Commands::PlaceOrderGuest do
   it "save the order of a guest" do
     Helper.order_guest(name: "james smith", meal: "burger", from: "slack id")
 

@@ -12,21 +12,21 @@ Coveralls.wear!
 
 class Helper
   def self.order(data)
-    set_order_command = PlaceOrder.new
+    set_order_command = Commands::PlaceOrder.new
     set_order_command.prepare(data)
     set_order_command.run
   end
 
   def self.order_previous_monday(data)
     data[:date] = Days.monday - 8
-    set_order_command = PlaceOrder.new
+    set_order_command = Commands::PlaceOrder.new
     set_order_command.prepare(data)
     set_order_command.run
   end
 
   def self.order_guest(data)
     from = data[:from] || "host id"
-    place_order_guest = PlaceOrderGuest.new
+    place_order_guest = Commands::PlaceOrderGuest.new
     place_order_guest.prepare(
       user_id: from,
       user_message: "order -#{data[:name]}-: #{data[:meal]}"
@@ -36,7 +36,7 @@ class Helper
 
   def self.order_guest_previous_monday(data)
     from = data[:from] || "host id"
-    place_order_guest = PlaceOrderGuest.new
+    place_order_guest = Commands::PlaceOrderGuest.new
     place_order_guest.prepare(
       user_id: from,
       user_message: "order -#{data[:name]}-: #{data[:meal]}",
@@ -46,7 +46,7 @@ class Helper
   end
 
   def self.add_guest(name)
-    place_order_guest = AddGuest.new
+    place_order_guest = Commands::AddGuest.new
     place_order_guest.prepare(
       user_message: "add guest: #{name}",
       user_id: "host id"
@@ -55,7 +55,7 @@ class Helper
   end
 
   def self.add_guest_previous_monday(name)
-    place_order_guest = AddGuest.new
+    place_order_guest = Commands::AddGuest.new
     place_order_guest.prepare(
       user_message: "add guest: #{name}",
       user_id: "host id",
@@ -67,7 +67,7 @@ class Helper
   def self.add_foreman(data)
     id = data[:id]
     user_name = data[:name]
-    add_apprentice = AddApprentice.new
+    add_apprentice = Commands::AddApprentice.new
     add_apprentice.prepare(user_id: id, user_name: user_name)
     add_apprentice.run
   end

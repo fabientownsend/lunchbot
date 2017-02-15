@@ -1,21 +1,19 @@
 require 'commands/foreman/remove_apprentice'
 require 'models/apprentice'
 
-RSpec.describe RemoveApprentice do
+RSpec.describe Commands::RemoveApprentice do
+  let(:remove_apprentice) { Commands::RemoveApprentice.new }
   it "applies to the command remove apprentice" do
-    remove_apprentice = RemoveApprentice.new
     result = remove_apprentice.applies_to("remove apprentice")
     expect(result).to be true
   end
 
   it "remove apprentice isn't case sensitive" do
-    remove_apprentice = RemoveApprentice.new
     result = remove_apprentice.applies_to("Remove Apprentice")
     expect(result).to be true
   end
 
   it "remove apprentice isn't space sensitive" do
-    remove_apprentice = RemoveApprentice.new
     result = remove_apprentice.applies_to("  remove apprentice  ")
     expect(result).to be true
   end
@@ -64,7 +62,6 @@ RSpec.describe RemoveApprentice do
     id = data[:id]
     name = data[:name]
 
-    remove_apprentice = RemoveApprentice.new
     remove_apprentice.prepare(user_id: id, user_name: name)
     remove_apprentice.run
   end

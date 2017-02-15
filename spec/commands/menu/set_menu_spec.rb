@@ -2,7 +2,8 @@ require 'commands/menu/set_menu'
 require 'models/apprentice'
 require 'models/menu'
 
-RSpec.describe SetMenu do
+RSpec.describe Commands::SetMenu do
+  let(:menu) { Commands::SetMenu.new }
   before(:each) do
     foreman = Apprentice.new(
       user_name: "Will",
@@ -12,21 +13,18 @@ RSpec.describe SetMenu do
   end
 
   it "applies to the command" do
-    menu = SetMenu.new
     response = menu.applies_to("new menu www.menu.com")
 
     expect(response).to be true
   end
 
   it "is not case sensitive" do
-    menu = SetMenu.new
     response = menu.applies_to("New Menu www.menu.com")
 
     expect(response).to be true
   end
 
   it "is not space sensitive" do
-    menu = SetMenu.new
     response = menu.applies_to("  new menu    www.menu.com   ")
 
     expect(response).to be true
@@ -81,7 +79,6 @@ RSpec.describe SetMenu do
   private
 
   def change_url(url, from_id = "valid id")
-    menu = SetMenu.new
     menu.prepare(user_message: url, user_id: from_id)
     menu.run
   end

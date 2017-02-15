@@ -5,7 +5,7 @@ require 'out_checker'
 
 class MarkAllOut
   def initialize
-    @mark_out = MarkOut.new
+    @mark_out = Commands::MarkOut.new
   end
 
   def update

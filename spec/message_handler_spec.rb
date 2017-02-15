@@ -25,7 +25,7 @@ RSpec.describe MessageHandler do
   before(:each) do
     foreman = Apprentice.new(
       user_name: "Will",
-      slack_id: "D3S6XE6SZ"
+      slack_id: recipient
     )
     foreman.save
   end
@@ -84,7 +84,7 @@ RSpec.describe MessageHandler do
   end
 
   it "return the foreman of the week" do
-    add_apprentice = AddApprentice.new
+    add_apprentice = Commands::AddApprentice.new
     add_apprentice.prepare(user_name: "Will", slack_id: "id")
     add_apprentice.run
 
@@ -196,7 +196,7 @@ RSpec.describe MessageHandler do
   end
 
   def add_guest(name)
-    add_guest = AddGuest.new
+    add_guest = Commands::AddGuest.new
     add_guest.prepare(
       user_message: "add guest: #{name}",
       user_id: "id host"

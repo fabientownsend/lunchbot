@@ -36,7 +36,7 @@ class MessageHandler
   end
 
   def respond_privately(command)
-    command.kind_of? GetAllOrders or command.kind_of? Help
+    command.kind_of? Commands::GetAllOrders or command.kind_of? Commands::Help
   end
 
   def format_data(team_id, event_data)

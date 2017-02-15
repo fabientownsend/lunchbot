@@ -1,8 +1,8 @@
 require 'commands/order/get_all_guests'
 require 'models/order'
 
-RSpec.describe GetAllGuests do
-  let(:guest_provider) { GetAllGuests.new }
+RSpec.describe Commands::GetAllGuests do
+  let(:guest_provider) { Commands::GetAllGuests.new }
 
   it "return list of guest when only one guest" do
     expect(guest_provider.run).to eq("no guest")

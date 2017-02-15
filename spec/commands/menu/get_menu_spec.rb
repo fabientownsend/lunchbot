@@ -1,7 +1,7 @@
 require 'commands/menu/get_menu'
 
-RSpec.describe GetMenu do
-  let(:get_menu_command) { GetMenu.new }
+RSpec.describe Commands::GetMenu do
+  let(:get_menu_command) { Commands::GetMenu.new }
 
   it "applies to menu request" do
     response = get_menu_command.applies_to("menu?")
