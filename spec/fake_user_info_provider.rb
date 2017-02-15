@@ -1,7 +1,6 @@
 class FakeUserInfoProvider
-  def initialize(team_id)
+  def initialize
     @names = ["Fabien", "Will"]
-    @team_id = team_id
   end
 
   def real_name(user_id)

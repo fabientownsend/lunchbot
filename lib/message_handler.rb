@@ -8,7 +8,7 @@ class MessageHandler
     @mark_all_out = args[:mark_all_out] || MarkAllOut.new
     @request_parser = RequestParser.new
     @response = args[:response] || Response.new
-    @user_info = args[:user_info_provider] || UserInfoProvider.new($teams.keys[0])
+    @user_info = args[:user_info_provider] || UserInfoProvider.new
   end
 
   def start_to_ping(response, team_id, event_data)

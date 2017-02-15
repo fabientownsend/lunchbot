@@ -6,10 +6,6 @@ class UserInfoProvider
 
     base_uri "https://slack.com/api/users.info?token="
 
-    def initialize(team_id)
-      @team_id = team_id
-    end
-
     def real_name(user_id)
       user_data(user_id)['user']['real_name']
     end
@@ -26,6 +22,6 @@ class UserInfoProvider
     end
 
     def token
-      $teams[@team_id][:bot_access_token]
+      ENV['BOT_ACCESS_TOKEN']
     end
 end
