@@ -1,0 +1,8 @@
+Style/StringLiterals:
+    Enabled: false
+
+Documentation:
+    Enabled: false
+
+Metrics/BlockLength:
+    Enabled: false
