@@ -10,7 +10,7 @@ require 'commands/help'
 RSpec.describe MessageHandler do
   let (:fake_response) { FakeResponse.new }
   let (:fake_mark_all_out) { FakeMarkAllOut.new }
-  let (:fake_user_info_provider) { FakeUserInfoProvider.new }
+  let (:fake_user_info_provider) { FakeUserInfoProvider.new("") }
 
   let (:message_handler) { MessageHandler.new(
     {
