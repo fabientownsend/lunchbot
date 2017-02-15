@@ -9,8 +9,7 @@ class GetMenu
     end
   end
 
-  def prepare(data)
-  end
+  def prepare(data) end
 
   def applies_to(request)
     request.downcase.strip == "menu?"

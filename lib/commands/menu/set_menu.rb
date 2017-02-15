@@ -9,7 +9,7 @@ class SetMenu
     @user_id = data[:user_id]
   end
 
-  def run()
+  def run
     if is_foreman(@user_id)
       update_url
     else
@@ -19,15 +19,14 @@ class SetMenu
 
   def applies_to(request)
     request = request.downcase.strip
-    request.split.size == 3 &&
-    request.include?("new menu")
+    request.split.size == 3 && request.include?("new menu")
   end
 
   private
 
   def update_url
     if extract_url(@user_message)
-      set_url(extract_url(@user_message))
+      save_url(extract_url(@user_message))
       "<!here> Menu has been set: #{extract_url(@user_message)}"
     else
       "That is not a valid URL!"
@@ -42,10 +41,10 @@ class SetMenu
     request[/#{protocol}?#{subdomain}?#{domain}#{path}?/]
   end
 
-  def set_url(url)
+  def save_url(url)
     menu = Menu.new(
-      :url => url,
-      :date => Time.now
+      url: url,
+      date: Time.now
     )
     menu.save
   end
