@@ -2,8 +2,7 @@ require "models/apprentice"
 
 module Commands
   class GetForeman
-    def prepare(data)
-    end
+    def prepare(data) end
 
     def run
       apprentice = Apprentice.first
