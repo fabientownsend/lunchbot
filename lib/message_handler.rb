@@ -13,7 +13,7 @@ class MessageHandler
 
   def keep_alive(team_id, event_data)
     @alive = true
-    #respond("ping", team_id, event_data['user'], event_data['channel'])
+    respond("ping", team_id, event_data['user'], event_data['channel'])
     sleep 600
     keep_alive(team_id, event_data)
   end
