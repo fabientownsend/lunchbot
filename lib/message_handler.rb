@@ -11,17 +11,9 @@ class MessageHandler
     @user_info = args[:user_info_provider] || UserInfoProvider.new
   end
 
-  def keep_alive(team_id, event_data)
-    @alive = true
-    respond("ping", team_id, event_data['user'], event_data['channel'])
-    sleep 600
-    keep_alive(team_id, event_data)
-  end
-
   def handle(team_id, event_data)
     returned_command = @request_parser.parse(format_data(team_id, event_data))
     deal_with_command(returned_command, team_id, event_data) unless returned_command.nil?
-    Thread.new {keep_alive(team_id, event_data)} if not @alive
   end
 
   private
