@@ -1,3 +1,5 @@
+require 'alert_foreman'
+require 'foreman_messager'
 require 'mark_all_out'
 require 'request_parser'
 require 'response'
@@ -9,6 +11,8 @@ class MessageHandler
     @request_parser = RequestParser.new
     @response = args[:response] || Response.new
     @user_info = args[:user_info_provider] || UserInfoProvider.new
+    @foreman_messager = ForemanMessager.new
+    @alert = AlertForeman.new(@foremanMessager)
   end
 
   def keep_alive(team_id, event_data)
@@ -19,6 +23,7 @@ class MessageHandler
   end
 
   def handle(team_id, event_data)
+    @foreman_messager.update_team_id(team_id)
     returned_command = @request_parser.parse(format_data(team_id, event_data))
     deal_with_command(returned_command, team_id, event_data) unless returned_command.nil?
     Thread.new {keep_alive(team_id, event_data)} if not @alive
@@ -47,7 +52,8 @@ class MessageHandler
       user_email: @user_info.email(event_data['user']),
       channel_id: event_data['channel'],
       team_id: team_id,
-      mark_all_out: @mark_all_out
+      mark_all_out: @mark_all_out,
+      alert: @alert
     }
   end
 
