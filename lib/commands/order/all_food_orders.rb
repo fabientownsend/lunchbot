@@ -7,20 +7,20 @@ module Commands
       "all food orders" == request
     end
 
-    def prepare(data)
-    end
+    def prepare(data) end
 
     def run
-      total_each_meal = Order.aggregate(
+      count_meal = Order.aggregate(
         :lunch,
         :all.count,
-        :date => (Days.from_monday_to_friday))
+        date: Days.from_monday_to_friday
+      )
 
-      format_list(total_each_meal)
+      count_meal.map { |lunch, total|  format_text(lunch, total) }.join.strip
     end
 
-    def format_list(total_each_meal)
-      total_each_meal.map { |lunch, total| "#{lunch}: #{total}\n" }.join.strip
+    def format_text(lunch, total)
+      "#{lunch}: #{total}\n" unless lunch.nil?
     end
   end
 end

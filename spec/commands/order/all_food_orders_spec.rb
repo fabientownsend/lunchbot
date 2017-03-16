@@ -53,6 +53,21 @@ RSpec.describe Commands::AllFoodOrders do
     expect(all_food_orders.run).to eq(all_food)
   end
 
+  it "doesn't count guest without orders" do
+    Helper.add_guest("james smith")
+    Helper.add_guest("smith james ")
+
+    Helper.order(
+      user_id: "asdf",
+      user_name: "will",
+      user_message: "burger",
+      date: Days.friday
+    )
+
+    all_food = "burger: 1"
+    expect(all_food_orders.run).to eq(all_food)
+  end
+
   private
 
   def previous_week
