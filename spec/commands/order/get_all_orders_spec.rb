@@ -128,6 +128,35 @@ RSpec.describe Commands::GetAllOrders do
     expect(response).to eq(list_all_orders)
   end
 
+  it "returns order name from a guest" do
+    Helper.order(
+      user_id: "asdf",
+      user_name: "no name",
+      user_message: "burger",
+      date: Days.monday
+    )
+    Helper.order(
+      user_id: "qwer",
+      user_name: "no name",
+      user_message: "fish",
+      date: Days.monday
+    )
+
+    Helper.order_guest(name: "james smith", meal: "burger")
+
+    crafter = Crafter.last(:slack_id => "asdf")
+    crafter.user_name = "will"
+    crafter.save
+
+    crafter = Crafter.last(:slack_id => "qwer")
+    crafter.user_name = "fabien"
+    crafter.save
+
+    response = get_all_orders_command.run
+    list_all_orders = "fabien: fish\njames smith: burger\nwill: burger"
+    expect(response).to eq(list_all_orders)
+  end
+
   private
 
   def previous_week
