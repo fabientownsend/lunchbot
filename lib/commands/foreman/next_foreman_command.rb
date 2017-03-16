@@ -14,17 +14,15 @@ module Commands
       request.downcase.strip == "next foreman"
     end
 
-    def prepare(data)
-    end
+    def prepare(data) end
 
     private
 
     def shift_apprentice_table
       @apprentice = Apprentice.first
-      if @apprentice
-        @apprentice.destroy
-        recreate(@apprentice)
-      end
+      return unless @apprentice
+      @apprentice.destroy
+      recreate(@apprentice)
     end
 
     def recreate(apprentice)

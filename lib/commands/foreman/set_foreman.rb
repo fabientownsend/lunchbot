@@ -13,7 +13,7 @@ module Commands
     end
 
     def run
-      if @foreman_id and Apprentice.last(:slack_id => @foreman_id)
+      if @foreman_id && Apprentice.last(slack_id: @foreman_id)
         sort_apprentice_list
       else
         "That person is not an apprentice!"
@@ -24,9 +24,7 @@ module Commands
 
     def sort_apprentice_list
       Apprentice.all.each do |apprentice|
-        if apprentice.slack_id == @foreman_id
-          next
-        end
+        next if apprentice.slack_id == @foreman_id
         move_to_back(apprentice)
       end
       "<@#{@foreman_id}> is now the foreman!"
@@ -39,17 +37,15 @@ module Commands
 
     def recreate(apprentice)
       apprentice = Apprentice.new(
-        :slack_id => apprentice.slack_id,
-        :user_name => apprentice.user_name
+        slack_id: apprentice.slack_id,
+        user_name: apprentice.user_name
       )
       apprentice.save
     end
 
     def format_foreman(request)
       foreman = request.gsub("set foreman:", "")
-      if foreman[0] == " "
-        foreman[0] = ""
-      end
+      foreman[0] = "" if foreman[0] == " "
       foreman
     end
   end
