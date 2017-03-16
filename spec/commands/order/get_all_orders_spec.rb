@@ -1,9 +1,10 @@
-require 'commands/order/get_all_orders'
+require 'commands/order/get_all_orders_command'
 require 'models/order'
+require 'models/crafter'
 require 'date'
 require 'days'
 
-RSpec.describe Commands::GetAllOrdersCommand do
+RSpec.describe Commands::GetAllOrders do
   let(:get_all_orders_command) { Commands::GetAllOrders.new }
 
   it "returns no orders" do
@@ -94,6 +95,33 @@ RSpec.describe Commands::GetAllOrdersCommand do
       date: previous_week
     )
     previous_week_order.save
+
+    response = get_all_orders_command.run
+    list_all_orders = "fabien: fish\nwill: burger"
+    expect(response).to eq(list_all_orders)
+  end
+
+  it "returns names based on the crafter database" do
+    Helper.order(
+      user_id: "asdf",
+      user_name: "no name",
+      user_message: "burger",
+      date: Days.monday
+    )
+    Helper.order(
+      user_id: "qwer",
+      user_name: "no name",
+      user_message: "fish",
+      date: Days.monday
+    )
+
+    crafter = Crafter.last(:slack_id => "asdf")
+    crafter.user_name = "will"
+    crafter.save
+
+    crafter = Crafter.last(:slack_id => "qwer")
+    crafter.user_name = "fabien"
+    crafter.save
 
     response = get_all_orders_command.run
     list_all_orders = "fabien: fish\nwill: burger"
