@@ -115,11 +115,11 @@ RSpec.describe Commands::GetAllOrders do
       date: Days.monday
     )
 
-    crafter = Crafter.last(:slack_id => "asdf")
+    crafter = Crafter.last(slack_id: "asdf")
     crafter.user_name = "will"
     crafter.save
 
-    crafter = Crafter.last(:slack_id => "qwer")
+    crafter = Crafter.last(slack_id: "qwer")
     crafter.user_name = "fabien"
     crafter.save
 
@@ -144,11 +144,11 @@ RSpec.describe Commands::GetAllOrders do
 
     Helper.order_guest(name: "james smith", meal: "burger")
 
-    crafter = Crafter.last(:slack_id => "asdf")
+    crafter = Crafter.last(slack_id: "asdf")
     crafter.user_name = "will"
     crafter.save
 
-    crafter = Crafter.last(:slack_id => "qwer")
+    crafter = Crafter.last(slack_id: "qwer")
     crafter.user_name = "fabien"
     crafter.save
 
