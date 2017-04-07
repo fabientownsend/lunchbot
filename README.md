@@ -24,9 +24,9 @@ export BAMBOO_HR_API_KEY="XXXX"
 Type help or look in the command_info.rb file to view all commands.
 
 # TODO
-- Cache BambooAPI requests in memory.
 - Create an error message moudle.
 - Emoji responses sepcific to lunch order.
+- Presist auth.
 
 # Development
 You can add a new command with
