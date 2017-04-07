@@ -1,4 +1,5 @@
 require 'httparty'
+require 'bamboo_cache'
 
 class BambooInfoProvider
   include HTTParty
@@ -8,21 +9,24 @@ class BambooInfoProvider
   def initialize(subdomain)
     @subdomain = subdomain
     @api_key = ENV["BAMBOO_HR_API_KEY"]
-    if @api_key.nil?
-      raise "Invalid API key! Have you set one?"
-    end
+    @cache = BambooCache.new
   end
 
   def employees
-    data = JSON.parse(employees_data.body)
-    data["employees"]
+    @cache.store_employees(get_employees) if @cache.employees_needs_cache?
+    @cache.employees
   end
 
   def whos_out
-    JSON.parse(whos_out_data.body)
+    @cache.store_whos_out(JSON.parse(whos_out_data.body)) if @cache.whos_out_needs_cache?
+    @cache.whos_out
   end
 
   private
+
+  def get_employees
+    JSON.parse(employees_data.body)["employees"]
+  end
 
   def employees_data
     self.class.get("/api/gateway.php/#{@subdomain}/v1/employees/directory", basic_auth: auth_info, headers: headers)
