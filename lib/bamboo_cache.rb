@@ -18,12 +18,10 @@ class BambooCache
   end
 
   def whos_out_needs_cache?
-    return true if Time.now.day != @whos_out_last_cache
-    false
+    Time.now.day != @whos_out_last_cache
   end
 
   def employees_needs_cache?
-    return true if Time.now.day != @employees_last_cache
-    false
+    Time.now.day != @employees_last_cache
   end
 end
