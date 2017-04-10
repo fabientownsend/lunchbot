@@ -3,12 +3,12 @@ require 'bamboo_cache'
 RSpec.describe BambooCache do
   let(:cache) {BambooCache.new}
   
-  it "it caches employees correctly" do
+  it "caches employees correctly" do
     cache.store_employees(["test"])
     expect(cache.employees).to eq(["test"])
   end
 
-  it "it caches whos out correctly" do
+  it "caches whos out correctly" do
     cache.store_whos_out(["test"])
     expect(cache.whos_out).to eq(["test"])
   end
