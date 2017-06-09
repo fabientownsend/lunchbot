@@ -18,10 +18,10 @@ module Commands
     private
 
     def orders
-      orders_of_the_week = Order.all(:date => (Days.from_monday_to_friday))
+      orders_of_the_week = Order.all(:date => Days.from_monday_to_friday)
 
       orders_of_the_week.map { |order|
-        "#{full_name(order)}: #{order.lunch}" if !order.lunch.nil?
+        "#{full_name(order)}: #{order.lunch}" unless order.lunch.nil?
       }.compact.sort
     end
 
@@ -38,11 +38,8 @@ module Commands
     end
 
     def format_response(orders)
-      if orders.empty?
-        return "no orders"
-      else
-        return orders.join("\n").strip
-      end
+      return "no orders" if orders.empty?
+      orders.join("\n").strip
     end
   end
 end

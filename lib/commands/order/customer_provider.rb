@@ -68,7 +68,7 @@ class CustomerProvider
     if guest.lunch
       "#{guest.user_name}: #{guest.lunch}"
     else
-      "#{guest.user_name}"
+      guest.user_name.to_s
     end
   end
 end

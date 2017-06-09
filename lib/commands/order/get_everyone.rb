@@ -13,7 +13,7 @@ module Commands
     end
 
     def run
-      CustomerProvider.new().everyone
+      CustomerProvider.new.everyone
     end
   end
 end

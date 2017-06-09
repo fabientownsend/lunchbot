@@ -7,7 +7,7 @@ module Commands
       @user_message = data[:user_message]
     end
 
-    def run()
+    def run
       user_message = @user_message.gsub("order? ", "")
       user_id_meal_researched = user_message[/(?<=\<@)(\w+)(?=>)/]
 

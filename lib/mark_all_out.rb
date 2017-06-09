@@ -9,9 +9,7 @@ class MarkAllOut
   end
 
   def update
-    if ENV["BAMBOO_HR_API_KEY"].nil?
-      raise "Invalid API key! Have you set one?"
-    end
+    raise "Invalid API key! Have you set one?" if ENV["BAMBOO_HR_API_KEY"].nil?
     out_checker = OutChecker.new(Crafter.all, BambooInfoProvider.new("8thlight"))
     Crafter.all.each do |crafter|
       if out_checker.out?(crafter.slack_id)

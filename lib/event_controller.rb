@@ -35,9 +35,7 @@ class EventController < Sinatra::Base
   end
 
   def verify_url(data)
-    if data['type'] == 'url_verification'
-      body data['challenge'].to_s
-    end
+    body data['challenge'].to_s if data['type'] == 'url_verification'
   end
 
   def handle_event(data)

@@ -14,8 +14,8 @@ module Commands
     end
 
     def run
-      create_user if !user_exist?
-      update_user if user_exist? && !user_dont_have_email?
+      create_user unless user_exists?
+      update_user if user_exists? && !user_dont_have_email?
 
       order = Order.last(
         :user_id => @user_id,
@@ -50,7 +50,7 @@ module Commands
       user.save
     end
 
-    def user_exist?
+    def user_exists?
       Crafter.last(:slack_id => @user_id)
     end
 
