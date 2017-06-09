@@ -1,5 +1,7 @@
+require_relative 'models/auth_info'
+
 class Response
-  def initialize()
+  def setup
     token = AuthInfo.last.bot_token
     Slack.configure do |config|
       config.token = token 

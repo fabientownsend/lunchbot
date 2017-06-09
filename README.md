@@ -26,7 +26,6 @@ Type help or look in the command_info.rb file to view all commands.
 # TODO
 - Create an error message moudle.
 - Emoji responses sepcific to lunch order.
-- Presist auth.
 
 # Development
 You can add a new command with
