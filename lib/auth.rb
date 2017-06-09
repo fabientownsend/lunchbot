@@ -71,7 +71,7 @@ class Auth < Sinatra::Base
 
       $teams[team_id]['client'] = create_slack_client(response['bot']['bot_access_token'])
       status 200
-      body "Authentication Succeeded"
+      body "<img src='https://cdn1.tnwcdn.com/wp-content/blogs.dir/1/files/2016/03/changed-passwords-to-incorrect_admin052413y4ihq.jpg'>"
     rescue Slack::Web::Api::Error => e
       status 403
       body "Auth failed! Reason: #{e.message}<br/>#{add_to_slack_button}"
