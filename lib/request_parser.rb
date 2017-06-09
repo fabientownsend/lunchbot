@@ -15,7 +15,7 @@ class RequestParser
   end
 
   def requested?(data)
-    @kommand.applies_to(data[:user_message])
+    @kommand.applies_to(data[:user_message].downcase)
   end
 
   def prepare(data)

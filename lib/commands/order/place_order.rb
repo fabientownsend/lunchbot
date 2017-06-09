@@ -14,7 +14,6 @@ module Commands
     end
 
     def run
-
       create_user if !user_exist?
       update_user if user_exist? && !user_dont_have_email?
 
