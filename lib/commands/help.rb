@@ -5,7 +5,7 @@ module Commands
     include CommandInfo
 
     def applies_to(request)
-      request == "help"
+      request == "help" || request == "hello"
     end
 
     def prepare(data)

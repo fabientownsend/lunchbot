@@ -38,14 +38,11 @@ module Commands
     end
 
     def format_response(orders)
-      response = ""
       if orders.empty?
-        response = "no orders"
+        return "no orders"
       else
-        response = orders.join("\n").strip
+        return orders.join("\n").strip
       end
-
-      response
     end
   end
 end
