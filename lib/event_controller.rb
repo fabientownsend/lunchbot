@@ -56,6 +56,6 @@ class EventController < Sinatra::Base
   end
 
   def from_robot?(event_data, team_id)
-    event_data['user'] == $teams[team_id][:bot_user_id]
+    !AuthInfo.last(:bot_id => event_data['user']).nil?
   end
 end
