@@ -17,14 +17,6 @@ end
 
 BOT_SCOPE = 'bot'
 
-def create_slack_client(slack_api_secret)
-  Slack.configure do |config|
-    config.token = slack_api_secret
-    fail 'Missing API token' unless config.token
-  end
-  Slack::Web::Client.new
-end
-
 def save_auth_info(response)
   auth_info = AuthInfo.new(
       :bot_token => response['bot']['bot_access_token'],
@@ -32,6 +24,16 @@ def save_auth_info(response)
       :user_token => response['access_token']
       )
   auth_info.save
+end
+
+def deal_with_response(client)
+  response = client.oauth_access({
+    client_id: SLACK_CONFIG[:slack_client_id],
+    client_secret: SLACK_CONFIG[:slack_api_secret],
+    redirect_uri: SLACK_CONFIG[:slack_redirect_uri],
+    code: params[:code]
+  })
+  save_auth_info(response)
 end
 
 class Auth < Sinatra::Base
@@ -53,19 +55,7 @@ class Auth < Sinatra::Base
   get '/finish_auth' do
     client = Slack::Web::Client.new
     begin
-      response = client.oauth_access(
-        {
-          client_id: SLACK_CONFIG[:slack_client_id],
-          client_secret: SLACK_CONFIG[:slack_api_secret],
-          redirect_uri: SLACK_CONFIG[:slack_redirect_uri],
-          code: params[:code]
-        }
-      )
-
-      team_id = response['team_id']
-
-      save_auth_info(response)
-
+      deal_with_response(client)
       status 200
       body "<img src='https://cdn1.tnwcdn.com/wp-content/blogs.dir/1/files/2016/03/changed-passwords-to-incorrect_admin052413y4ihq.jpg'>"
     rescue Slack::Web::Api::Error => e
