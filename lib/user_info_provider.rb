@@ -24,7 +24,6 @@ class UserInfoProvider
   end
 
   def token
-    team_id = ENV['TEAM_ID']
-    $teams[team_id][:bot_access_token]
+    AuthInfo.last.bot_token
   end
 end

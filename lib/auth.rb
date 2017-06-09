@@ -63,9 +63,9 @@ class Auth < Sinatra::Base
       }
 
       auth_info = AuthInfo.new(
-        :bot_token => response['access_token'],
+        :bot_token => response['bot']['bot_access_token'],
         :bot_id => response['bot']['bot_user_id'],
-        :user_token => response['bot']['bot_access_token']
+        :user_token => response['access_token']
       )
       auth_info.save
 
