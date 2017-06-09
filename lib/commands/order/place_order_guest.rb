@@ -28,7 +28,7 @@ module Commands
     def place_order
       existing_order = Order.last(
         :user_name => @name,
-        :date => (Days.from_monday_to_friday)
+        :date => Days.from_monday_to_friday
       )
 
       if existing_order

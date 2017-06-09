@@ -16,7 +16,7 @@ module Commands
     def run
       order = Order.last(:user_name => @name, :date => Days.from_monday_to_friday)
 
-      if order.nil? or !guest_order?(order)
+      if order.nil? || !guest_order?(order)
         "There is no such guest!"
       elsif order.destroy
         "#{@name} has been removed."

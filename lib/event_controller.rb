@@ -7,7 +7,7 @@ require 'slack-ruby-client'
 class EventController < Sinatra::Base
   attr_reader :message_handler
 
-  def initialize()
+  def initialize
     @message_handler = MessageHandler.new
   end
 
@@ -36,7 +36,7 @@ class EventController < Sinatra::Base
 
   def verify_url(data)
     if data['type'] == 'url_verification'
-      body "#{data['challenge']}"
+      body data['challenge'].to_s
     end
   end
 
@@ -45,7 +45,7 @@ class EventController < Sinatra::Base
       team_id = data['team_id']
       event_data = data['event']
 
-      if message?(event_data) && !from_robot?(event_data, team_id)
+      if message?(event_data) && !from_robot?(event_data)
         @message_handler.handle(team_id, event_data)
       end
     end
@@ -55,7 +55,7 @@ class EventController < Sinatra::Base
     event_data['type'] == 'message'
   end
 
-  def from_robot?(event_data, team_id)
+  def from_robot?(event_data)
     !AuthInfo.last(:bot_id => event_data['user']).nil?
   end
 end

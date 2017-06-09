@@ -61,9 +61,7 @@ module Commands
 
     def format_lunch(request)
       order = request.gsub("order:", "")
-      if order[0] == " "
-        order[0] = ""
-      end
+      order[0] = "" if order[0] == " "
       order
     end
 

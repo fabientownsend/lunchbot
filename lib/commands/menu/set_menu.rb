@@ -11,7 +11,7 @@ module Commands
     end
 
     def run
-      if is_foreman(@user_id)
+      if foreman?(@user_id)
         update_url
       else
         "You are not the foreman!"

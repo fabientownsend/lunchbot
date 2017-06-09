@@ -17,7 +17,7 @@ module Commands
     end
 
     def run
-      if is_foreman(@user_id)
+      if foreman?(@user_id)
         @mark_all_out.update
         format_response(not_ordered_members).strip
       else
@@ -40,7 +40,7 @@ module Commands
     end
 
     def not_ordered_members
-      CustomerProvider.new().customers_without_order
+      CustomerProvider.new.customers_without_order
     end
   end
 end

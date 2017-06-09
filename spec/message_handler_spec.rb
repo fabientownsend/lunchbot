@@ -36,7 +36,6 @@ RSpec.describe MessageHandler do
     message_from_slack("help")
 
     expect(fake_response.message).to eq(all_command_info)
-    expect(fake_response.team_id).to eq(team_id)
   end
 
   it "should return a message for a new menu" do
@@ -44,7 +43,6 @@ RSpec.describe MessageHandler do
 
     bot_response = "<!here> Menu has been set: http://www.test.com"
     expect(fake_response.message).to eq(bot_response)
-    expect(fake_response.team_id).to eq(team_id)
     expect(fake_response.user_id).to eq(channel_id)
   end
 
@@ -66,7 +64,6 @@ RSpec.describe MessageHandler do
 
     bot_response = "The menu for this week is: http://www.test.com"
     expect(fake_response.message).to eq(bot_response)
-    expect(fake_response.team_id).to eq(team_id)
     expect(fake_response.user_id).to eq(channel_id)
   end
 
@@ -74,7 +71,6 @@ RSpec.describe MessageHandler do
     message_from_slack("order: hamburger")
 
     expect(fake_response.message).to eq("Will just ordered `hamburger`.")
-    expect(fake_response.team_id).to eq(team_id)
     expect(fake_response.user_id).to eq(channel_id)
   end
 
@@ -91,7 +87,6 @@ RSpec.describe MessageHandler do
     message_from_slack("foreman")
 
     expect(fake_response.message).to eq("The foreman for this week is Will")
-    expect(fake_response.team_id).to eq(team_id)
     expect(fake_response.user_id).to eq(channel_id)
   end
 
