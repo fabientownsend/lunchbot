@@ -20,18 +20,10 @@ class MessageHandler
     @alert = AlertForeman.new(@foremanMessager)
   end
 
-  def keep_alive(event_data)
-    @alive = true
-    respond("ping", event_data['user'], event_data['channel'])
-    sleep 600
-    keep_alive(event_data)
-  end
-
   def handle(team_id, event_data)
     @foreman_messager.update_team_id(team_id)
     returned_command = @request_parser.parse(format_data(team_id, event_data))
     deal_with_command(returned_command, event_data) unless returned_command.nil?
-    Thread.new {keep_alive(event_data)} unless @alive
   end
 
   private
