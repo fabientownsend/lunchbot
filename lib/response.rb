@@ -3,6 +3,7 @@ require_relative 'models/auth_info'
 class Response
   def setup
     token = AuthInfo.last.bot_token
+    raise "No token!" unless token
     Slack.configure do |config|
       config.token = token 
     end
