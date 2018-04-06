@@ -1,7 +1,7 @@
 # LunchBot
 A ruby slack bot that assists you when ordering your lunch.
 
-[![Build Status](https://travis-ci.org/willcurry/LunchBot.svg?branch=master)](https://travis-ci.org/willcurry/LunchBot)
+[![Build Status](https://travis-ci.org/fabientownsend/lunchbot.svg?branch=master)](https://travis-ci.org/fabientownsend/lunchbot)
 [![Coverage Status](https://coveralls.io/repos/github/willcurry/LunchBot/badge.svg?branch=master)](https://coveralls.io/github/willcurry/LunchBot?branch=master)
 
 # Add new command
