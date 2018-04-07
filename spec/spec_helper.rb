@@ -29,7 +29,8 @@ class Helper
     place_order_guest = Commands::PlaceOrderGuest.new
     place_order_guest.prepare(
       user_id: from,
-      user_message: "order -#{data[:name]}-: #{data[:meal]}"
+      user_message: "order -#{data[:name]}-: #{data[:meal]}",
+      date: Days.monday
     )
     place_order_guest.run
   end
@@ -49,7 +50,8 @@ class Helper
     place_order_guest = Commands::AddGuest.new
     place_order_guest.prepare(
       user_message: "add guest: #{name}",
-      user_id: "host id"
+      user_id: "host id",
+      date: Days.monday
     )
     place_order_guest.run
   end

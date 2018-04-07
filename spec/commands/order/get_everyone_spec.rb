@@ -1,4 +1,5 @@
 require 'commands/order/get_everyone'
+require 'days'
 
 RSpec.describe Commands::GetEveryone do
   let(:get_everyone) { Commands::GetEveryone.new }
@@ -53,7 +54,8 @@ RSpec.describe Commands::GetEveryone do
     Helper.order(
       user_id: "FabienUserId",
       user_name: "Fabien",
-      user_message: "fish"
+      user_message: "fish",
+      date: Days.monday
     )
 
     get_everyone.prepare(data)

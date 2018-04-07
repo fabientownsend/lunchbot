@@ -1,10 +1,11 @@
-require 'fake_response'
-require 'message_handler'
-require 'fake_user_info_provider'
-require 'fake_mark_all_out'
-require 'commands/order/add_guest'
 require 'commands/foreman/add_apprentice'
 require 'commands/help'
+require 'commands/order/add_guest'
+require 'days'
+require 'fake_mark_all_out'
+require 'fake_response'
+require 'fake_user_info_provider'
+require 'message_handler'
 
 RSpec.describe MessageHandler do
   let(:fake_response) { FakeResponse.new }
@@ -28,6 +29,7 @@ RSpec.describe MessageHandler do
       slack_id: recipient
     )
     foreman.save
+  allow(Date).to receive(:today).and_return Days.monday
   end
 
   include CommandInfo
@@ -173,8 +175,7 @@ RSpec.describe MessageHandler do
 
   private
 
-  def message_from_slack(request, new_recipient = recipient)
-    user_message = request
+  def message_from_slack(user_message, new_recipient = recipient)
     event_data = create_event_data(user_message, new_recipient)
     message_handler.handle(team_id, event_data)
   end
@@ -194,7 +195,8 @@ RSpec.describe MessageHandler do
     add_guest = Commands::AddGuest.new
     add_guest.prepare(
       user_message: "add guest: #{name}",
-      user_id: "id host"
+      user_id: "id host",
+      date: Days.monday
     )
     add_guest.run
   end
