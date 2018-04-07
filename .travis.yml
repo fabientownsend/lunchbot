@@ -4,4 +4,5 @@ rvm:
 install:
   - bundle install --without production
 script:
+  - bundle exec rubocop
   - bundle exec rspec
