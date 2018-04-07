@@ -1,4 +1,4 @@
-$: << File.expand_path('../lib', File.dirname(__FILE__))
+$LOAD_PATH << File.expand_path('../lib', File.dirname(__FILE__))
 
 require 'message_handler'
 require 'sinatra/base'
