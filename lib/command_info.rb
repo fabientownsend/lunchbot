@@ -31,7 +31,8 @@ module CommandInfo
   def guest
     "To add a guest with no order | `add guest: name of guest`\n" \
     "To remove a guest | `remove guest: name of guest`\n" \
-    "To place an order for a guest (this also creates a guest if the name given does not exist) | `order -name of guest-: food`"
+    "To place an order for a guest (this also creates a guest if the name" \
+    "given does not exist) | `order -name of guest-: food`"
   end
 
   def foreman

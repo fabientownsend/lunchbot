@@ -12,22 +12,25 @@ RSpec.describe AlertForeman do
   it "alrt without message" do
     alert.from(:order).send
 
-    expect(fake_foreman_messager.message)
-      .to eq("Something wrong is happening with the order")
+    expect(fake_foreman_messager.message) .to eq(
+      "Something wrong is happening with the order"
+    )
   end
 
   it "sends a default title when empty" do
     alert.message("help").send
 
-    expect(fake_foreman_messager.message)
-      .to eq("Something wrong is happening\nhelp")
+    expect(fake_foreman_messager.message) .to eq(
+      "Something wrong is happening\nhelp"
+    )
   end
 
   it "sends a custom title" do
     alert.message("help").from(:order).send
 
-    expect(fake_foreman_messager.message)
-      .to eq("Something wrong is happening with the order\nhelp")
+    expect(fake_foreman_messager.message) .to eq(
+      "Something wrong is happening with the order\nhelp"
+    )
   end
 
   class FakeForemanMessager

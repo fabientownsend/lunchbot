@@ -70,12 +70,12 @@ RSpec.describe RequestParser do
     expect(user_request.parse(request)).to be_a(Commands::GetAllGuests)
   end
 
-  it "return GetAllGuests" do
+  it "return RemoveGuestOrder" do
     request = { user_message: "remove guest: james" }
     expect(user_request.parse(request)).to be_a(Commands::RemoveGuestOrder)
   end
 
-  it "return GetAllGuests" do
+  it "return AddGuest" do
     request = { user_message: "add guest: james" }
     expect(user_request.parse(request)).to be_a(Commands::AddGuest)
   end
@@ -98,7 +98,8 @@ RSpec.describe RequestParser do
   it "return remind command when it's a remind request" do
     request = {
       user_message: "remind",
-      channel_id: "asdf", team_id: "team id"
+      channel_id: "asdf",
+      team_id: "team id",
     }
 
     expect(user_request.parse(request)).to be_a(Commands::Reminder)

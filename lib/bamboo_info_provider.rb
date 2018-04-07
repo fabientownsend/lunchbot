@@ -29,18 +29,26 @@ class BambooInfoProvider
   end
 
   def employees_data
-    self.class.get("/api/gateway.php/#{@subdomain}/v1/employees/directory", basic_auth: auth_info, headers: headers)
+    self.class.get(
+      "/api/gateway.php/#{@subdomain}/v1/employees/directory",
+      basic_auth: auth_info,
+      headers: headers
+    )
   end
 
   def whos_out_data
-    self.class.get("/api/gateway.php/#{@subdomain}/v1/time_off/whos_out", basic_auth: auth_info, headers: headers)
+    self.class.get(
+      "/api/gateway.php/#{@subdomain}/v1/time_off/whos_out",
+      basic_auth: auth_info,
+      headers: headers
+    )
   end
 
   def headers
-    {'Accept' => 'application/json'}
+    { Accept: "application/json" }
   end
 
   def auth_info
-    {username: @api_key, password: "x"}
+    { username: @api_key, password: "x" }
   end
 end

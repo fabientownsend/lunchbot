@@ -42,7 +42,7 @@ class MessageHandler
       channel_id: event_data['channel'],
       team_id: team_id,
       mark_all_out: @mark_all_out,
-      alert: @alert
+      alert: @alert,
     }
   end
 
