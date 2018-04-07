@@ -1,4 +1,5 @@
 require 'commands/order/reminder'
+require 'days'
 require 'fake_mark_all_out'
 
 RSpec.describe Commands::Reminder do
@@ -33,12 +34,14 @@ RSpec.describe Commands::Reminder do
     Helper.order(
       user_id: "FabienUserId",
       user_name: "fabien",
-      user_message: "burger"
+      user_message: "burger",
+      date: Days.monday
     )
     Helper.order(
       user_id: "WillUserId",
       user_name: "will",
-      user_message: "burger"
+      user_message: "burger",
+      date: Days.monday
     )
 
     reminder.prepare(data)
@@ -51,7 +54,8 @@ RSpec.describe Commands::Reminder do
     Helper.order(
       user_id: "FabienUserId",
       user_name: "will",
-      user_message: "burger"
+      user_message: "burger",
+      date: Days.monday
     )
 
     reminder.prepare(data)
