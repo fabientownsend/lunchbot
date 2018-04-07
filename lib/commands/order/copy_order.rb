@@ -34,9 +34,9 @@ module Commands
 
     def place_order(copied_lunch)
       existing_order = Order.last(
-      :user_id => @user_id,
-      :date => Days.from_monday_to_friday
-    )
+        :user_id => @user_id,
+        :date => Days.from_monday_to_friday
+      )
 
       if existing_order
         update(existing_order, copied_lunch)

@@ -5,7 +5,7 @@ require 'days'
 RSpec.describe Commands::MarkOut do
   let(:out) { Commands::MarkOut.new }
 
-  it "should place an out order when command is run" do
+  it "place an out order when command is run" do
     out.prepare(user_id: "id", user_name: "Will")
     out.run
 
@@ -13,7 +13,7 @@ RSpec.describe Commands::MarkOut do
     expect(Order.last.user_id).to eq("id")
   end
 
-  it "should update existing orders" do
+  it "update existing orders" do
     Helper.order(
       user_id: "id",
       user_name: "will",

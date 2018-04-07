@@ -7,7 +7,7 @@ RSpec.describe Commands::GetOrder do
     {
       user_name: "Will",
       user_id: "w_id",
-      user_message: "order? <@f_id>"
+      user_message: "order? <@f_id>",
     }
   end
 

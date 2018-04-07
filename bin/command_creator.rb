@@ -59,4 +59,3 @@ if verb == 'new' && subject == 'command'
   file << "  end\n"
   file << "end"
 end
-

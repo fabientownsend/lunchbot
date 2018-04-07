@@ -20,9 +20,9 @@ module Commands
     def orders
       orders_of_the_week = Order.all(:date => Days.from_monday_to_friday)
 
-      orders_of_the_week.map { |order|
+      orders_of_the_week.map do |order|
         "#{full_name(order)}: #{order.lunch}" unless order.lunch.nil?
-      }.compact.sort
+      end.compact.sort
     end
 
     def full_name(order)

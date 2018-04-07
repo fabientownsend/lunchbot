@@ -15,16 +15,16 @@ class CustomerProvider
 
   def crafters_wihtout_order
     members = Crafter.all(:fields => [:slack_id])
-    members.map { |member_id|
+    members.map do |member_id|
       "<@#{member_id.slack_id}>" if !has_ordered(member_id.slack_id)
-    }.compact
+    end.compact
   end
 
   def guests_without_order
     orders_current_week = Order.all(:date => Days.from_monday_to_friday)
-    orders_current_week.map { |order|
+    orders_current_week.map do |order|
       "#{order.user_name} host: <@#{order.host}>" if has_ordered?(order)
-    }.compact
+    end.compact
   end
 
   def has_ordered(user_id)
@@ -37,7 +37,7 @@ class CustomerProvider
 
   def crafters
     members = Crafter.all(:fields => [:slack_id])
-    members.map { |member_id|  with_order(member_id.slack_id) }
+    members.map { |member_id| with_order(member_id.slack_id) }
   end
 
   def with_order(member_id)
@@ -60,7 +60,7 @@ class CustomerProvider
   def guests_of_the_week
     Order.all(
       :date => Days.from_monday_to_friday,
-      :conditions => {:host.not => nil}
+      :conditions => { :host.not => nil }
     ).compact
   end
 

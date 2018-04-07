@@ -9,7 +9,7 @@ RSpec.describe Commands::GetEveryone do
       user_id: "user id",
       user_name: "user name",
       channel_id: "channel id",
-      team_id: "team id"
+      team_id: "team id",
     }
   end
 

@@ -4,6 +4,7 @@ require 'models/menu'
 
 RSpec.describe Commands::SetMenu do
   let(:menu) { Commands::SetMenu.new }
+
   before(:each) do
     foreman = Apprentice.new(
       user_name: "Will",
@@ -60,8 +61,8 @@ RSpec.describe Commands::SetMenu do
   end
 
   it "remove useless information from url" do
-    url = "https://deliveroo.co.uk/menu/london/covent-garden/the-real-greek \
-    ?day=today&rpos=0&time=1130"
+    url = "https://deliveroo.co.uk/menu/london/covent-garden/the-real-greek" \
+    "?day=today&rpos=0&time=1130"
     change_url(url)
 
     result = "https://deliveroo.co.uk/menu/london/covent-garden/the-real-greek"

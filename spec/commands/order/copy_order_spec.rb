@@ -5,7 +5,7 @@ RSpec.describe Commands::CopyOrder do
   let(:id_user_reference) { "id_one" }
   let(:id_user_which_copy) { "id_two" }
 
-  it "should copy the order of the person specified" do
+  it "copy the order of the person specified" do
     Helper.order(
       user_id: id_user_reference,
       user_name: "Fabien",
@@ -20,13 +20,13 @@ RSpec.describe Commands::CopyOrder do
     expect(Order.last(user_id: id_user_which_copy).lunch).to eq("sandwhich")
   end
 
-  it "should know if a user specified is invalid" do
+  it "know if a user specified is invalid" do
     response = copy_order_from(id_user_reference, id_user_which_copy)
 
     expect(response).to eq("That user does not have an order!")
   end
 
-  it "should update a users order to the person they are copying" do
+  it "update a users order to the person they are copying" do
     Helper.order(
       user_id: id_user_reference,
       user_name: "Fabien",
@@ -64,7 +64,7 @@ RSpec.describe Commands::CopyOrder do
     fake = {
       user_id: id_user_which_copy,
       user_name: "Will",
-      user_message: "copy order: <@#{id_user_reference}>"
+      user_message: "copy order: <@#{id_user_reference}>",
     }
 
     copy_order = Commands::CopyOrder.new

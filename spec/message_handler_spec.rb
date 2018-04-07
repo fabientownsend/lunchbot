@@ -29,7 +29,7 @@ RSpec.describe MessageHandler do
       slack_id: recipient
     )
     foreman.save
-  allow(Date).to receive(:today).and_return Days.monday
+    allow(Date).to receive(:today).and_return Days.monday
   end
 
   include CommandInfo
@@ -40,7 +40,7 @@ RSpec.describe MessageHandler do
     expect(fake_response.message).to eq(all_command_info)
   end
 
-  it "should return a message for a new menu" do
+  it "returns a message for a new menu" do
     message_from_slack("new menu: <http://www.test.com|www.test.com>")
 
     bot_response = "<!here> Menu has been set: http://www.test.com"
@@ -48,12 +48,12 @@ RSpec.describe MessageHandler do
     expect(fake_response.user_id).to eq(channel_id)
   end
 
-  it "should say that the url is invalid if the url is invalid" do
+  it "says that the url is invalid if the url is invalid" do
     message_from_slack("new menu: invalid")
     expect(fake_response.message).to eq("That is not a valid URL!")
   end
 
-  it "return the url when you ask the menu which is not provided" do
+  it "returns the url when you ask the menu which is not provided" do
     message_from_slack("menu?")
 
     bot_response = "The menu for this week is: no url provided"
@@ -92,7 +92,7 @@ RSpec.describe MessageHandler do
     expect(fake_response.user_id).to eq(channel_id)
   end
 
-  it "return list of users that doesn't ordered yet" do
+  it "returns list of users that doesn't ordered yet" do
     add_guest("james smith")
     message_from_slack("remind")
 
@@ -187,7 +187,7 @@ RSpec.describe MessageHandler do
       "text" => message,
       "ts" => "1484928006.000013",
       "channel" => channel_id,
-      "event_ts" => "1484928006.000013"
+      "event_ts" => "1484928006.000013",
     }
   end
 
