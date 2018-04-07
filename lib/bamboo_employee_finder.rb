@@ -5,7 +5,7 @@ class BambooEmployeeFinder
   end
 
   def employee_id(slack_id)
-    return employee_data(slack_id, "id")
+    employee_data(slack_id, "id")
   end
 
   private
@@ -13,7 +13,7 @@ class BambooEmployeeFinder
   def employee_data(slack_id, data_wanted)
     @slack_users.each do |user|
       if user.slack_id == slack_id
-        employee = @bamboo_employees.find {|employee| have_same_email(user, employee)}
+        employee = @bamboo_employees.find { |e| have_same_email(user, e) }
         return employee[data_wanted] if !employee.nil?
       end
     end

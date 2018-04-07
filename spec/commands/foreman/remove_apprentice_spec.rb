@@ -3,6 +3,7 @@ require 'models/apprentice'
 
 RSpec.describe Commands::RemoveApprentice do
   let(:remove_apprentice) { Commands::RemoveApprentice.new }
+
   it "applies to the command remove apprentice" do
     result = remove_apprentice.applies_to("remove apprentice")
     expect(result).to be true

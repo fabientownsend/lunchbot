@@ -4,11 +4,11 @@ require 'models/order'
 RSpec.describe Commands::GetAllGuests do
   let(:guest_provider) { Commands::GetAllGuests.new }
 
-  it "return list of guest when only one guest" do
+  it "list of guest when no guest" do
     expect(guest_provider.run).to eq("no guest")
   end
 
-  it "return list of guest when only one guest" do
+  it "list of guest when only one guest" do
     Helper.order_guest(name: "james smith", meal: "burger")
 
     expect(guest_provider.run).to eq("james smith")

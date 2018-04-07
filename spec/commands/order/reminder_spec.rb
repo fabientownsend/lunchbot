@@ -11,7 +11,7 @@ RSpec.describe Commands::Reminder do
       user_name: "user name",
       channel_id: "channel id",
       team_id: "team id",
-      mark_all_out: FakeMarkAllOut.new
+      mark_all_out: FakeMarkAllOut.new,
     }
   end
 
@@ -82,8 +82,9 @@ RSpec.describe Commands::Reminder do
     reminder.prepare(data)
     response = reminder.run
 
-    expect(response)
-      .to eq("<@FabienUserId>\n<@WillUserId>\njean gaston host: <@host id>")
+    expect(response) .to eq(
+      "<@FabienUserId>\n<@WillUserId>\njean gaston host: <@host id>"
+    )
   end
 
   it "doesn't remind guest form the previous weeks" do

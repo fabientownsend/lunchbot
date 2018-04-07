@@ -3,7 +3,15 @@ require './lib/event_controller'
 require 'data_mapper'
 require 'dm-core'
 
-DataMapper::setup(:default, ENV['DATABASE_URL'])
+require 'raven'
+
+Raven.configure do |config|
+    config.dsn = ENV['SENTRY_URL']
+end
+
+use Raven::Rack
+
+DataMapper.setup(:default, ENV['DATABASE_URL'])
 DataMapper.finalize.auto_upgrade!
 DataMapper::Property::String.length(255)
 

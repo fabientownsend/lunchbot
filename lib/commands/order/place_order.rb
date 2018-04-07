@@ -15,11 +15,14 @@ module Commands
 
     def run
       create_user unless user_exists?
-      update_user if user_exists? && !user_dont_have_email?
+
+      if user_exists? && !user_dont_have_email?
+        update_user
+      end
 
       order = Order.last(
         :user_id => @user_id,
-        :date => (Days.from_monday_to_friday)
+        :date => Days.from_monday_to_friday
       )
 
       if @lunch.empty?

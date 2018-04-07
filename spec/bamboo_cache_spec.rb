@@ -1,8 +1,8 @@
 require 'bamboo_cache'
 
 RSpec.describe BambooCache do
-  let(:cache) {BambooCache.new}
-  
+  let(:cache) { BambooCache.new }
+
   it "caches employees correctly" do
     cache.store_employees(["test"])
     expect(cache.employees).to eq(["test"])

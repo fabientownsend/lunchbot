@@ -1,8 +1,8 @@
 require 'response'
 
 class ForemanMessager
-  def initialize(slack_responder = Response.new)
-    @slack_responder = slack_responder
+  def initialize
+    @slack_responder = Response.new
   end
 
   def update_team_id(team_id)

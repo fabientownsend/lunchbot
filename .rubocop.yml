@@ -1,8 +1,5 @@
-Style/StringLiterals:
-    Enabled: false
+inherit_from:
+    - .rubocop_airbnb.yml
 
-Documentation:
-    Enabled: false
-
-Metrics/BlockLength:
+Rails:
     Enabled: false

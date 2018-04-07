@@ -16,7 +16,7 @@ module Commands
         date: Days.from_monday_to_friday
       )
 
-      count_meal.map { |lunch, total|  format_text(lunch, total) }.join.strip
+      count_meal.map { |lunch, total| format_text(lunch, total) }.join.strip
     end
 
     def format_text(lunch, total)

@@ -30,7 +30,8 @@ class MessageHandler
 
   def deal_with_command(command, event_data)
     response = command.run
-    respond(response, event_data['user'], event_data['channel'])
+    channel = event_data['channel'] || event_data['user']
+    respond(response, event_data['user'], channel)
   end
 
   def format_data(team_id, event_data)
@@ -42,11 +43,11 @@ class MessageHandler
       channel_id: event_data['channel'],
       team_id: team_id,
       mark_all_out: @mark_all_out,
-      alert: @alert
+      alert: @alert,
     }
   end
 
-  def respond(bot_answer, user_id, channel = user_id)
+  def respond(bot_answer, user_id, channel)
     @response.send(bot_answer, channel)
   end
 end

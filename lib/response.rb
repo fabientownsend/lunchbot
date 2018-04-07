@@ -5,7 +5,7 @@ class Response
     token = AuthInfo.last.bot_token
     raise "No token!" unless token
     Slack.configure do |config|
-      config.token = token 
+      config.token = token
     end
     @slack_client = Slack::Web::Client.new
   end

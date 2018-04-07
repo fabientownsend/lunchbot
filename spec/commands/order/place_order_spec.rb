@@ -63,7 +63,6 @@ RSpec.describe Commands::PlaceOrder do
       user_email: "fabien@email.com"
     )
 
-    expect(Crafter.last(slack_id: "FabienUserId").email)
-      .to eq("fabien@email.com")
+    expect(Crafter.last(slack_id: "FabienUserId").email) .to eq("fabien@email.com")
   end
 end
