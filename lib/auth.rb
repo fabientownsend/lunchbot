@@ -37,11 +37,12 @@ def deal_with_response(client)
 end
 
 class Auth < Sinatra::Base
-  add_to_slack_button = %(
-    <a href=\"https://slack.com/oauth/authorize?scope=#{BOT_SCOPE}&client_id=#{SLACK_CONFIG[:slack_client_id]}&redirect_uri=#{SLACK_CONFIG[:redirect_uri]}\">
-      <img alt=\"Add to Slack\" height=\"40\" width=\"139\" src=\"https://platform.slack-edge.com/img/add_to_slack.png\"/>
-    </a>
-  )
+  add_to_slack_button = "<a href=\"https://slack.com/oauth/authorize?scope=#{BOT_SCOPE}" \
+    "&client_id=#{SLACK_CONFIG[:slack_client_id]}" \
+    "&redirect_uri=#{SLACK_CONFIG[:redirect_uri]}\">" \
+    "<img alt=\"Add to Slack\" height=\"40\" width=\"139\ " \
+    "src=\"https://platform.slack-edge.com/img/add_to_slack.png\"/> " \
+    "</a>"
 
   get '/' do
     redirect '/begin_auth'
@@ -57,7 +58,8 @@ class Auth < Sinatra::Base
     begin
       deal_with_response(client)
       status 200
-      body "<img src='https://cdn1.tnwcdn.com/wp-content/blogs.dir/1/files/2016/03/changed-passwords-to-incorrect_admin052413y4ihq.jpg'>"
+      body "<img src='https://cdn1.tnwcdn.com/wp-content/blogs.dir/1/files" \
+      "/2016/03/changed-passwords-to-incorrect_admin052413y4ihq.jpg'>"
     rescue Slack::Web::Api::Error => e
       status 403
       body "Auth failed! Reason: #{e.message}<br/>#{add_to_slack_button}"
