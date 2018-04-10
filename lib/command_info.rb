@@ -42,7 +42,8 @@ module CommandInfo
 
   def issues
     ":bug: Want to report a bug or have an idea for a new feature? :package:\n" \
-    "Share it here: :loudspeaker: <https://github.com/fabientownsend/lunchbot/issues/new> :loudspeaker:" \
+    "Share it here: :loudspeaker: <https://github.com/fabientownsend/lunchbot/issues/new>" \
+    ":loudspeaker:" \
     "\n\n"
   end
 end
