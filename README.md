@@ -19,7 +19,8 @@ To make the code consistent we ask you to use Rubocop.
 Note that Rubocop isn't configured to run on the pipeline, it's up to the
 developers to check the code they commit.
 
+Run the static code analyzer
 ``` bash
-gem install rubocop
-rubocop
+Bundle exec rubocop
+
 ```
