@@ -1,6 +1,5 @@
 require 'sinatra/base'
 require 'slack-ruby-client'
-require 'tiny_logger'
 require_relative 'models/auth_info'
 
 SLACK_CONFIG = {
@@ -64,7 +63,6 @@ class Auth < Sinatra::Base
     rescue Slack::Web::Api::Error => exception
       status 403
       body "Auth failed! Reason: #{exception.message}<br/>#{add_to_slack_button}"
-      Logger.alert(exception)
     end
   end
 end
