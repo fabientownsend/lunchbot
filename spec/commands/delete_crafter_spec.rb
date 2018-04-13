@@ -23,7 +23,7 @@ RSpec.describe Commands::DeleteCrafter do
     crafter_name = "Fabien Townsend"
 
     fake_data_from_slack = {
-      user_message: "delete crafter #{crafter_name}"
+      user_message: "delete crafter #{crafter_name}",
     }
 
     expect(delete_crafter.prepare(fake_data_from_slack)).to eq(crafter_name)
@@ -33,7 +33,7 @@ RSpec.describe Commands::DeleteCrafter do
     delete_crafter = Commands::DeleteCrafter.new
     crafter_name = "Katerina Georgiou"
     fake_data_from_slack = {
-      user_message: "delete crafter #{crafter_name}"
+      user_message: "delete crafter #{crafter_name}",
     }
 
     expect(delete_crafter.prepare(fake_data_from_slack)).to eq(crafter_name)
@@ -42,7 +42,7 @@ RSpec.describe Commands::DeleteCrafter do
   it "deletes cafter name from the database" do
     delete_crafter = Commands::DeleteCrafter.new
     fake_data_from_slack = {
-      user_message: "delete crafter Will"
+      user_message: "delete crafter Will",
     }
 
     delete_crafter.prepare(fake_data_from_slack)
@@ -54,7 +54,7 @@ RSpec.describe Commands::DeleteCrafter do
   it "return succes message when the crafter was deleted" do
     delete_crafter = Commands::DeleteCrafter.new
     fake_data_from_slack = {
-      user_message: "delete crafter Will"
+      user_message: "delete crafter Will",
     }
 
     delete_crafter.prepare(fake_data_from_slack)
