@@ -1,5 +1,6 @@
 require 'sinatra/base'
 require 'slack-ruby-client'
+require 'tiny_logger'
 require_relative 'models/auth_info'
 
 SLACK_CONFIG = {
@@ -60,9 +61,10 @@ class Auth < Sinatra::Base
       status 200
       body "<img src='https://cdn1.tnwcdn.com/wp-content/blogs.dir/1/files" \
       "/2016/03/changed-passwords-to-incorrect_admin052413y4ihq.jpg'>"
-    rescue Slack::Web::Api::Error => e
+    rescue Slack::Web::Api::Error => exception
       status 403
-      body "Auth failed! Reason: #{e.message}<br/>#{add_to_slack_button}"
+      body "Auth failed! Reason: #{exception.message}<br/>#{add_to_slack_button}"
+      Logger.alert(exception)
     end
   end
 end
