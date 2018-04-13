@@ -6,7 +6,7 @@ require 'dm-core'
 require 'raven'
 
 Raven.configure do |config|
-    config.dsn = ENV['SENTRY_URL']
+  config.dsn = ENV['SENTRY_URL']
 end
 
 use Raven::Rack

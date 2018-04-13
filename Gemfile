@@ -20,4 +20,5 @@ end
 group :production do
   gem 'dm-postgres-adapter'
   gem 'pg'
+  gem "sentry-raven"
 end
