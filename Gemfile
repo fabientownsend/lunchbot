@@ -21,4 +21,5 @@ group :production do
   gem 'dm-postgres-adapter'
   gem 'pg'
   gem "sentry-raven"
+  gem 'logglier', '~> 0.2.11'
 end

@@ -4,10 +4,13 @@ require 'data_mapper'
 require 'dm-core'
 
 require 'raven'
+require 'logglier'
 
 Raven.configure do |config|
   config.dsn = ENV['SENTRY_URL']
 end
+
+config.logger = Logglier.new(ENV['LOGGLIER_URL'], :threaded => true)
 
 use Raven::Rack
 

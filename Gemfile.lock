@@ -87,6 +87,8 @@ GEM
       concurrent-ruby (~> 1.0)
     json (1.8.6)
     json_pure (1.8.6)
+    logglier (0.2.13)
+      multi_json (~> 1)
     minitest (5.11.3)
     multi_json (1.13.1)
     multi_xml (0.6.0)
@@ -173,6 +175,7 @@ DEPENDENCIES
   dm-postgres-adapter
   dm-sqlite-adapter (= 1.2.0)
   httparty
+  logglier (~> 0.2.11)
   pg
   rake
   rspec (~> 3.0)
