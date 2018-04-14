@@ -1,8 +1,10 @@
 $LOAD_PATH << File.expand_path('../lib', File.dirname(__FILE__))
 
-require 'message_handler'
 require 'sinatra/base'
 require 'slack-ruby-client'
+
+require 'message_handler'
+require 'tiny_logger'
 
 class EventController < Sinatra::Base
   attr_reader :message_handler
@@ -44,6 +46,7 @@ class EventController < Sinatra::Base
       event_data = data['event']
 
       if message?(event_data) && !from_robot?(event_data)
+        Logger.info("Receives Data #{event_data}")
         @message_handler.handle(team_id, event_data)
       end
     end
