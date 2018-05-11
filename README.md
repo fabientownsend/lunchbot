@@ -14,6 +14,12 @@ This will create a command with the method need in: `lib/commands` and its test 
 
 To make your new command effective you simply need to add your commands class to the `lib/request_parser`.
 
+## Tests
+Run the tests
+```
+Bundle exec rspec
+```
+
 ## Coding Conventions
 To make the code consistent we ask you to use Rubocop.
 Note that Rubocop isn't configured to run on the pipeline, it's up to the
