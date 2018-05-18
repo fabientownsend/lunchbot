@@ -11,6 +11,9 @@ gem 'slack-ruby-client', '~> 0.7.7'
 gem 'data_mapper'
 gem 'dm-core'
 
+gem "sentry-raven"
+gem 'logglier', '~> 0.2.11'
+
 group :test, :development do
   gem 'dm-sqlite-adapter', '1.2.0'
   gem 'rubocop-airbnb'
@@ -20,6 +23,4 @@ end
 group :production do
   gem 'dm-postgres-adapter'
   gem 'pg'
-  gem "sentry-raven"
-  gem 'logglier', '~> 0.2.11'
 end
