@@ -5,17 +5,17 @@ RSpec.describe Commands::RemoveApprentice do
   let(:remove_apprentice) { Commands::RemoveApprentice.new }
 
   it "applies to the command remove apprentice" do
-    result = remove_apprentice.applies_to({user_message: "remove apprentice"})
+    result = remove_apprentice.applies_to(user_message: "remove apprentice")
     expect(result).to be true
   end
 
   it "remove apprentice isn't case sensitive" do
-    result = remove_apprentice.applies_to({user_message: "Remove Apprentice"})
+    result = remove_apprentice.applies_to(user_message: "Remove Apprentice")
     expect(result).to be true
   end
 
   it "remove apprentice isn't space sensitive" do
-    result = remove_apprentice.applies_to({user_message: "  remove apprentice  "})
+    result = remove_apprentice.applies_to(user_message: "  remove apprentice  ")
     expect(result).to be true
   end
 
