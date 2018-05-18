@@ -7,6 +7,7 @@ module Commands
     end
 
     def applies_to(request)
+      request = request[:user_message].downcase
       request == "guests?"
     end
 

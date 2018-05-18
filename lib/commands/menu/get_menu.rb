@@ -13,6 +13,7 @@ module Commands
     def prepare(data) end
 
     def applies_to(request)
+      request = request[:user_message].downcase
       request.downcase.strip == "menu?"
     end
   end

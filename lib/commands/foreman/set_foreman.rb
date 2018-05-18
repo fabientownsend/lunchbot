@@ -3,6 +3,7 @@ require 'models/apprentice'
 module Commands
   class SetForeman
     def applies_to(request)
+      request = request[:user_message].downcase
       request.start_with? "set foreman:"
     end
 

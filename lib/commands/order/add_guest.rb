@@ -5,6 +5,7 @@ require 'days'
 module Commands
   class AddGuest
     def applies_to(request)
+      request = request[:user_message].downcase
       request.start_with?("add guest:")
     end
 

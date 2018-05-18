@@ -6,7 +6,7 @@ RSpec.describe Commands::AllFoodOrders do
   let(:all_food_orders) { Commands::AllFoodOrders.new }
 
   it "return all food orders when asked" do
-    expect(all_food_orders.applies_to("all food orders")).to eq(true)
+    expect(all_food_orders.applies_to({user_message: "all food orders"})).to eq(true)
   end
 
   it "return the total of the different food" do

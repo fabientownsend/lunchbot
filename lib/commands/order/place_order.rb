@@ -33,6 +33,7 @@ module Commands
     end
 
     def applies_to(request)
+      request = request[:user_message].downcase
       request.start_with?("order:")
     end
 

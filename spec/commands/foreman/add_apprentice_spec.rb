@@ -40,19 +40,19 @@ RSpec.describe Commands::AddApprentice do
   end
 
   it "return true when it's a valid command" do
-    response = add_apprentice.applies_to("add apprentice")
+    response = add_apprentice.applies_to({user_message: "add apprentice"})
 
     expect(response).to be true
   end
 
   it "isn't case sensitive" do
-    response = add_apprentice.applies_to("Add apPrentice")
+    response = add_apprentice.applies_to({user_message: "Add apPrentice"})
 
     expect(response).to be true
   end
 
   it "isn't spaces sensitive" do
-    response = add_apprentice.applies_to("  Add apPrentice  ")
+    response = add_apprentice.applies_to({user_message: "  Add apPrentice  "})
 
     expect(response).to be true
   end

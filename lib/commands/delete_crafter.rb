@@ -3,6 +3,7 @@ require 'models/crafter'
 module Commands
   class DeleteCrafter
     def applies_to(request)
+      request = request[:user_message].downcase
       request.strip.downcase.start_with?("delete crafter")
     end
 

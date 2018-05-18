@@ -4,6 +4,7 @@ require 'days'
 module Commands
   class RemoveGuestOrder
     def applies_to(request)
+      request = request[:user_message].downcase
       request.start_with?("remove guest:")
     end
 

@@ -4,15 +4,15 @@ RSpec.describe Commands::GetForeman do
   let(:foreman) { Commands::GetForeman.new }
 
   it "applies to a foreman command" do
-    expect(foreman.applies_to("foreman")).to be true
+    expect(foreman.applies_to({user_message: "foreman"})).to be true
   end
 
   it "freman comman isn't case sensitive" do
-    expect(foreman.applies_to("Foreman")).to be true
+    expect(foreman.applies_to({user_message: "Foreman"})).to be true
   end
 
   it "freman comman isn't spaces sensitive" do
-    expect(foreman.applies_to("  foreman  ")).to be true
+    expect(foreman.applies_to({user_message: "  foreman  "})).to be true
   end
 
   it "return a message when no foreman found" do
