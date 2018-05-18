@@ -19,7 +19,11 @@ class EventController < Sinatra::Base
     verify_token(request_data)
     verify_url(request_data)
 
-    Thread.new { handle_event(request_data) }
+    begin
+      Thread.new { handle_event(request_data) }
+    rescue StandarError
+      Logger.alert(StandarError)
+    end
 
     status 200
   end
