@@ -1,7 +1,10 @@
 require 'command_info'
+require 'tiny_logger'
+require 'feature_flag'
 
 module Commands
-  class Help
+  class Help < FeatureFlag
+    release_for 'FabieN Townsend'
     include CommandInfo
 
     def applies_to(request)
@@ -10,10 +13,15 @@ module Commands
     end
 
     def prepare(data)
+      @user_name = data[:user_name]
     end
 
     def run
-      all_command_info
+      if feature_access?(@user_name)
+        'lol'
+      else
+        all_command_info
+      end
     end
   end
 end
