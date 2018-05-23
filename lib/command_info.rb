@@ -17,7 +17,7 @@ module CommandInfo
   def other
     "To remind everyone who hasn't ordered | `remind`\n" \
     "To mark yourself as out | `out`"
-    "To delete a crafter | `delete slack_user_name`"
+    "To delete a crafter | `delete crafter slack_user_name`"
   end
 
   def order
