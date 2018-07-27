@@ -1,3 +1,5 @@
+require 'tiny_logger'
+
 $LOAD_PATH << File.expand_path('../lib', File.dirname(__FILE__))
 
 require 'sinatra/base'
@@ -21,8 +23,8 @@ class EventController < Sinatra::Base
 
     begin
       Thread.new { handle_event(request_data) }
-    rescue StandarError
-      Logger.alert(StandarError)
+    rescue StandardError => error
+      Logger.alert(error)
     end
 
     status 200

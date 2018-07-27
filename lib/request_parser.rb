@@ -1,3 +1,5 @@
+require 'tiny_logger'
+
 Dir["#{File.dirname(__FILE__)}/commands/**/*.rb"].each { |file| require file }
 
 class RequestParser
@@ -12,10 +14,14 @@ class RequestParser
   def klass(command)
     @kommand = Object.const_get("Commands::#{command}").new
     self
+  rescue StandardError => error
+    Logger.alert(error)
   end
 
   def requested?(data)
     @kommand.applies_to(data)
+  rescue StandardError => error
+    Logger.alert(error)
   end
 
   def prepare(data)
