@@ -2,7 +2,7 @@ require 'feature_flag'
 
 module Commands
   class TestSentry < FeatureFlag
-    release_for 'Andrew MacMurray'
+    release_for 'FabieN Townsend'
 
     def applies_to(request)
       request[:user_message].downcase == "sentry test"
@@ -14,12 +14,7 @@ module Commands
 
     def run
       if feature_access?(@tester)
-        begin
-          1 / 0
-        rescue ZeroDivisionError => exception
-          Logger.info "Trace 1"
-          Raven.capture_exception(exception)
-        end
+        "Hello"
       end
     end
   end
