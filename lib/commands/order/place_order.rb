@@ -4,9 +4,13 @@ require 'days'
 
 module Commands
   class PlaceOrder
+    def applies_to(request)
+      request = request[:user_message].downcase
+      request.start_with?("order:")
+    end
+
     def prepare(data)
-      request = data[:user_message]
-      @lunch = format_lunch(request)
+      @lunch = format_lunch(data[:user_message])
       @user_id = data[:user_id]
       @user_name = data[:user_name]
       @user_email = data[:user_email]
@@ -30,11 +34,6 @@ module Commands
       else
         place_order(order)
       end
-    end
-
-    def applies_to(request)
-      request = request[:user_message].downcase
-      request.start_with?("order:")
     end
 
     private
