@@ -1,9 +1,12 @@
 require 'models/order'
 require 'date'
 require 'days'
+require 'feature_flag'
 
 module Commands
-  class PlaceOrder
+  class PlaceOrder < FeatureFlag
+    release_for 'Fabien Townsend'
+
     def applies_to(request)
       request = request[:user_message].downcase
       request.start_with?("order:")
@@ -19,7 +22,10 @@ module Commands
 
     def run
       create_user unless user_exists?
-      #request_office unless user_had_office?
+
+      if feature_access?(@user_name) && user_do_not_have_office?
+        return "You need to add your office. ex: \"office: london\""
+      end
 
       if user_exists? && user_dont_have_email?
         update_user
@@ -38,6 +44,11 @@ module Commands
     end
 
     private
+
+    def user_do_not_have_office?
+      crafter = Crafter.last(:slack_id => @user_id)
+      !crafter.office
+    end
 
     def create_user
       new_user = Crafter.new(

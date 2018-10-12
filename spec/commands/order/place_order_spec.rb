@@ -65,4 +65,17 @@ RSpec.describe Commands::PlaceOrder do
 
     expect(Crafter.last(slack_id: "FabienUserId").email) .to eq("fabien@email.com")
   end
+
+  it "Ask user to add location when user do not have a location" do
+    expect(Crafter.last(slack_id: "FabienUserId").office).to eq(nil)
+
+    place_order = Commands::PlaceOrder.new
+    place_order.prepare(
+      user_message: "burger",
+      user_name: "Fabien Townsend",
+      user_id: "FabienUserId"
+    )
+
+    expect(place_order.run) .to eq("You need to add your office. ex: \"office: london\"")
+  end
 end
