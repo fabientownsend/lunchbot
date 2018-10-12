@@ -19,8 +19,9 @@ module Commands
 
     def run
       create_user unless user_exists?
+      #request_office unless user_had_office?
 
-      if user_exists? && !user_dont_have_email?
+      if user_exists? && user_dont_have_email?
         update_user
       end
 
@@ -59,7 +60,7 @@ module Commands
 
     def user_dont_have_email?
       crafter = Crafter.last(:slack_id => @user_id)
-      crafter.email
+      !crafter.email
     end
 
     def format_lunch(request)
