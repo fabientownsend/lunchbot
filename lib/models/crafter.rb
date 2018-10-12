@@ -7,4 +7,5 @@ class Crafter
   property :user_name, String, length: 255
   property :slack_id, String, length: 255
   property :email, String, length: 255
+  property :office, String, length: 255
 end
