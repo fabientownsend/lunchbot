@@ -1,27 +1,32 @@
 require 'models/menu'
+require 'models/apprentice'
 require 'foreman_checker'
+require 'feature_flag'
 
 module Commands
-  class SetMenu
+  class SetMenu < FeatureFlag
+    release_for 'Fabien Townsend'
     include ForemanChecker
-
-    def prepare(data)
-      @user_message = data[:user_message]
-      @user_id = data[:user_id]
-    end
-
-    def run
-      if foreman?(@user_id)
-        update_url
-      else
-        "You are not the foreman!"
-      end
-    end
 
     def applies_to(request)
       request = request[:user_message].downcase
       request = request.downcase.strip
       request.split.size == 3 && request.include?("new menu")
+    end
+
+    def prepare(data)
+      @user_message = data[:user_message]
+      @apprentice = Apprentice.profile(data[:user_id])
+    end
+
+    def run
+      if feature_access?(@apprentice.user_name) && !@apprentice.office
+        return "You need to add your office. ex: \"office: london\""
+      end
+
+      return "You are not the foreman!" unless foreman?(@apprentice.slack_id)
+
+      update_url
     end
 
     private
@@ -44,11 +49,7 @@ module Commands
     end
 
     def save_url(url)
-      menu = Menu.new(
-        url: url,
-        date: Time.now
-      )
-      menu.save
+      Menu.new(url: url, date: Time.now, office: @apprentice.office).save
     end
   end
 end
