@@ -20,7 +20,6 @@ RSpec.describe Commands::AddOffice do
     add_office_command = Commands::AddOffice.new
     add_office_command.prepare(user_message: "office: London", user_id: "1234")
 
-
     response = add_office_command.run
 
     crafter = Crafter.last(:slack_id => "1234")
@@ -37,7 +36,6 @@ RSpec.describe Commands::AddOffice do
     ).save
     add_office_command = Commands::AddOffice.new
     add_office_command.prepare(user_message: "office: random office", user_id: "1234")
-
 
     response = add_office_command.run
 
