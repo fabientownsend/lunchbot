@@ -23,24 +23,17 @@ module Commands
     def run
       create_user unless user_exists?
 
-      if feature_access?(@user_name) && user_do_not_have_office?
-        return "You need to add your office. ex: \"office: london\""
-      end
-
       if user_exists? && user_dont_have_email?
         update_user
       end
 
-      order = Order.last(
-        :user_id => @user_id,
-        :date => Days.from_monday_to_friday
-      )
+      return "That is not a valid order." if @lunch.empty?
 
-      if @lunch.empty?
-        "That is not a valid order."
-      else
-        place_order(order)
+      if feature_access?(@user_name) && user_do_not_have_office?
+        return "You need to add your office. ex: \"office: london\""
       end
+
+      place_order
     end
 
     private
@@ -80,9 +73,14 @@ module Commands
       order
     end
 
-    def place_order(order)
-      if order
-        update(order)
+    def place_order
+      order_places = Order.last(
+        :user_id => @user_id,
+        :date => Days.from_monday_to_friday
+      )
+
+      if order_places
+        update(order_places)
       else
         place_new_order
       end

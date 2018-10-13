@@ -78,4 +78,15 @@ RSpec.describe Commands::PlaceOrder do
 
     expect(place_order.run) .to eq("You need to add your office. ex: \"office: london\"")
   end
+
+  it "does not place an order if lunch is empty" do
+    place_order = Commands::PlaceOrder.new
+    place_order.prepare(
+      user_message: "",
+      user_name: "Fabien Townsend",
+      user_id: "FabienUserId"
+    )
+
+    expect(place_order.run) .to eq("That is not a valid order.")
+  end
 end
