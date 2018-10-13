@@ -1,5 +1,6 @@
 require 'feature_flag'
 require 'models/crafter'
+require 'models/office'
 
 module Commands
   class AddOffice < FeatureFlag
@@ -13,15 +14,17 @@ module Commands
     end
 
     def prepare(data)
-      @office = data[:user_message].gsub("office:", "").strip
+      @office = data[:user_message].gsub("office:", "").strip.downcase
       @slack_id = data[:user_id]
     end
 
     def run
-      crafter = Crafter.last(:slack_id => @slack_id)
-      crafter.office = @office
-      crafter.save
-      crafter.office
+      if Office.available?(@office)
+        Crafter.profile(@slack_id).add_office(@office)
+        "You were added to the #{@office}"
+      else
+        "The office available are: #{Office.list.map(&:capitalize).join(", ")}"
+      end
     end
   end
 end
