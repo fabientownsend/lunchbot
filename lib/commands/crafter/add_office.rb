@@ -33,8 +33,11 @@ module Commands
       if Office.available?(@office)
         @crafter.add_office(@office)
         Logger.info("#{@office} was added to #{@crafter.user_name} - #{updated_crafter}")
-        @apprentice.add_office(@office) if @apprentice
-        Logger.info("#{@office} was added to #{@apprentice.user_name} - #{updated_apprentice}") if @apprentice
+
+        if @apprentice
+          @apprentice.add_office(@office)
+          Logger.info("#{@office} was added to #{@apprentice.user_name} - #{updated_apprentice}")
+        end
 
         "You were added to the office: #{@office}"
       else
