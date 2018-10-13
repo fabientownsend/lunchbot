@@ -1,5 +1,6 @@
 require 'feature_flag'
 require 'models/crafter'
+require 'models/apprentice'
 require 'models/office'
 
 module Commands
@@ -21,7 +22,9 @@ module Commands
     def run
       if Office.available?(@office)
         Crafter.profile(@slack_id).add_office(@office)
-        "You were added to the #{@office}"
+        Apprentice.profile(@slack_id).add_office(@office) if Apprentice.profile(@slack_id)
+
+        "You were added to the office: #{@office}"
       else
         "The office available are: #{Office.list.map(&:capitalize).join(", ")}"
       end
