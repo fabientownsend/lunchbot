@@ -1,7 +1,8 @@
 require 'feature_flag'
-require 'models/crafter'
 require 'models/apprentice'
+require 'models/crafter'
 require 'models/office'
+require 'tiny_logger'
 
 module Commands
   class AddOffice < FeatureFlag
@@ -16,18 +17,32 @@ module Commands
 
     def prepare(data)
       @office = data[:user_message].gsub("office:", "").strip.downcase
-      @slack_id = data[:user_id]
+      @crafter = Crafter.profile(data[:user_id])
+      @apprentice = Apprentice.profile(data[:user_id])
     end
 
     def run
       if Office.available?(@office)
-        Crafter.profile(@slack_id).add_office(@office)
-        Apprentice.profile(@slack_id).add_office(@office) if Apprentice.profile(@slack_id)
+        @crafter.add_office(@office)
+        Logger.info("#{@office} was added to #{@crafter.user_name} - #{updated_crafter}")
+        @apprentice.add_office(@office) if @apprentice
+        Logger.info("#{@office} was added to #{@apprentice.user_name}") if @apprentice
 
         "You were added to the office: #{@office}"
       else
+        Logger.info("#{@crafter.user_name} use a unavailable office: #{@office}")
         "The office available are: #{Office.list.map(&:capitalize).join(", ")}"
       end
     end
+  end
+
+  private
+
+  def updated_crafter
+    "#{Crafter.all(:office => !nil).count}/#{Crafter.all.count}"
+  end
+
+  def updated_apprentice
+    "#{Apprentice.all(:office => !nil).count}/#{Apprentice.all.count}"
   end
 end

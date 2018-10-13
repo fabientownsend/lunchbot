@@ -12,15 +12,14 @@ RSpec.describe Commands::AddOffice do
   end
 
   it "adds the office to the user" do
-    add_office_command = Commands::AddOffice.new
-    add_office_command.prepare(user_message: "office: London", user_id: "1234")
-
-    new_user = Crafter.new(
+    Crafter.new(
       :user_name => "Fabien",
       :slack_id => "1234",
       :email => "fabien@adsak.com"
-    )
-    new_user.save
+    ).save
+    add_office_command = Commands::AddOffice.new
+    add_office_command.prepare(user_message: "office: London", user_id: "1234")
+
 
     response = add_office_command.run
 
@@ -31,15 +30,14 @@ RSpec.describe Commands::AddOffice do
   end
 
   it "does not add office is not available" do
-    add_office_command = Commands::AddOffice.new
-    add_office_command.prepare(user_message: "office: random office", user_id: "1234")
-
-    new_user = Crafter.new(
+    Crafter.new(
       :user_name => "Fabien",
       :slack_id => "1234",
       :email => "fabien@adsak.com"
-    )
-    new_user.save
+    ).save
+    add_office_command = Commands::AddOffice.new
+    add_office_command.prepare(user_message: "office: random office", user_id: "1234")
+
 
     response = add_office_command.run
 
@@ -47,9 +45,6 @@ RSpec.describe Commands::AddOffice do
   end
 
   it "does add office to apprentice if this person is an apprentice too" do
-    add_office_command = Commands::AddOffice.new
-    add_office_command.prepare(user_message: "london", user_id: "1234")
-
     Crafter.new(
       :user_name => "Fabien",
       :slack_id => "1234",
@@ -60,6 +55,9 @@ RSpec.describe Commands::AddOffice do
       user_name: "Fabien Townsend",
       slack_id: "1234"
     ).save
+
+    add_office_command = Commands::AddOffice.new
+    add_office_command.prepare(user_message: "london", user_id: "1234")
 
     add_office_command.run
 
