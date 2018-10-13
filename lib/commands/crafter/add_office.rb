@@ -21,12 +21,20 @@ module Commands
       @apprentice = Apprentice.profile(data[:user_id])
     end
 
+    def updated_crafter
+      "#{Crafter.all(:office => !nil).count}/#{Crafter.all.count}"
+    end
+
+    def updated_apprentice
+      "#{Apprentice.all(:office => !nil).count}/#{Apprentice.all.count}"
+    end
+
     def run
       if Office.available?(@office)
         @crafter.add_office(@office)
         Logger.info("#{@office} was added to #{@crafter.user_name} - #{updated_crafter}")
         @apprentice.add_office(@office) if @apprentice
-        Logger.info("#{@office} was added to #{@apprentice.user_name}") if @apprentice
+        Logger.info("#{@office} was added to #{@apprentice.user_name} - #{updated_apprentice}") if @apprentice
 
         "You were added to the office: #{@office}"
       else
@@ -34,15 +42,5 @@ module Commands
         "The office available are: #{Office.list.map(&:capitalize).join(", ")}"
       end
     end
-  end
-
-  private
-
-  def updated_crafter
-    "#{Crafter.all(:office => !nil).count}/#{Crafter.all.count}"
-  end
-
-  def updated_apprentice
-    "#{Apprentice.all(:office => !nil).count}/#{Apprentice.all.count}"
   end
 end
