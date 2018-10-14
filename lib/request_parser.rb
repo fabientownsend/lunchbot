@@ -12,7 +12,6 @@ class RequestParser
   end
 
   def klass(command)
-    Logger.info("COMMAND REQUESTED: #{command}")
     @kommand = Object.const_get("Commands::#{command}").new
     self
   rescue StandardError => error
