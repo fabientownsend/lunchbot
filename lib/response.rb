@@ -17,5 +17,7 @@ class Response
       channel: user_id,
       text: message
     )
+  rescue StandardError => error
+    Logger.alert(error)
   end
 end
