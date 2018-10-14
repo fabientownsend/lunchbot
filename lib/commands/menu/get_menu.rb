@@ -1,5 +1,6 @@
-require 'models/menu'
+require 'feature_flag'
 require 'models/crafter'
+require 'models/menu'
 
 module Commands
   class GetMenu < FeatureFlag
