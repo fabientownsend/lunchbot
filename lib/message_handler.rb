@@ -3,6 +3,7 @@ require 'foreman_messager'
 require 'mark_all_out'
 require 'request_parser'
 require 'response'
+require 'tiny_logger'
 require 'user_info_provider'
 
 class MessageHandler
@@ -29,7 +30,9 @@ class MessageHandler
   private
 
   def deal_with_command(command, event_data)
+    Logger.info("COMMAND RUN")
     response = command.run
+    Logger.info("COMMAND RESPONSE: #{response}")
     channel = event_data['channel'] || event_data['user']
     respond(response, event_data['user'], channel)
   end
