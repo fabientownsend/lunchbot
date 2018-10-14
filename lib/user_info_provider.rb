@@ -24,6 +24,6 @@ class UserInfoProvider
   end
 
   def token
-    ENV['SLACK_VERIFICATION_TOKEN']
+    ENV['SLACK_OAUTH_ACCESS_TOKEN']
   end
 end
