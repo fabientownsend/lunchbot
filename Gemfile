@@ -6,7 +6,7 @@ gem 'httparty'
 gem 'rake'
 gem 'rspec', '~> 3.0'
 gem 'sinatra', '~> 1.4.7'
-gem 'slack-ruby-client', '~> 0.7.7'
+gem 'slack-ruby-client', '~> 0.13.1'
 
 gem 'data_mapper'
 gem 'dm-core'
