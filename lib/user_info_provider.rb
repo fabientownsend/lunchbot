@@ -24,6 +24,6 @@ class UserInfoProvider
   end
 
   def token
-    AuthInfo.last.bot_token
+    ENV['SLACK_VERIFICATION_TOKEN']
   end
 end
