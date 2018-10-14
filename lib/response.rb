@@ -2,7 +2,7 @@ require_relative 'models/auth_info'
 
 class Response
   def setup
-    token = AuthInfo.last.bot_token if AuthInfo.last
+    token = ENV['SLACK_VERIFICATION_TOKEN']
     raise "No token!" unless token
     Slack.configure do |config|
       config.token = token
