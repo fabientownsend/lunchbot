@@ -1,6 +1,5 @@
 require 'json'
 require 'httparty'
-require 'tiny_logger'
 
 class UserInfoProvider
   include HTTParty
@@ -9,7 +8,7 @@ class UserInfoProvider
 
   def real_name(user_id)
     data = user_data(user_id)
-    Logger.info("USER INFORMATION REQUESTED: data")
+    puts "TRACE #{data}"
     data['error'].nil? ? data['user']['real_name'] : data['error']
   end
 
@@ -24,7 +23,7 @@ class UserInfoProvider
     data = self.class.get("#{token}&user=#{user_id}&pretty=1")
     JSON.parse(data.body)
   rescue StandardError => error
-    Logger.alert(error)
+    puts "TRACE 2 #{error}"
   end
 
   def token
