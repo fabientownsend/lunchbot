@@ -95,6 +95,14 @@ RSpec.describe Commands::SetMenu do
     expect(Menu.last.url).to eq(result)
   end
 
+  it "can extract url with an apostrof" do
+    url = "https://deliveroo.co.uk/menu/london/st-paul's/vita-mojo"
+    change_url(url: url)
+
+    result = "https://deliveroo.co.uk/menu/london/st-paul's/vita-mojo"
+    expect(Menu.last.url).to eq(result)
+  end
+
   it "save save the office based on forman office " do
     url = "https://arancinibrothers-catering.orderswift.com/menu/re_0UV"
     change_url(url: url)

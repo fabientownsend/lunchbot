@@ -44,7 +44,7 @@ module Commands
       protocol = "((http|https):\/\/)?(w{3}.)"
       subdomain = "[A-Za-z0-9-]+."
       domain = "[A-Za-z0-9-]+.(com|co.uk)"
-      path = "([a-zA-Z0-9_\.\/\-]+)"
+      path = "([a-zA-Z0-9'_\.\/\-]+)"
       request[/#{protocol}?#{subdomain}?#{domain}#{path}?/]
     end
 
