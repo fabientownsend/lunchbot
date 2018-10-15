@@ -18,12 +18,12 @@ module Commands
       @user_name = data[:user_name]
       @user_email = data[:user_email]
       @date = data[:date] || Date.today
+
+      Crafter.create(data) unless Crafter.profile(data[:user_id])
     end
 
     def run
-      create_user unless user_exists?
-
-      if user_exists? && user_dont_have_email?
+      if user_dont_have_email?
         update_user
       end
 
@@ -43,23 +43,10 @@ module Commands
       !crafter.office
     end
 
-    def create_user
-      new_user = Crafter.new(
-        :user_name => @user_name,
-        :slack_id => @user_id,
-        :email => @user_email
-      )
-      new_user.save
-    end
-
     def update_user
       user = Crafter.last(:slack_id => @user_id)
       user.email = @user_email
       user.save
-    end
-
-    def user_exists?
-      Crafter.last(:slack_id => @user_id)
     end
 
     def user_dont_have_email?

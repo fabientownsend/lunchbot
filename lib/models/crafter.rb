@@ -13,6 +13,14 @@ class Crafter
     Crafter.last(:slack_id => slack_id)
   end
 
+  def self.create(user)
+    Crafter.new(
+      :user_name => user[:user_name],
+      :slack_id => user[:user_id],
+      :email => user[:user_email]
+    ).save
+  end
+
   def add_office(office)
     self.office = office
     save
