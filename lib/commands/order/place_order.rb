@@ -29,7 +29,7 @@ module Commands
 
       return "That is not a valid order." if @lunch.empty?
 
-      if feature_access?(@user_name) && user_do_not_have_office?
+      if feature_access?(@user_name) && !Crafter.has_office?(@user_id)
         return "You need to add your office. ex: \"office: london\""
       end
 
@@ -38,11 +38,6 @@ module Commands
 
     private
 
-    def user_do_not_have_office?
-      crafter = Crafter.last(:slack_id => @user_id)
-      !crafter.office
-    end
-
     def update_user
       user = Crafter.last(:slack_id => @user_id)
       user.email = @user_email
@@ -50,7 +45,7 @@ module Commands
     end
 
     def user_dont_have_email?
-      crafter = Crafter.last(:slack_id => @user_id)
+      crafter = Crafter.profile(@user_id)
       !crafter.email
     end
 
