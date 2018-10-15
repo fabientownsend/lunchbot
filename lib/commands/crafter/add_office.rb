@@ -30,9 +30,11 @@ module Commands
     end
 
     def run
-      if Office.available?(@office)
-        @crafter.add_office(@office)
-        Logger.info("#{@office} was added to #{@crafter.user_name} - #{updated_crafter}")
+      if Office.available?(@office) && (@crafter || @apprentice)
+        if @crafter
+          @crafter.add_office(@office)
+          Logger.info("#{@office} was added to #{@crafter.user_name} - #{updated_crafter}")
+        end
 
         if @apprentice
           @apprentice.add_office(@office)
@@ -40,9 +42,11 @@ module Commands
         end
 
         "You were added to the office: #{@office}"
-      else
+      elsif @crafter || @apprentice
         Logger.info("#{@crafter.user_name} use a unavailable office: #{@office}")
         "The office available are: #{Office.list.map(&:capitalize).join(", ")}"
+      else
+        ""
       end
     end
   end
