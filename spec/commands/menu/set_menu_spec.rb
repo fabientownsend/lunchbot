@@ -15,7 +15,8 @@ RSpec.describe Commands::SetMenu do
 
     Apprentice.new(
       user_name: "Fabien another apprentice",
-      slack_id: "valid id 2"
+      slack_id: "valid id 2",
+      office: "london"
     ).save
 
     Apprentice.new(
@@ -43,22 +44,19 @@ RSpec.describe Commands::SetMenu do
   end
 
   it "tell you if you don't have the right to set a new url" do
-    url = "no an url"
-    response = set_menu_link(url: url, overwrite_slack_id: "valid id 2")
+    response = set_menu_link(url: "no an url", overwrite_slack_id: "valid id 2")
 
     expect(response).to eq("You are not the foreman!")
   end
 
   it "test the new feature whish require office" do
-    url = "no an url"
-    response = set_menu_link(url: url, overwrite_slack_id: "valid id 3")
+    response = set_menu_link(url: "no an url", overwrite_slack_id: "valid id 3")
 
     expect(response).to eq("You need to add your office. ex: \"office: london\"")
   end
 
   it "tell you when the url isn't valid" do
-    url = "no an url"
-    response = set_menu_link(url: url)
+    response = set_menu_link(url: "no an url")
 
     expect(response).to eq("That is not a valid URL!")
   end
@@ -68,6 +66,12 @@ RSpec.describe Commands::SetMenu do
     response = set_menu_link(url: url)
 
     expect(response).to eq("<!here> Menu has been set: #{url}")
+  end
+
+  it "extracts the first url" do
+    response = set_menu_link(url: "new menu: <http://www.test.com|www.test.com>")
+
+    expect(response).to eq("<!here> Menu has been set: http://www.test.com")
   end
 
   it "remove useless information from url" do

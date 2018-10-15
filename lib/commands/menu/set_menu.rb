@@ -1,11 +1,9 @@
 require 'models/menu'
 require 'models/apprentice'
 require 'foreman_checker'
-require 'feature_flag'
 
 module Commands
-  class SetMenu < FeatureFlag
-    release_for 'Fabien Townsend', 'Marion'
+  class SetMenu
     include ForemanChecker
 
     def applies_to(request)
@@ -20,10 +18,7 @@ module Commands
     end
 
     def run
-      if feature_access?(@apprentice.user_name) && !@apprentice.office
-        return "You need to add your office. ex: \"office: london\""
-      end
-
+      return "You need to add your office. ex: \"office: london\"" unless @apprentice.office
       return "You are not the foreman!" unless foreman?(@apprentice.slack_id)
 
       update_url

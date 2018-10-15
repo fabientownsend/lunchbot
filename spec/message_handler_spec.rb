@@ -40,19 +40,6 @@ RSpec.describe MessageHandler do
     expect(fake_response.message).to eq(all_command_info)
   end
 
-  it "returns a message for a new menu" do
-    message_from_slack(user_message: "new menu: <http://www.test.com|www.test.com>")
-
-    bot_response = "<!here> Menu has been set: http://www.test.com"
-    expect(fake_response.message).to eq(bot_response)
-    expect(fake_response.user_id).to eq(channel_id)
-  end
-
-  it "says that the url is invalid if the url is invalid" do
-    message_from_slack(user_message: "new menu: invalid")
-    expect(fake_response.message).to eq("That is not a valid URL!")
-  end
-
   it "returns the url when you ask the menu which is not provided" do
     Crafter.new(
       user_name: "Fabien",
