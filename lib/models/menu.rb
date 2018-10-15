@@ -8,7 +8,7 @@ class Menu
   property :date, DateTime
   property :office, String, length: 255
 
-  def self.selected_for(office)
-    Menu.last(:office => office)
+  def self.url_to_menu_for(office)
+    Menu.last(:office => office).url if Menu.last(:office => office)
   end
 end

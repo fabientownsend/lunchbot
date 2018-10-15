@@ -66,21 +66,6 @@ RSpec.describe MessageHandler do
     expect(fake_response.message).to eq(bot_response)
   end
 
-  it "return the url when you ask the menu which is not provided" do
-    Crafter.new(
-      user_name: "Fabien",
-      slack_id: "user id",
-      office: "london"
-    ).save
-
-    message_from_slack(user_message: "new menu: <http://www.test.com|www.test.com>")
-    message_from_slack(user_message: "menu?", new_recipient: "user id")
-
-    bot_response = "The menu for this week is: http://www.test.com"
-    expect(fake_response.message).to eq(bot_response)
-    expect(fake_response.user_id).to eq(channel_id)
-  end
-
   it "responds with the order you just placed" do
     message_from_slack(user_message: "order: hamburger")
 

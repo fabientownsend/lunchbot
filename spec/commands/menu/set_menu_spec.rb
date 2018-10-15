@@ -44,44 +44,36 @@ RSpec.describe Commands::SetMenu do
 
   it "tell you if you don't have the right to set a new url" do
     url = "no an url"
-    response = change_url(url: url, overwrite_slack_id: "valid id 2")
+    response = set_menu_link(url: url, overwrite_slack_id: "valid id 2")
 
     expect(response).to eq("You are not the foreman!")
   end
 
   it "test the new feature whish require office" do
     url = "no an url"
-    response = change_url(url: url, overwrite_slack_id: "valid id 3")
+    response = set_menu_link(url: url, overwrite_slack_id: "valid id 3")
 
     expect(response).to eq("You need to add your office. ex: \"office: london\"")
   end
 
   it "tell you when the url isn't valid" do
     url = "no an url"
-    response = change_url(url: url)
+    response = set_menu_link(url: url)
 
     expect(response).to eq("That is not a valid URL!")
   end
 
   it "return a message with a message" do
     url = "http://www.deliveroo.co.uk/menu/london/holborn/itsu-fleet-street"
-    response = change_url(url: url)
+    response = set_menu_link(url: url)
 
     expect(response).to eq("<!here> Menu has been set: #{url}")
-  end
-
-  it "save url in database" do
-    url = "http://www.deliveroo.co.uk/menu/london/holborn/itsu-fleet-street"
-    change_url(url: url)
-
-    result = "http://www.deliveroo.co.uk/menu/london/holborn/itsu-fleet-street"
-    expect(Menu.last.url).to eq(result)
   end
 
   it "remove useless information from url" do
     url = "https://deliveroo.co.uk/menu/london/covent-garden/the-real-greek" \
     "?day=today&rpos=0&time=1130"
-    change_url(url: url)
+    set_menu_link(url: url)
 
     result = "https://deliveroo.co.uk/menu/london/covent-garden/the-real-greek"
     expect(Menu.last.url).to eq(result)
@@ -89,32 +81,29 @@ RSpec.describe Commands::SetMenu do
 
   it "accept subdomain" do
     url = "https://arancinibrothers-catering.orderswift.com/menu/re_0UV"
-    change_url(url: url)
+    set_menu_link(url: url)
 
-    result = "https://arancinibrothers-catering.orderswift.com/menu/re_0UV"
-    expect(Menu.last.url).to eq(result)
+    expect(Menu.last.url).to eq(url)
   end
 
   it "can extract url with an apostrof" do
     url = "https://deliveroo.co.uk/menu/london/st-paul's/vita-mojo"
-    change_url(url: url)
+    set_menu_link(url: url)
 
-    result = "https://deliveroo.co.uk/menu/london/st-paul's/vita-mojo"
-    expect(Menu.last.url).to eq(result)
+    expect(Menu.last.url).to eq(url)
   end
 
   it "save save the office based on forman office " do
     url = "https://arancinibrothers-catering.orderswift.com/menu/re_0UV"
-    change_url(url: url)
+    set_menu_link(url: url)
 
-    result = "https://arancinibrothers-catering.orderswift.com/menu/re_0UV"
-    expect(Menu.last.url).to eq(result)
+    expect(Menu.last.url).to eq(url)
     expect(Menu.last.office).to eq(@foreman.office)
   end
 
   private
 
-  def change_url(args)
+  def set_menu_link(args)
     url = args[:url]
     from_id = args[:overwrite_slack_id] || "valid id"
     menu.prepare(user_message: url, user_id: from_id)

@@ -20,8 +20,8 @@ module Commands
         return "You need to add your office. ex: \"office: london\""
       end
 
-      if Menu.selected_for(@crafter.office)
-        "The menu for this week is: #{Menu.selected_for(@crafter.office)}"
+      if Menu.url_to_menu_for(@crafter.office)
+        "The menu for this week is: #{Menu.url_to_menu_for(@crafter.office)}"
       else
         "The menu for this week is: no url provided"
       end
