@@ -5,7 +5,7 @@ require 'feature_flag'
 
 module Commands
   class SetMenu < FeatureFlag
-    release_for 'Fabien Townsend'
+    release_for 'Fabien Townsend', 'Marion'
     include ForemanChecker
 
     def applies_to(request)

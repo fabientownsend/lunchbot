@@ -5,7 +5,7 @@ require 'tiny_logger'
 
 module Commands
   class GetMenu < FeatureFlag
-    release_for 'Fabien Townsend'
+    release_for 'Fabien Townsend', 'Marion'
 
     def applies_to(request)
       request = request[:user_message].downcase
@@ -17,8 +17,6 @@ module Commands
     end
 
     def run
-      Logger.info("Trace #{@crafter.user_name}")
-      Logger.info("Trace #{@crafter.office}")
       if feature_access?(@crafter.user_name) && !@crafter.office
         return "You need to add your office. ex: \"office: london\""
       end
