@@ -1,11 +1,9 @@
-require 'feature_flag'
 require 'models/crafter'
 require 'models/menu'
 require 'tiny_logger'
 
 module Commands
-  class GetMenu < FeatureFlag
-    release_for 'Fabien Townsend', 'Marion'
+  class GetMenu
 
     def applies_to(request)
       request = request[:user_message].downcase
@@ -17,14 +15,14 @@ module Commands
     end
 
     def run
-      if feature_access?(@crafter.user_name) && !@crafter.office
+      return if !@crafter
+
+      if !@crafter.office
         return "You need to add your office. ex: \"office: london\""
       end
 
       if Menu.selected_for(@crafter.office)
         "The menu for this week is: #{Menu.selected_for(@crafter.office)}"
-      elsif Menu.last
-        "The menu for this week is: #{Menu.last.url}"
       else
         "The menu for this week is: no url provided"
       end
