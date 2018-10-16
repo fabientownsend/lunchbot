@@ -49,7 +49,7 @@ class EventController < Sinatra::Base
       team_id = data['team_id']
       event_data = data['event']
 
-      if message?(event_data) && !from_robot?(event_data)
+      if message?(event_data) && !message_from_bot?(event_data)
         Logger.info("Receives Data #{event_data}")
         @message_handler.handle(team_id, event_data)
       end
@@ -60,7 +60,7 @@ class EventController < Sinatra::Base
     event_data['type'] == 'message'
   end
 
-  def from_robot?(event_data)
-    !AuthInfo.last(:bot_id => event_data['user']).nil?
+  def message_from_bot?(event_data)
+    event_data['bot_id']
   end
 end
