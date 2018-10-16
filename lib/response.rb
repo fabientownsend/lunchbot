@@ -12,6 +12,7 @@ class Response
 
   def send(message, user_id)
     Logger.info("BOT RESPONSE: #{message}, to: #{user_id}")
+    return if message.nil?
     @slack_client.chat_postMessage(
       as_user: 'true',
       channel: user_id,
