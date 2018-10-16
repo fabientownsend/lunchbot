@@ -4,10 +4,6 @@ require 'days'
 
 module Commands
   class GetAllOrders
-    def run
-      format_response(orders)
-    end
-
     def applies_to(request)
       request = request[:user_message].downcase
       request == "all orders?"
@@ -16,13 +12,20 @@ module Commands
     def prepare(data)
     end
 
+    def run
+      format_response(orders)
+    end
+
     private
 
     def orders
       orders_of_the_week = Order.all(:date => Days.from_monday_to_friday)
 
       orders_of_the_week.map do |order|
-        "#{full_name(order)}: #{order.lunch}" unless order.lunch.nil?
+        name = full_name(order)
+        unless order.lunch.nil? || name.nil?
+          "#{name}: #{order.lunch}"
+        end
       end.compact.sort
     end
 
@@ -30,7 +33,7 @@ module Commands
       if guest?(order)
         order.user_name
       else
-        Crafter.first(:slack_id => order.user_id).user_name
+        Crafter.profile(order.user_id).user_name if Crafter.profile(order.user_id)
       end
     end
 
