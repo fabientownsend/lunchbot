@@ -12,6 +12,7 @@ class RequestParser
   end
 
   def klass(command)
+    return if command.nil?
     Logger.info("CREATE NEW INSTANCE #{command}")
     @kommand = Object.const_get("Commands::#{command}").new
     self
