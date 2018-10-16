@@ -23,7 +23,9 @@ class MessageHandler
 
   def handle(team_id, event_data)
     @foreman_messager.update_team_id(team_id)
-    returned_command = @request_parser.parse(format_data(team_id, event_data))
+    data = format_data(team_id, event_data)
+    return data[:user_message] if data[:user_message].nil?
+    returned_command = @request_parser.parse(data)
     deal_with_command(returned_command, event_data) unless returned_command.nil?
   end
 
