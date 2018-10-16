@@ -7,6 +7,20 @@ require 'days'
 RSpec.describe Commands::GetAllOrders do
   let(:get_all_orders_command) { Commands::GetAllOrders.new }
 
+  before(:each) do
+    Crafter.create(
+      user_id: "asdf",
+      user_name: "will",
+      office: "london"
+    )
+
+    Crafter.create(
+      user_id: "qwer",
+      user_name: "fabien",
+      office: "london"
+    )
+  end
+
   it "returns no orders" do
     expect(get_all_orders_command.run).to eq("no orders")
   end
@@ -89,6 +103,8 @@ RSpec.describe Commands::GetAllOrders do
   end
 
   it "returns names based on the crafter database" do
+    Crafter.create(user_id: "asdf", user_name: "no name", office: "london")
+    Crafter.create(user_id: "qwer", user_name: "no name", office: "london")
     Helper.order(
       user_id: "asdf",
       user_name: "no name",
@@ -104,10 +120,12 @@ RSpec.describe Commands::GetAllOrders do
 
     crafter = Crafter.last(slack_id: "asdf")
     crafter.user_name = "will"
+    crafter.office = "london"
     crafter.save
 
     crafter = Crafter.last(slack_id: "qwer")
     crafter.user_name = "fabien"
+    crafter.office = "london"
     crafter.save
 
     response = get_all_orders_command.run
@@ -133,15 +151,16 @@ RSpec.describe Commands::GetAllOrders do
 
     crafter = Crafter.last(slack_id: "asdf")
     crafter.user_name = "will"
+    crafter.office = "london"
     crafter.save
 
     crafter = Crafter.last(slack_id: "qwer")
     crafter.user_name = "fabien"
+    crafter.office = "london"
     crafter.save
 
     response = get_all_orders_command.run
-    list_all_orders = "fabien: fish\njames smith: burger\nwill: burger"
-    expect(response).to eq(list_all_orders)
+    expect(response).to eq("fabien: fish\njames smith: burger\nwill: burger")
   end
 
   private

@@ -30,6 +30,7 @@ RSpec.describe Commands::MarkOut do
   end
 
   it "update the current week" do
+    Crafter.create(user_id: "id", user_name: "will", office: "london")
     Helper.order_previous_monday(
       user_id: "id",
       user_name: "will",

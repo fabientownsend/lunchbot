@@ -54,6 +54,7 @@ RSpec.describe MessageHandler do
   end
 
   it "responds with the order you just placed" do
+    Crafter.create(user_id: recipient, user_name: "Fabien", office: "london")
     message_from_slack(user_message: "order: hamburger")
 
     expect(fake_response.message).to eq("Will just ordered `hamburger`.")
@@ -148,12 +149,13 @@ RSpec.describe MessageHandler do
   end
 
   it "return the sum of food by type" do
+    Crafter.create(user_id: recipient, user_name: "Fabien", office: "london")
     message_from_slack(user_message: "order: burger")
     message_from_slack(user_message: "order -james smith-: burger")
     message_from_slack(user_message: "order -jean bon-: burger")
     message_from_slack(user_message: "order -harry potter-: fish")
-
     message_from_slack(user_message: "all food orders")
+
     expect(fake_response.message).to eq("burger: 3\nfish: 1")
   end
 

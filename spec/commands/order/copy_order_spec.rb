@@ -6,6 +6,12 @@ RSpec.describe Commands::CopyOrder do
   let(:id_user_which_copy) { "id_two" }
 
   it "copy the order of the person specified" do
+    Crafter.create(
+      user_id: id_user_reference,
+      user_name: "Fabien",
+      office: "london"
+    )
+
     Helper.order(
       user_id: id_user_reference,
       user_name: "Fabien",
@@ -27,6 +33,12 @@ RSpec.describe Commands::CopyOrder do
   end
 
   it "update a users order to the person they are copying" do
+    Crafter.create(
+      user_id: id_user_reference,
+      user_name: "Fabien",
+      office: "london"
+    )
+
     Helper.order(
       user_id: id_user_reference,
       user_name: "Fabien",

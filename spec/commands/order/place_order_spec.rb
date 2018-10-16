@@ -3,6 +3,14 @@ require 'models/order'
 require 'models/crafter'
 
 RSpec.describe Commands::PlaceOrder do
+  before(:each) do
+    Crafter.create(
+      user_id: "asdf",
+      user_name: "james",
+      office: "london"
+    )
+  end
+
   it "reccord an order in the database" do
     Helper.order(user_id: "asdf", user_name: "will", user_message: "burger")
 
@@ -22,6 +30,8 @@ RSpec.describe Commands::PlaceOrder do
   end
 
   it "save different order when user id is different" do
+    Crafter.create(user_id: "qwer", user_name: "user_name", office: "london")
+    Crafter.create(user_id: "asdf", user_name: "user_name", office: "london")
     Helper.order(user_id: "asdf", user_name: "will", user_message: "burger")
     Helper.order(user_id: "qwer", user_name: "fabien", user_message: "fish")
 
@@ -71,8 +81,6 @@ RSpec.describe Commands::PlaceOrder do
       user_name: "Fabien Townsend",
       user_id: "a new user"
     )
-
-    expect(Crafter.last(slack_id: "FabienUserId").office).to eq(nil)
 
     place_order = Commands::PlaceOrder.new
     place_order.prepare(

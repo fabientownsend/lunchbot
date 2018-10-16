@@ -42,6 +42,7 @@ RSpec.describe Commands::RemoveGuestOrder do
   it "doesn't remove a crafter" do
     Helper.order_guest(name: "james smith", meal: "burger")
     Helper.order_guest(name: "jean bon", meal: "burger")
+    Crafter.create(user_id: "asdf", user_name: "will", office: "london")
     Helper.order(user_id: "asdf", user_name: "will", user_message: "burger")
 
     response = remove_guest("will")

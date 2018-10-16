@@ -10,6 +10,9 @@ RSpec.describe Commands::AllFoodOrders do
   end
 
   it "return the total of the different food" do
+    Crafter.create(user_id: "asdf", user_name: "will", office: "london")
+    Crafter.create(user_id: "qwer", user_name: "fabien", office: "london")
+    Crafter.create(user_id: "poiu", user_name: "james", office: "london")
     place_order("asdf", "will", "burger")
     place_order("qwer", "fabien", "burger")
     place_order("poiu", "james", "fish")
@@ -19,6 +22,9 @@ RSpec.describe Commands::AllFoodOrders do
   end
 
   it "return only the meal of the current week" do
+    Crafter.create(user_id: "asdf", user_name: "will", office: "london")
+    Crafter.create(user_id: "qwer", user_name: "fabien", office: "london")
+    Crafter.create(user_id: "poiu", user_name: "james", office: "london")
     place_order("asdf", "will", "burger")
     place_order("qwer", "fabien", "burger")
     place_order("poiu", "james", "fish")
@@ -35,6 +41,7 @@ RSpec.describe Commands::AllFoodOrders do
   end
 
   it "return monday orders" do
+    Crafter.create(user_id: "asdf", user_name: "will", office: "london")
     place_order("asdf", "will", "burger")
 
     all_food = "burger: 1"
@@ -42,6 +49,7 @@ RSpec.describe Commands::AllFoodOrders do
   end
 
   it "return friday orders" do
+    Crafter.create(user_id: "asdf", user_name: "will", office: "london")
     Helper.order(
       user_id: "asdf",
       user_name: "will",
@@ -57,6 +65,7 @@ RSpec.describe Commands::AllFoodOrders do
     Helper.add_guest("james smith")
     Helper.add_guest("smith james ")
 
+    Crafter.create(user_id: "asdf", user_name: "will", office: "london")
     Helper.order(
       user_id: "asdf",
       user_name: "will",

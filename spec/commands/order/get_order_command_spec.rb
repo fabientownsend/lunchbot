@@ -12,6 +12,7 @@ RSpec.describe Commands::GetOrder do
   end
 
   it "returns the user specified order" do
+    Crafter.create(user_id: "f_id", user_name: "Fabien", office: "london")
     Helper.order(
       user_id: "f_id",
       user_name: "Fabien",

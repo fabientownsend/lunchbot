@@ -22,6 +22,12 @@ RSpec.describe Commands::GetAllGuests do
   end
 
   it "doesn't return the crafters" do
+    Crafter.create(
+      user_id: "asdf",
+      user_name: "Will",
+      office: "london"
+    )
+
     Helper.order(user_id: "asdf", user_name: "Will", user_message: "burger")
     Helper.order_guest(name: "james smith", meal: "burger")
     Helper.order_guest(name: "jean bon", meal: "burger")

@@ -1,12 +1,9 @@
 require 'models/order'
 require 'date'
 require 'days'
-require 'feature_flag'
 
 module Commands
-  class PlaceOrder < FeatureFlag
-    release_for 'Fabien Townsend'
-
+  class PlaceOrder
     def applies_to(request)
       request = request[:user_message].downcase
       request.start_with?("order:")
@@ -29,7 +26,7 @@ module Commands
 
       return "That is not a valid order." if @lunch.empty?
 
-      if feature_access?(@user_name) && !Crafter.has_office?(@user_id)
+      if !Crafter.has_office?(@user_id)
         return "You need to add your office. ex: \"office: london\""
       end
 

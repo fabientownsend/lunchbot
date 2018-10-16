@@ -83,13 +83,15 @@ RSpec.configure do |config|
 
     crafter = Crafter.new(
       user_name: "Fabien",
-      slack_id: "FabienUserId"
+      slack_id: "FabienUserId",
+      office: "london"
     )
     crafter.save
 
     crafter = Crafter.new(
       user_name: "Will",
-      slack_id: "WillUserId"
+      slack_id: "WillUserId",
+      office: "london"
     )
     crafter.save
   end
