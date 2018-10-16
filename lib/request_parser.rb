@@ -12,6 +12,7 @@ class RequestParser
   end
 
   def klass(command)
+    Logger.info("CREATE NEW INSTANCE #{command}")
     @kommand = Object.const_get("Commands::#{command}").new
     self
   rescue StandardError => error
@@ -25,7 +26,7 @@ class RequestParser
   end
 
   def prepare(data)
-    Logger.info("COMMAND PREPARE: #{data}")
+    Logger.info("COMMAND PREPARE: #{@kommand} WITH #{data}")
     @kommand.prepare(data)
     Logger.info("COMMAND PREPARED")
     @kommand
