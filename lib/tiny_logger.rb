@@ -11,6 +11,6 @@ class Logger
     return if ENV['RACK_ENV'] != 'production'
 
     logger = Logglier.new(ENV['LOGGLIER_URL'], :threaded => true)
-    logger.info("[INFO] #{message}")
+    logger.info(message)
   end
 end
