@@ -1,18 +1,13 @@
-require 'feature_flag'
 require 'models/apprentice'
 require 'models/crafter'
 require 'models/office'
 require 'tiny_logger'
 
 module Commands
-  class AddOffice < FeatureFlag
-    release_for 'Fabien Townsend', 'Marion'
-
+  class AddOffice
     def applies_to(request)
-      if feature_access?(request[:user_name])
-        request = request[:user_message].downcase
-        request.strip.downcase.start_with?("office:")
-      end
+      request = request[:user_message].downcase
+      request.strip.downcase.start_with?("office:")
     end
 
     def prepare(data)
