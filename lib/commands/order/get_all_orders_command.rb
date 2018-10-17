@@ -15,7 +15,7 @@ module Commands
 
     def prepare(data)
       @crafter_name = data[:user_name]
-      @crafter = data[:user_id]
+      @crafter_id = data[:user_id]
     end
 
     def run
@@ -28,11 +28,9 @@ module Commands
       orders_of_the_week = []
 
       if feature_access?(@crafter_name)
-        Logger.info("USE NEW FEATURE ORDER FILTERED")
-        orders_of_the_week = Order.all(:date => Days.from_monday_to_friday).select do |order|
-          Crafter.profile(order.user_id).office == @crafter.office
-        end
-        return orders_of_the_week if orders_of_the_week.empty?
+        crafter = Crafter.profile(@crafter_id)
+        Logger.info("USE NEW FEATURE ORDER FILTERED id: #{@crafter_id} id: #{crafter.slack_id}")
+        orders_of_the_week = Order.placed_in(crafter.office)
       else
         Logger.info("USE OLD FEATURE ORDER FILTERED")
         orders_of_the_week = Order.all(:date => Days.from_monday_to_friday)
