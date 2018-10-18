@@ -6,7 +6,7 @@ require 'tiny_logger'
 
 module Commands
   class GetAllOrders < FeatureFlag
-    release_for 'Fabien Townsend'
+    release_for 'Fabien Townsend', 'Marion'
 
     def applies_to(request)
       request = request[:user_message].downcase
