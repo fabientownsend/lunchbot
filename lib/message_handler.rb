@@ -36,7 +36,7 @@ class MessageHandler
     response = command.run
     Logger.info("COMMAND RESPONSE: #{response}")
     channel = event_data['channel'] || event_data['user']
-    respond(response, event_data['user'], channel)
+    @response.send(response, channel)
   end
 
   def format_data(team_id, event_data)
@@ -50,9 +50,5 @@ class MessageHandler
       mark_all_out: @mark_all_out,
       alert: @alert,
     }
-  end
-
-  def respond(bot_answer, user_id, channel)
-    @response.send(bot_answer, channel)
   end
 end
