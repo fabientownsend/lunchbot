@@ -1,3 +1,4 @@
+require 'models/crafter'
 require 'alert_foreman'
 require 'foreman_messager'
 require 'mark_all_out'
@@ -5,8 +6,11 @@ require 'request_parser'
 require 'response'
 require 'tiny_logger'
 require 'user_info_provider'
+require 'feature_flag'
 
-class MessageHandler
+class MessageHandler < FeatureFlag
+  release_for 'Fabien Townsend'
+
   def initialize(args = {})
     @mark_all_out = args[:mark_all_out] || MarkAllOut.new
     @request_parser = RequestParser.new
@@ -22,21 +26,30 @@ class MessageHandler
   end
 
   def handle(team_id, event_data)
+    recipient = event_data['channel'] || event_data['user']
     @foreman_messager.update_team_id(team_id)
     data = format_data(team_id, event_data)
     return data[:user_message] if data[:user_message].nil?
     returned_command = @request_parser.parse(data)
-    deal_with_command(returned_command, event_data) unless returned_command.nil?
+
+    if feature_access?(data['user_name'])
+      Crafter.create(data) unless Crafter.profile(data[:user_id])
+      @response.send(response, recipient) unless Crafter.has_office?(data[:user_id])
+    end
+
+    unless returned_command.nil?
+      response = deal_with_command(returned_command)
+      @response.send(response, recipient)
+    end
   end
 
   private
 
-  def deal_with_command(command, event_data)
+  def deal_with_command(command)
     Logger.info("COMMAND RUN")
     response = command.run
     Logger.info("COMMAND RESPONSE: #{response}")
-    channel = event_data['channel'] || event_data['user']
-    @response.send(response, channel)
+    response
   end
 
   def format_data(team_id, event_data)
