@@ -1,5 +1,5 @@
 class Office
-  @offices = ["london", "madisson"]
+  @offices = ["london", "madison"]
 
   def self.list
     @offices

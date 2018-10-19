@@ -2,7 +2,7 @@ require 'models/office'
 
 RSpec.describe Office do
   it "tells the offices available" do
-    expect(Office.list).to eq(["london", "madisson"])
+    expect(Office.list).to eq(["london", "madison"])
   end
 
   it "tells if an office is part of the list" do
