@@ -17,16 +17,18 @@ class EventController < Sinatra::Base
     verify_token
     verify_url
 
-    if event_callback?
-      if message? && !message_from_bot?
-        handle_event
-      end
+    if okay_to_handle_event?
+      handle_event
     end
 
     status 200
   end
 
   private
+
+  def okay_to_handle_event?
+    event_is_callback? && event_is_message? && !message_from_bot?
+  end
 
   def verify_token
     if invalid_token?
@@ -60,11 +62,11 @@ class EventController < Sinatra::Base
   def handle_event
   end
 
-  def event_callback?
+  def event_is_callback?
     request_data['type'] == 'event_callback'
   end
 
-  def message?
+  def event_is_message?
     event['type'] == 'message'
   end
 
