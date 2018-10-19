@@ -30,10 +30,12 @@ class MessageHandler < FeatureFlag
 
     if feature_access?(data[:user_name])
       Logger.info("CREATION FEATURE FLAG #{data[:user_id]}")
+
       unless Crafter.profile(data[:user_id])
         Logger.info("CREATION FEATURE CRAFTER FOR #{data[:user_id]}")
         Crafter.create(data)
       end
+
       unless Crafter.has_office?(data[:user_id])
         Logger.info("CREATION FEATURE ADD OFFICE FOR #{data[:user_id]}")
         @response.send(response, recipient)
