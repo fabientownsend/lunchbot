@@ -5,12 +5,13 @@ require 'slack-ruby-client'
 
 require 'message_handler'
 require 'tiny_logger'
+require 'response'
 
 class EventController < Sinatra::Base
   attr_reader :message_handler
 
   def initialize
-    @message_handler = MessageHandler.new
+    @message_handler = MessageHandler.new(response: Response.new.setup)
   end
 
   post '/events' do
