@@ -15,7 +15,7 @@ module Commands
       end
     end
 
-    def applies_to(request)
+    def applies_to?(request)
       request = request[:user_message].downcase
       request.strip.downcase == "add apprentice"
     end

@@ -5,7 +5,7 @@ RSpec.describe Commands::AddOffice do
   it "applies the command when required" do
     add_office_command = Commands::AddOffice.new
 
-    expect(add_office_command.applies_to(
+    expect(add_office_command.applies_to?(
       user_message: "office: london",
       user_name: "Fabien Townsend"
     )).to eq(true)

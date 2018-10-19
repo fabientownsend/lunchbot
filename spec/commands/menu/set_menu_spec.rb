@@ -26,19 +26,19 @@ RSpec.describe Commands::SetMenu do
   end
 
   it "applies to the command" do
-    response = menu.applies_to(user_message: "new menu www.menu.com")
+    response = menu.applies_to?(user_message: "new menu www.menu.com")
 
     expect(response).to be true
   end
 
   it "is not case sensitive" do
-    response = menu.applies_to(user_message: "New Menu www.menu.com")
+    response = menu.applies_to?(user_message: "New Menu www.menu.com")
 
     expect(response).to be true
   end
 
   it "is not space sensitive" do
-    response = menu.applies_to(user_message: "  new menu    www.menu.com   ")
+    response = menu.applies_to?(user_message: "  new menu    www.menu.com   ")
 
     expect(response).to be true
   end

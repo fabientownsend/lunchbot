@@ -4,7 +4,7 @@ require 'days'
 
 module Commands
   class CopyOrder
-    def applies_to(request)
+    def applies_to?(request)
       request = request[:user_message].downcase
       request.start_with?("copy order:")
     end

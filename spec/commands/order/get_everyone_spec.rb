@@ -16,25 +16,25 @@ RSpec.describe Commands::GetEveryone do
   it "apply to the command 'everyone'" do
     user_request = "everyone"
 
-    expect(get_everyone.applies_to(user_message: user_request)).to eq(true)
+    expect(get_everyone.applies_to?(user_message: user_request)).to eq(true)
   end
 
   it "apply only only ton 'everyone' command" do
     user_request = "everyone and me"
 
-    expect(get_everyone.applies_to(user_message: user_request)).to eq(false)
+    expect(get_everyone.applies_to?(user_message: user_request)).to eq(false)
   end
 
   it "is not case sensitive" do
     user_request = "Everyone"
 
-    expect(get_everyone.applies_to(user_message: user_request)).to eq(true)
+    expect(get_everyone.applies_to?(user_message: user_request)).to eq(true)
   end
 
   it "is not spaces sensitive" do
     user_request = "  everyone  "
 
-    expect(get_everyone.applies_to(user_message: user_request)).to eq(true)
+    expect(get_everyone.applies_to?(user_message: user_request)).to eq(true)
   end
 
   it "return guests with and without a meal" do

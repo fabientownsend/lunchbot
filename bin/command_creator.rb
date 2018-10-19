@@ -37,7 +37,7 @@ if verb == 'new' && subject == 'command'
 
   file << "module Commands\n"
   file << "  class #{file_name}\n"
-  file << "    def applies_to(request)\n"
+  file << "    def applies_to?(request)\n"
   file << "    end\n\n"
   file << "    def prepare(data)\n"
   file << "    end\n\n"

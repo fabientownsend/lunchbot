@@ -20,7 +20,7 @@ class RequestParser
   end
 
   def requested?(data)
-    @kommand.applies_to(data)
+    @kommand.applies_to?(data)
   rescue StandardError => error
     Logger.alert(error)
   end

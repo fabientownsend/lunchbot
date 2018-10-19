@@ -4,7 +4,7 @@ require 'commands/order/customer_provider'
 
 module Commands
   class GetEveryone
-    def applies_to(request)
+    def applies_to?(request)
       request = request[:user_message].downcase
       request.strip.downcase == "everyone"
     end
