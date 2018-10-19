@@ -16,7 +16,13 @@ class EventController < Sinatra::Base
   post '/events' do
     verify_token
     verify_url
-    spawn_new_event_handler
+
+    if event_callback?
+      if message? && !message_from_bot?
+        handle_event
+      end
+    end
+
     status 200
   end
 
@@ -32,9 +38,12 @@ class EventController < Sinatra::Base
     body request_data['challenge'].to_s if url_verification?
   end
 
-  def spawn_new_event_handler
+  def handle_event
     begin
-      Thread.new { handle_event }
+      Thread.new do
+        Logger.info("Receives Data #{event}")
+        @message_handler.handle(team_id, event)
+      end
     rescue StandardError => error
       Logger.alert(error)
     end
@@ -49,12 +58,6 @@ class EventController < Sinatra::Base
   end
 
   def handle_event
-    if event_callback?
-      if message? && !message_from_bot?
-        Logger.info("Receives Data #{event}")
-        @message_handler.handle(team_id, event)
-      end
-    end
   end
 
   def event_callback?
