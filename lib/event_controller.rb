@@ -14,53 +14,74 @@ class EventController < Sinatra::Base
   end
 
   post '/events' do
-    request_data = JSON.parse(request.body.read)
-
-    verify_token(request_data)
-    verify_url(request_data)
-
-    begin
-      Thread.new { handle_event(request_data) }
-    rescue StandardError => error
-      Logger.alert(error)
-    end
-
+    verify_token
+    verify_url
+    spawn_new_event_handler
     status 200
   end
 
   private
 
-  def verify_token(data)
-    if invalid_token?(data['token'])
-      halt 403, "Invalid Slack verification token received: #{data['token']}"
+  def verify_token
+    if invalid_token?
+      halt 403, "Invalid Slack verification token received: #{token}"
     end
   end
 
-  def invalid_token?(token)
+  def verify_url
+    body request_data['challenge'].to_s if url_verification?
+  end
+
+  def spawn_new_event_handler
+    begin
+      Thread.new { handle_event }
+    rescue StandardError => error
+      Logger.alert(error)
+    end
+  end
+
+  def invalid_token?
     !SLACK_CONFIG[:slack_verification_token] == token
   end
 
-  def verify_url(data)
-    body data['challenge'].to_s if data['type'] == 'url_verification'
+  def url_verification?
+    request_data['type'] == 'url_verification'
   end
 
-  def handle_event(data)
-    if data['type'] == 'event_callback'
-      team_id = data['team_id']
-      event_data = data['event']
-
-      if message?(event_data) && !message_from_bot?(event_data)
-        Logger.info("Receives Data #{event_data}")
-        @message_handler.handle(team_id, event_data)
+  def handle_event
+    if event_callback?
+      if message? && !message_from_bot?
+        Logger.info("Receives Data #{event}")
+        @message_handler.handle(team_id, event)
       end
     end
   end
 
-  def message?(event_data)
-    event_data['type'] == 'message'
+  def event_callback?
+    request_data['type'] == 'event_callback'
   end
 
-  def message_from_bot?(event_data)
-    event_data['bot_id']
+  def message?
+    event['type'] == 'message'
+  end
+
+  def message_from_bot?
+    event['bot_id']
+  end
+
+  def token
+    request_data['token']
+  end
+
+  def team_id
+    request_data['team_id']
+  end
+
+  def event
+    request_data['event']
+  end
+
+  def request_data
+    JSON.parse(request.body.read)
   end
 end
