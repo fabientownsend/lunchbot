@@ -17,6 +17,7 @@ RSpec.describe Commands::AddOffice do
       :slack_id => "1234",
       :email => "fabien@adsak.com"
     ).save
+
     add_office_command = Commands::AddOffice.new
 
     add_office_command.prepare(user_message: "office: London", user_id: "1234")

@@ -11,9 +11,13 @@ module Commands
     end
 
     def prepare(data)
-      @office = data[:user_message].gsub("office:", "").strip.downcase
+      @office = Office.new(parse_office_location(data))
       @crafter = Crafter.profile(data[:user_id])
       @apprentice = Apprentice.profile(data[:user_id])
+    end
+
+    def parse_office_location(data)
+      data[:user_message].gsub("office:", "").strip.downcase
     end
 
     def updated_crafter
@@ -25,21 +29,21 @@ module Commands
     end
 
     def run
-      if Office.available?(@office) && (@crafter || @apprentice)
+      if @office.available? && (@crafter || @apprentice)
         if @crafter
-          @crafter.add_office(@office)
+          @crafter.add_office(@office.location)
           Logger.info("#{@office} was added to #{@crafter.user_name} - #{updated_crafter}")
         end
 
         if @apprentice
-          @apprentice.add_office(@office)
-          Logger.info("#{@office} was added to #{@apprentice.user_name} - #{updated_apprentice}")
+          @apprentice.add_office(@office.location)
+          Logger.info("#{@office.location} was added to #{@apprentice.user_name} - #{updated_apprentice}")
         end
 
-        "You were added to the office: #{@office}"
+        "You were added to the office: #{@office.location}"
       elsif @crafter || @apprentice
         Logger.info("#{@crafter.user_name} use a unavailable office: #{@office}")
-        "The office available are: #{Office.list.map(&:capitalize).join(", ")}"
+        "The office available are: #{Office.locations.map(&:capitalize).join(", ")}"
       else
         ""
       end
