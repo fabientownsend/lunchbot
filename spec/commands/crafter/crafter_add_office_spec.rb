@@ -40,7 +40,7 @@ RSpec.describe Commands::AddOffice do
     add_office_command.prepare(user_message: "office: random office", user_id: "1234")
     response = add_office_command.run
 
-    expect(response).to eq("The office available are: London, Madison")
+    expect(response).to eq("The offices available are: London, Madison")
   end
 
   it "does add office to apprentice if this person is an apprentice too" do
