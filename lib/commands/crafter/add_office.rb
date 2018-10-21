@@ -16,14 +16,6 @@ module Commands
       @apprentice = Apprentice.profile(data[:user_id])
     end
 
-    def updated_crafter
-      "#{Crafter.all(:office.not => nil).count}/#{Crafter.all.count}"
-    end
-
-    def updated_apprentice
-      "#{Apprentice.all(:office.not => nil).count}/#{Apprentice.all.count}"
-    end
-
     def run
       if Office.available?(@office) && (@crafter || @apprentice)
         if @crafter
@@ -43,6 +35,16 @@ module Commands
       else
         ""
       end
+    end
+
+    private
+
+    def updated_crafter
+      "#{Crafter.all(:office.not => nil).count}/#{Crafter.all.count}"
+    end
+
+    def updated_apprentice
+      "#{Apprentice.all(:office.not => nil).count}/#{Apprentice.all.count}"
     end
   end
 end
