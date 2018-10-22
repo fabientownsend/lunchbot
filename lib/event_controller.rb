@@ -60,9 +60,6 @@ class EventController < Sinatra::Base
     request_data['type'] == 'url_verification'
   end
 
-  def handle_event
-  end
-
   def event_is_callback?
     request_data['type'] == 'event_callback'
   end
