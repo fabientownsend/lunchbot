@@ -5,8 +5,6 @@ class Days
     monday..friday
   end
 
-  private_class_method :monday, :friday
-
   def self.monday
     Date.today - Date.today.wday + 1
   end
