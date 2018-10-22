@@ -42,14 +42,12 @@ class EventController < Sinatra::Base
   end
 
   def handle_event
-    begin
-      Thread.new do
-        Logger.info("Receives Data #{event}")
-        @message_handler.handle(team_id, event)
-      end
-    rescue StandardError => error
-      Logger.alert(error)
+    Thread.new do
+      Logger.info("Receives Data #{event}")
+      @message_handler.handle(team_id, event)
     end
+  rescue StandardError => error
+    Logger.alert(error)
   end
 
   def invalid_token?
