@@ -1,5 +1,5 @@
 class Office
-  LOCATIONS = ["london", "madison"]
+  LOCATIONS = ["london", "madison"].freeze
 
   attr_reader :location
 
