@@ -33,17 +33,21 @@ module Commands
       if @office.available? && (@crafter || @apprentice)
         if @crafter
           @crafter.add_office(@office.location)
-          Logger.info("#{@office} was added to #{@crafter.user_name} - #{updated_crafter}")
+          Logger.info(
+            "#{@office.location} was added to #{@crafter.user_name} - #{updated_crafter}"
+          )
         end
 
         if @apprentice
           @apprentice.add_office(@office.location)
-          Logger.info("#{@office.location} was added to #{@apprentice.user_name} - #{updated_apprentice}")
+          Logger.info(
+            "#{@office.location} was added to #{@apprentice.user_name} - #{updated_apprentice}"
+          )
         end
 
         "You were added to the office: #{@office.location}"
       elsif @crafter || @apprentice
-        Logger.info("#{@crafter.user_name} use a unavailable office: #{@office}")
+        Logger.info("#{@crafter.user_name} used an unavailable office: #{@office.location}")
         "The offices available are: #{OfficePresenter.locations}"
       else
         ""
