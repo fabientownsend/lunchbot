@@ -22,11 +22,11 @@ module Commands
     end
 
     def updated_crafter
-      "#{Crafter.all(:office.not => nil).count}/#{Crafter.all.count}"
+      "#{Crafter.with_office.count}/#{Crafter.all.count}"
     end
 
     def updated_apprentice
-      "#{Apprentice.all(:office.not => nil).count}/#{Apprentice.all.count}"
+      "#{Apprentice.with_office.count}/#{Apprentice.all.count}"
     end
 
     def run
