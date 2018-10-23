@@ -53,33 +53,24 @@ module Commands
     end
 
     def place_order
-      order_places = Order.last(
-        :user_id => @user_id,
-        :date => Days.from_monday_to_friday
-      )
+      order_placed = Order.placed_for(@user_id)
 
-      if order_places
-        update(order_places)
+      if order_placed
+        order_placed.update_lunch(@lunch)
+        "#{@user_name} updated their order to`#{@lunch}`."
       else
         place_new_order
+        "#{@user_name} just ordered `#{@lunch}`."
       end
     end
 
-    def update(order)
-      order.lunch = @lunch
-      order.save
-      "#{@user_name} updated their order to`#{@lunch}`."
-    end
-
     def place_new_order
-      order = Order.new(
+      Order.place(
         :user_name => @user_name,
         :user_id => @user_id,
         :lunch => @lunch,
         :date => @date
       )
-      order.save
-      "#{@user_name} just ordered `#{@lunch}`."
     end
   end
 end
