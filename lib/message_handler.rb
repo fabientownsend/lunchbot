@@ -42,7 +42,7 @@ class MessageHandler < FeatureFlag
       end
       unless Crafter.has_office?(data[:user_id])
         Logger.info("CREATION FEATURE ADD OFFICE FOR #{data[:user_id]}")
-        @response.send(response, recipient)
+        @response.send("You need to add your office. ex: \"office: london\"", recipient)
         return
       end
     end
