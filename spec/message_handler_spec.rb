@@ -30,6 +30,7 @@ RSpec.describe MessageHandler do
     )
     foreman.save
     allow(Date).to receive(:today).and_return Days.monday
+    allow(Crafter).to receive(:has_office?).and_return(true)
   end
 
   include CommandInfo
@@ -78,6 +79,7 @@ RSpec.describe MessageHandler do
   end
 
   it "returns list of users that doesn't ordered yet" do
+    allow(Crafter).to receive(:profile).and_return(true)
     add_guest("james smith")
     message_from_slack(user_message: "remind")
 
@@ -87,6 +89,7 @@ RSpec.describe MessageHandler do
   end
 
   it "return list of users that doesn't ordered yet" do
+    allow(Crafter).to receive(:profile).and_return(true)
     add_guest("james smith")
     message_from_slack(user_message: "remind")
 
@@ -101,10 +104,10 @@ RSpec.describe MessageHandler do
 
   it "return a list without the people who ordered" do
     message_from_slack(user_message: "order: fish", new_recipient: "FabienUserId")
-    message_from_slack(user_message: "order -james-: fish")
+    message_from_slack(user_message: "order -james-: pomme")
     message_from_slack(user_message: "remind")
 
-    expect(fake_response.message).to eq("<@WillUserId>")
+    expect(fake_response.message).to eq("<@WillUserId>\n<@D3S6XE6SZ>")
   end
 
   it "return in the channel by default" do

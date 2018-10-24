@@ -33,18 +33,13 @@ class MessageHandler < FeatureFlag
     return data[:user_message] if data[:user_message].nil?
     returned_command = @request_parser.parse(data)
 
-    if feature_access?(data[:user_name])
-      Logger.info("CREATION FEATURE FLAG #{data[:user_id]}")
-      unless Crafter.profile(data[:user_id])
-        Logger.info("CREATION FEATURE CRAFTER FOR #{data[:user_id]}")
-        Crafter.create(data)
-      end
+    unless Crafter.profile(data[:user_id])
+      Crafter.create(data)
+    end
 
-      if !Crafter.has_office?(data[:user_id]) && !Commands::AddOffice.add_office_request?(data)
-        Logger.info("CREATION FEATURE ADD OFFICE FOR #{data[:user_id]} - #{Crafter.has_office?(data[:user_id])} = #{Commands::AddOffice.add_office_request?(data)}")
-        @response.send("You need to add your office. ex: \"office: london\"", recipient)
-        return
-      end
+    if !Crafter.has_office?(data[:user_id]) && !Commands::AddOffice.add_office_request?(data)
+      @response.send("You need to add your office. ex: \"office: london\"", recipient)
+      return
     end
 
     unless returned_command.nil?
