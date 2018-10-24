@@ -8,7 +8,7 @@ module Commands
   class GetAllOrders < FeatureFlag
     release_for 'Fabien Townsend', 'Marion'
 
-    def applies_to(request)
+    def applies_to?(request)
       request = request[:user_message].downcase
       request == "all orders?"
     end

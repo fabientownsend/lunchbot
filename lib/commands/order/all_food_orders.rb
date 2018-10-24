@@ -3,7 +3,7 @@ require 'days'
 
 module Commands
   class AllFoodOrders
-    def applies_to(request)
+    def applies_to?(request)
       request = request[:user_message].downcase
       "all food orders" == request
     end

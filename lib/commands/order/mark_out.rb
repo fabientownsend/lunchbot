@@ -4,7 +4,7 @@ require 'days'
 
 module Commands
   class MarkOut
-    def applies_to(request)
+    def applies_to?(request)
       request = request[:user_message].downcase
       request == "out"
     end

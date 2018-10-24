@@ -4,7 +4,7 @@ module Commands
   class TestSentry < FeatureFlag
     release_for 'FabieN Townsend'
 
-    def applies_to(request)
+    def applies_to?(request)
       request[:user_message].downcase == "sentry test"
     end
 

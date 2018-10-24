@@ -6,7 +6,7 @@ module Commands
   class SetMenu
     include ForemanChecker
 
-    def applies_to(request)
+    def applies_to?(request)
       request = request[:user_message].downcase
       request = request.downcase.strip
       request.split.size == 3 && request.include?("new menu")

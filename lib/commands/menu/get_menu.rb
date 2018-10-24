@@ -4,7 +4,7 @@ require 'tiny_logger'
 
 module Commands
   class GetMenu
-    def applies_to(request)
+    def applies_to?(request)
       request = request[:user_message].downcase
       request.downcase.strip == "menu?"
     end

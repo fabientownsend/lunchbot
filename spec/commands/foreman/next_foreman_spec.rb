@@ -5,17 +5,17 @@ RSpec.describe Commands::NextForeman do
   let(:next_foreman) { Commands::NextForeman.new }
 
   it "apply to the command next foreman" do
-    response = next_foreman.applies_to(user_message: "next foreman")
+    response = next_foreman.applies_to?(user_message: "next foreman")
     expect(response).to be true
   end
 
   it "isn't case sensitive" do
-    response = next_foreman.applies_to(user_message: "Next Foreman")
+    response = next_foreman.applies_to?(user_message: "Next Foreman")
     expect(response).to be true
   end
 
   it "isn't space sensitive" do
-    response = next_foreman.applies_to(user_message: "  next foreman  ")
+    response = next_foreman.applies_to?(user_message: "  next foreman  ")
     expect(response).to be true
   end
 

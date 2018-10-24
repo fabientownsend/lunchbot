@@ -4,18 +4,18 @@ RSpec.describe Commands::DeleteCrafter do
   it "applies to the command remove crafter" do
     delete_crafter = Commands::DeleteCrafter.new
 
-    result = delete_crafter.applies_to(user_message: "delete crafter")
+    result = delete_crafter.applies_to?(user_message: "delete crafter")
     expect(result).to eq(true)
   end
 
   it "returns true if message starts with delete crafter" do
     delete_crafter = Commands::DeleteCrafter.new
-    expect(delete_crafter.applies_to(user_message: "delete crafter Fabien")).to eq(true)
+    expect(delete_crafter.applies_to?(user_message: "delete crafter Fabien")).to eq(true)
   end
 
   it "returns false is message doesn't start with delete crafter" do
     delete_crafter = Commands::DeleteCrafter.new
-    expect(delete_crafter.applies_to(user_message: "Hi Fabien")).to eq(false)
+    expect(delete_crafter.applies_to?(user_message: "Hi Fabien")).to eq(false)
   end
 
   it "extacts crafter name Fabien from user message " do
