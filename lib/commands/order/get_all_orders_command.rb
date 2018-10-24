@@ -1,13 +1,10 @@
 require 'days'
-require 'feature_flag'
 require 'models/crafter'
 require 'models/order'
 require 'tiny_logger'
 
 module Commands
-  class GetAllOrders < FeatureFlag
-    release_for 'Fabien Townsend', 'Marion'
-
+  class GetAllOrders
     def applies_to?(request)
       request = request[:user_message].downcase
       request == "all orders?"
@@ -27,13 +24,10 @@ module Commands
     def orders
       orders_of_the_week = []
 
-      if feature_access?(@crafter_name)
-        crafter = Crafter.profile(@crafter_id)
-        Logger.info("USE NEW FEATURE ORDER FILTERED id: #{@crafter_id} id: #{crafter.slack_id}")
+      crafter = Crafter.profile(@crafter_id)
+
+      if crafter
         orders_of_the_week = Order.placed_in(crafter.office)
-      else
-        Logger.info("USE OLD FEATURE ORDER FILTERED")
-        orders_of_the_week = Order.all(:date => Days.from_monday_to_friday)
       end
 
       orders_of_the_week.map do |order|

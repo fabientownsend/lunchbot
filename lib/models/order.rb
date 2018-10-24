@@ -15,7 +15,7 @@ class Order
   def self.placed_in(office)
     orders = Order.all(:date => Days.from_monday_to_friday)
     crafter = Crafter.all(:office => office)
-    orders.keep_if { |o| crafter.any? { |c| c.slack_id == o.user_id } }
+    orders.keep_if { |o| crafter.any? { |c| c.slack_id == o.user_id || c.slack_id == o.host } }
   end
 
   def self.place(order)

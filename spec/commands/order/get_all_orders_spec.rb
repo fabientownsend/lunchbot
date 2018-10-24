@@ -30,15 +30,18 @@ RSpec.describe Commands::GetAllOrders do
       user_id: "qwer",
       user_name: "fabien",
       user_message: "fish",
-      date: Days.monday
+      date: Days.monday,
+      office: 'london'
     )
     Helper.order(
       user_id: "asdf",
       user_name: "will",
       user_message: "burger",
-      date: Days.monday
+      date: Days.monday,
+      office: 'london'
     )
 
+    get_all_orders_command.prepare(user_id: "qwer")
     response = get_all_orders_command.run
     list_all_orders = "fabien: fish\nwill: burger"
     expect(response).to eq(list_all_orders)
@@ -49,9 +52,11 @@ RSpec.describe Commands::GetAllOrders do
       user_id: "asdf",
       user_name: "will",
       user_message: "burger",
-      date: Days.monday
+      date: Days.monday,
+      office: 'london'
     )
 
+    get_all_orders_command.prepare(user_id: "asdf")
     response = get_all_orders_command.run
     list_all_orders = "will: burger"
     expect(response).to eq(list_all_orders)
@@ -62,15 +67,18 @@ RSpec.describe Commands::GetAllOrders do
       user_id: "asdf",
       user_name: "will",
       user_message: "burger",
-      date: Days.monday
+      date: Days.monday,
+      office: "london"
     )
     Helper.order(
       user_id: "qwer",
       user_name: "fabien",
       user_message: "fish",
-      date: Days.monday
+      date: Days.monday,
+      office: "london"
     )
 
+    get_all_orders_command.prepare(user_id: "qwer")
     response = get_all_orders_command.run
     list_all_orders = "fabien: fish\nwill: burger"
     expect(response).to eq(list_all_orders)
@@ -81,30 +89,32 @@ RSpec.describe Commands::GetAllOrders do
       user_id: "asdf",
       user_name: "will",
       user_message: "burger",
-      date: Days.monday
+      date: Days.monday,
+      office: "london"
     )
     Helper.order(
       user_id: "qwer",
       user_name: "fabien",
       user_message: "fish",
-      date: Days.monday
+      date: Days.monday,
+      office: "london"
     )
 
-    previous_week_order = Order.create(
+    Order.create(
       user_name: "james",
       lunch: "rice",
       date: previous_week
-    )
-    previous_week_order.save
+    ).save
 
+    get_all_orders_command.prepare(user_id: "qwer")
     response = get_all_orders_command.run
     list_all_orders = "fabien: fish\nwill: burger"
     expect(response).to eq(list_all_orders)
   end
 
   it "returns names based on the crafter database" do
-    Crafter.create(user_id: "asdf", user_name: "no name", office: "london")
-    Crafter.create(user_id: "qwer", user_name: "no name", office: "london")
+    Crafter.create(user_id: "asdf", user_name: "will", office: "london")
+    Crafter.create(user_id: "qwer", user_name: "fabien", office: "london")
     Helper.order(
       user_id: "asdf",
       user_name: "no name",
@@ -118,27 +128,21 @@ RSpec.describe Commands::GetAllOrders do
       date: Days.monday
     )
 
-    crafter = Crafter.last(slack_id: "asdf")
-    crafter.user_name = "will"
-    crafter.office = "london"
-    crafter.save
-
-    crafter = Crafter.last(slack_id: "qwer")
-    crafter.user_name = "fabien"
-    crafter.office = "london"
-    crafter.save
-
+    get_all_orders_command.prepare(user_id: "qwer")
     response = get_all_orders_command.run
     list_all_orders = "fabien: fish\nwill: burger"
     expect(response).to eq(list_all_orders)
   end
 
   it "returns order name from a guest" do
+    Crafter.create(user_id: "asdf", user_name: "will", office: "london")
+    Crafter.create(user_id: "qwer", user_name: "fabien", office: "london")
+
     Helper.order(
       user_id: "asdf",
       user_name: "no name",
       user_message: "burger",
-      date: Days.monday
+      date: Days.monday,
     )
     Helper.order(
       user_id: "qwer",
@@ -147,18 +151,9 @@ RSpec.describe Commands::GetAllOrders do
       date: Days.monday
     )
 
-    Helper.order_guest(name: "james smith", meal: "burger")
+    Helper.order_guest(name: "james smith", meal: "burger", from: "qwer")
 
-    crafter = Crafter.last(slack_id: "asdf")
-    crafter.user_name = "will"
-    crafter.office = "london"
-    crafter.save
-
-    crafter = Crafter.last(slack_id: "qwer")
-    crafter.user_name = "fabien"
-    crafter.office = "london"
-    crafter.save
-
+    get_all_orders_command.prepare(user_id: "qwer")
     response = get_all_orders_command.run
     expect(response).to eq("fabien: fish\njames smith: burger\nwill: burger")
   end
