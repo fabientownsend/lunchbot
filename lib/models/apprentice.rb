@@ -7,6 +7,7 @@ class Apprentice
   property :user_name, String, length: 255
   property :slack_id, String, length: 255
   property :office, String, length: 255
+  property :is_foreman, Boolean, :default => false
 
   def self.profile(slack_id)
     Apprentice.last(:slack_id => slack_id)
