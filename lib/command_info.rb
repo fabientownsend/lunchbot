@@ -15,8 +15,6 @@ module CommandInfo
   end
 
   def other
-    "To remind everyone who hasn't ordered | `remind`\n" \
-    "To mark yourself as out | `out`"
     "To delete a crafter | `delete crafter slack_user_name`"
   end
 
@@ -24,15 +22,7 @@ module CommandInfo
     "To place an order | `order: food`\n" \
     "To see someone elses order | `order? @name_of_person`\n" \
     "To see all orders | `all orders?`\n" \
-    "To see sum of orders | `all food orders`\n" \
     "To copy someones order | `copy order: @username`"
-  end
-
-  def guest
-    "To add a guest with no order | `add guest: name of guest`\n" \
-    "To remove a guest | `remove guest: name of guest`\n" \
-    "To place an order for a guest (this also creates a guest if the name" \
-    "given does not exist) | `order -name of guest-: food`"
   end
 
   def foreman
