@@ -9,7 +9,7 @@ module Commands
       if apprentice
         "The foreman for this week is #{Apprentice.first.user_name}"
       else
-        "There are no apprentices!"
+        "There are no foreman!"
       end
     end
 

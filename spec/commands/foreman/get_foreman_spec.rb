@@ -18,7 +18,7 @@ RSpec.describe Commands::GetForeman do
   it "return a message when no foreman found" do
     response = foreman.run
 
-    expect(response).to eq("There are no apprentices!")
+    expect(response).to eq("There are no foreman!")
   end
 
   it "return the foreman of the week" do
