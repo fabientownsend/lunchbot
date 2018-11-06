@@ -7,13 +7,14 @@ module Commands
     end
 
     def prepare(data)
-      @crafter = Crafter.profile(data[:user_id])
+      @requester = Crafter.profile(data[:user_id])
     end
 
     def run
-      apprentice = Apprentice.first
+      apprentice = Apprentice.foreman_for_office(@requester.office)
+
       if apprentice
-        "The foreman for this week is #{Apprentice.first.user_name}"
+        "The foreman for this week is #{apprentice.user_name}"
       else
         "There are no foreman!"
       end

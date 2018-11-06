@@ -20,4 +20,17 @@ class Apprentice
     self.office = office
     save
   end
+
+  def self.create(user)
+    Apprentice.new(
+      :user_name => user[:user_name],
+      :slack_id => user[:user_id],
+      :office => user[:office]
+    ).save
+  end
+
+  def self.foreman_for_office(office)
+    apprentice = Apprentice.first(:office => office)
+    apprentice
+  end
 end
