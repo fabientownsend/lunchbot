@@ -68,8 +68,9 @@ RSpec.describe MessageHandler do
   end
 
   it "return the foreman of the week" do
+    Crafter.create(user_name: "Will", user_id: "id", office: "london")
     add_apprentice = Commands::AddApprentice.new
-    add_apprentice.prepare(user_name: "Will", slack_id: "id")
+    add_apprentice.prepare(user_name: "Will", user_id: "id")
     add_apprentice.run
 
     message_from_slack(user_message: "foreman")

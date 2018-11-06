@@ -67,6 +67,7 @@ class Helper
   end
 
   def self.add_foreman(data)
+    Crafter.create(user_name: data[:name], user_id: data[:id], office: "london")
     id = data[:id]
     user_name = data[:name]
     add_apprentice = Commands::AddApprentice.new
