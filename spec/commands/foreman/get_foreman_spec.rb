@@ -3,7 +3,7 @@ require 'commands/foreman/get_foreman'
 RSpec.describe Commands::GetForeman do
   let(:foreman) { Commands::GetForeman.new }
 
-  it "applies the command when the message is not stiped and lowercase" do
+  it "applies the command when the message is not striped and lowercase" do
     expect(foreman.applies_to?(user_message: "  foreman  ")).to be true
   end
 

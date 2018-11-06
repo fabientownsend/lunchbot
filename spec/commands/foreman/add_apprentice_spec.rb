@@ -5,7 +5,7 @@ require 'models/crafter'
 RSpec.describe Commands::AddApprentice do
   let(:foreman) { Commands::AddApprentice.new }
 
-  it "applies the command when the message is not stiped and lowercase" do
+  it "applies the command when the message is not striped and lowercase" do
     response = foreman.applies_to?(user_message: "  Add apPrentice  ")
 
     expect(response).to be true
