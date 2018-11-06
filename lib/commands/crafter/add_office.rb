@@ -1,7 +1,6 @@
 require 'models/apprentice'
 require 'models/crafter'
 require 'models/office'
-require 'office_presenter'
 require 'tiny_logger'
 
 module Commands
@@ -48,7 +47,7 @@ module Commands
         "You were added to the office: #{@office.location}"
       elsif @crafter || @apprentice
         Logger.info("#{@crafter.user_name} used an unavailable office: #{@office.location}")
-        "The offices available are: #{OfficePresenter.locations}"
+        "The offices available are: #{Office.locations.map(&:capitalize).join(", ")}"
       else
         ""
       end
