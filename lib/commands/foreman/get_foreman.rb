@@ -2,7 +2,13 @@ require "models/apprentice"
 
 module Commands
   class GetForeman
-    def prepare(data) end
+    def applies_to?(request)
+      "foreman" == request[:user_message].downcase.strip
+    end
+
+    def prepare(data)
+      @crafter = Crafter.profile(data[:user_id])
+    end
 
     def run
       apprentice = Apprentice.first
@@ -11,11 +17,6 @@ module Commands
       else
         "There are no foreman!"
       end
-    end
-
-    def applies_to?(request)
-      request = request[:user_message].downcase
-      request.downcase.strip == "foreman"
     end
   end
 end
