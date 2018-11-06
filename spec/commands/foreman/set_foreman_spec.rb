@@ -16,7 +16,8 @@ RSpec.describe Commands::SetForeman do
     create_apprentice("Will", "w_id")
   end
 
-  it "respond invalid if its not a valid userid" do
+  it "respond with error message if user not found" do
+    Crafter.create(user_name: "name", user_id: "id", office: "london")
     set_foreman.prepare(
       user_id: "id",
       user_name: "name",
@@ -25,30 +26,25 @@ RSpec.describe Commands::SetForeman do
     expect(set_foreman.run).to eq("That person is not an apprentice!")
   end
 
-  it "notify the new foreman" do
+  it "set foreman if belongs to the same office than requester" do
+    Crafter.create(user_name: "name", user_id: "id", office: "london")
     set_foreman.prepare(fake_data)
     expect(set_foreman.run).to eq("<@w_id> is now the foreman!")
   end
 
-  it "make the userid given first in the database" do
+  it "does not set foreman if user not found in the same office" do
+    Crafter.create(user_name: "name", user_id: "id", office: "new york")
     set_foreman.prepare(fake_data)
-    set_foreman.run
-    expect(Apprentice.first.slack_id).to eq("w_id")
-  end
-
-  it "shuffle second apprentice down by one" do
-    set_foreman.prepare(fake_data)
-    set_foreman.run
-    expect(Apprentice.last.slack_id).to eq("a_id")
+    expect(set_foreman.run).to eq("That person is not an apprentice!")
   end
 
   private
 
   def create_apprentice(name, id)
-    apprentice = Apprentice.new(
+    Apprentice.new(
       user_name: name,
-      slack_id: id
-    )
-    apprentice.save
+      slack_id: id,
+      office: 'london'
+    ).save
   end
 end
