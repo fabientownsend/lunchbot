@@ -21,41 +21,46 @@ module Commands
       @apprentice = Apprentice.profile(data[:user_id])
     end
 
+    def run
+      return ""                 unless user
+      return office_unavailable unless @office.available?
+
+      if @crafter
+        @crafter.add_office(@office.location)
+        log_office_added
+      end
+
+      if @apprentice
+        @apprentice.add_office(@office.location)
+        log_office_added
+      end
+
+      "You were added to the office: #{@office.location}"
+    end
+
+    private
+
+    def user
+      @crafter || @apprentice
+    end
+
+    def log_office_added
+      Logger.info(
+        "#{@office.location} was added to #{user.user_name} - #{updated_user}"
+      )
+    end
+
+    def office_unavailable
+      Logger.info("#{@crafter.user_name} used an unavailable office: #{@office.location}")
+      "The offices available are: #{Office.locations.map(&:capitalize).join(", ")}"
+    end
+
+    def updated_user
+      "#{user.class.with_office.count}/#{user.class.all.count}"
+    end
+
     def parse_office_location(data)
       data[:user_message].gsub("office:", "").strip.downcase
-    end
-
-    def updated_crafter
-      "#{Crafter.with_office.count}/#{Crafter.all.count}"
-    end
-
-    def updated_apprentice
-      "#{Apprentice.with_office.count}/#{Apprentice.all.count}"
-    end
-
-    def run
-      if @office.available? && (@crafter || @apprentice)
-        if @crafter
-          @crafter.add_office(@office.location)
-          Logger.info(
-            "#{@office.location} was added to #{@crafter.user_name} - #{updated_crafter}"
-          )
-        end
-
-        if @apprentice
-          @apprentice.add_office(@office.location)
-          Logger.info(
-            "#{@office.location} was added to #{@apprentice.user_name} - #{updated_apprentice}"
-          )
-        end
-
-        "You were added to the office: #{@office.location}"
-      elsif @crafter || @apprentice
-        Logger.info("#{@crafter.user_name} used an unavailable office: #{@office.location}")
-        "The offices available are: #{Office.locations.map(&:capitalize).join(", ")}"
-      else
-        ""
-      end
     end
   end
 end
