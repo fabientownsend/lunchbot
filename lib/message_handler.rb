@@ -15,12 +15,7 @@ class MessageHandler < FeatureFlag
   def initialize(args = {})
     @mark_all_out = args[:mark_all_out] || MarkAllOut.new
     @request_parser = RequestParser.new
-    if args[:response]
-      @response = args[:response]
-    else
-      @response = Response.new
-      @response.setup
-    end
+    @response = args[:response]
     @user_info = args[:user_info_provider] || UserInfoProvider.new
     @foreman_messager = ForemanMessager.new
     @alert = AlertForeman.new(@foremanMessager)
