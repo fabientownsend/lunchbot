@@ -2,11 +2,6 @@ require_relative 'models/auth_info'
 
 class Response
   def setup
-    token = ENV['SLACK_API_TOKEN']
-    raise "No token!" unless token
-    Slack.configure do |config|
-      config.token = token
-    end
     @slack_client = Slack::Web::Client.new
   end
 
