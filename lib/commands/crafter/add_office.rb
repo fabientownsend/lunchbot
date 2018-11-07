@@ -46,17 +46,13 @@ module Commands
 
     def log_office_added
       Logger.info(
-        "#{@office.location} was added to #{user.user_name} - #{updated_user}"
+        "#{@office.location} was added to #{user.user_name}"
       )
     end
 
     def office_unavailable
       Logger.info("#{@crafter.user_name} used an unavailable office: #{@office.location}")
       "The offices available are: #{Office.locations.map(&:capitalize).join(", ")}"
-    end
-
-    def updated_user
-      "#{user.class.with_office.count}/#{user.class.all.count}"
     end
 
     def parse_office_location(data)
