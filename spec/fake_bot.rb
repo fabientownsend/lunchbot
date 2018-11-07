@@ -1,4 +1,4 @@
-class FakeResponse
+class FakeBot
   attr_reader :message
   attr_reader :user_id
 
