@@ -1,7 +1,7 @@
 class Bot
   attr_reader :client
 
-  def initialize(client = nil)
+  def initialize(client: nil)
     @client = client || Slack::Web::Client.new
   end
 
