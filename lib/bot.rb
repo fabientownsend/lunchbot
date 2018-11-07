@@ -1,5 +1,4 @@
 class Bot
-  attr_reader :client
 
   def initialize(client: nil)
     @client = client || Slack::Web::Client.new
@@ -14,4 +13,8 @@ class Bot
       text: message
     )
   end
+
+  private
+
+  attr_reader :client
 end
