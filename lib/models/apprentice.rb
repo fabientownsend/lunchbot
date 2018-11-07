@@ -9,6 +9,10 @@ class Apprentice
   property :office, String, length: 255
   property :is_foreman, Boolean, :default => false
 
+  def self.with_office
+    all(:office.not => nil)
+  end
+
   def self.profile(slack_id)
     Apprentice.last(:slack_id => slack_id)
   end

@@ -9,6 +9,10 @@ class Crafter
   property :email, String, length: 255
   property :office, String, length: 255
 
+  def self.with_office
+    all(:office.not => nil)
+  end
+
   def self.profile(slack_id)
     Crafter.last(:slack_id => slack_id)
   end

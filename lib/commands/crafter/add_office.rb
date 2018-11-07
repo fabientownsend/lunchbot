@@ -16,38 +16,47 @@ module Commands
     end
 
     def prepare(data)
-      @office = data[:user_message].gsub("office:", "").strip.downcase
+      @office = Office.new(parse_office_location(data))
       @crafter = Crafter.profile(data[:user_id])
       @apprentice = Apprentice.profile(data[:user_id])
     end
 
-    def updated_crafter
-      "#{Crafter.all(:office.not => nil).count}/#{Crafter.all.count}"
-    end
-
-    def updated_apprentice
-      "#{Apprentice.all(:office.not => nil).count}/#{Apprentice.all.count}"
-    end
-
     def run
-      if Office.available?(@office) && (@crafter || @apprentice)
-        if @crafter
-          @crafter.add_office(@office)
-          Logger.info("#{@office} was added to #{@crafter.user_name} - #{updated_crafter}")
-        end
+      return ""                 unless user
+      return office_unavailable unless @office.available?
 
-        if @apprentice
-          @apprentice.add_office(@office)
-          Logger.info("#{@office} was added to #{@apprentice.user_name} - #{updated_apprentice}")
-        end
-
-        "You were added to the office: #{@office}"
-      elsif @crafter || @apprentice
-        Logger.info("#{@crafter.user_name} use a unavailable office: #{@office}")
-        "The office available are: #{Office.list.map(&:capitalize).join(", ")}"
-      else
-        ""
+      if @crafter
+        @crafter.add_office(@office.location)
+        log_office_added
       end
+
+      if @apprentice
+        @apprentice.add_office(@office.location)
+        log_office_added
+      end
+
+      "You were added to the office: #{@office.location}"
+    end
+
+    private
+
+    def user
+      @crafter || @apprentice
+    end
+
+    def log_office_added
+      Logger.info(
+        "#{@office.location} was added to #{user.user_name}"
+      )
+    end
+
+    def office_unavailable
+      Logger.info("#{@crafter.user_name} used an unavailable office: #{@office.location}")
+      "The offices available are: #{Office.locations.map(&:capitalize).join(", ")}"
+    end
+
+    def parse_office_location(data)
+      data[:user_message].gsub("office:", "").strip.downcase
     end
   end
 end

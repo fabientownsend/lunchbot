@@ -1,11 +1,17 @@
 class Office
-  @offices = ["london", "madison"]
+  LOCATIONS = ["london", "madison"].freeze
 
-  def self.list
-    @offices
+  attr_reader :location
+
+  def initialize(location)
+    @location = location
   end
 
-  def self.available?(office)
-    @offices.include?(office)
+  def self.locations
+    LOCATIONS
+  end
+
+  def available?
+    LOCATIONS.include?(location)
   end
 end
