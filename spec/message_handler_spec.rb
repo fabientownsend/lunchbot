@@ -67,18 +67,6 @@ RSpec.describe MessageHandler do
     expect(fake_response.message).to eq("That is not a valid order.")
   end
 
-  it "return the foreman of the week" do
-    Crafter.create(user_name: "Will", user_id: "id", office: "london")
-    add_apprentice = Commands::AddApprentice.new
-    add_apprentice.prepare(user_name: "Will", user_id: "id")
-    add_apprentice.run
-
-    message_from_slack(user_message: "foreman")
-
-    expect(fake_response.message).to eq("The foreman for this week is Will")
-    expect(fake_response.user_id).to eq(channel_id)
-  end
-
   it "returns list of users that doesn't ordered yet" do
     allow(Crafter).to receive(:profile).and_return(true)
     add_guest("james smith")

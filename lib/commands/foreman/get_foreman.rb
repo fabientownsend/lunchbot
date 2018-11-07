@@ -2,20 +2,22 @@ require "models/apprentice"
 
 module Commands
   class GetForeman
-    def prepare(data) end
-
-    def run
-      apprentice = Apprentice.first
-      if apprentice
-        "The foreman for this week is #{Apprentice.first.user_name}"
-      else
-        "There are no apprentices!"
-      end
+    def applies_to?(request)
+      "foreman" == request[:user_message].downcase.strip
     end
 
-    def applies_to?(request)
-      request = request[:user_message].downcase
-      request.downcase.strip == "foreman"
+    def prepare(data)
+      @requester = Crafter.profile(data[:user_id])
+    end
+
+    def run
+      apprentice = Apprentice.foreman_for_office(@requester.office)
+
+      if apprentice
+        "The foreman for this week is #{apprentice.user_name}"
+      else
+        "There are no foreman!"
+      end
     end
   end
 end
