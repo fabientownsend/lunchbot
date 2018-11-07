@@ -80,11 +80,6 @@ RSpec.describe RequestParser do
     expect(user_request.parse(request)).to be_a(Commands::AddGuest)
   end
 
-  it "returns NextForeman" do
-    request = { user_message: "next foreman" }
-    expect(user_request.parse(request)).to be_a(Commands::NextForeman)
-  end
-
   it "returns AddApprentice" do
     request = { user_message: "add apprentice" }
     expect(user_request.parse(request)).to be_a(Commands::AddApprentice)
