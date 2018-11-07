@@ -9,6 +9,10 @@ Raven.configure do |config|
   config.dsn = ENV['SENTRY_URL']
 end
 
+Slack.configure do |config|
+  config.token = ENV['SLACK_API_TOKEN']
+end
+
 use Raven::Rack
 
 DataMapper.setup(:default, ENV['DATABASE_URL'])
