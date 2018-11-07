@@ -3,6 +3,7 @@ $LOAD_PATH << File.expand_path('../lib', File.dirname(__FILE__))
 require 'sinatra/base'
 require 'slack-ruby-client'
 
+require 'bot'
 require 'message_handler'
 require 'tiny_logger'
 
@@ -10,7 +11,7 @@ class EventController < Sinatra::Base
   attr_reader :message_handler
 
   def initialize
-    @message_handler = MessageHandler.new
+    @message_handler = MessageHandler.new(bot: Bot.new)
   end
 
   post '/events' do

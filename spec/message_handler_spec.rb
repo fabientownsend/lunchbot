@@ -18,7 +18,7 @@ RSpec.describe MessageHandler do
   let(:message_handler) do
     MessageHandler.new(
       mark_all_out: fake_mark_all_out,
-      response: fake_response,
+      bot: fake_response,
       user_info_provider: fake_user_info_provider
     )
   end

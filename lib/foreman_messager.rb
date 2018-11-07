@@ -1,8 +1,8 @@
-require 'response'
+require 'bot'
 
 class ForemanMessager
-  def initialize
-    @slack_responder = Response.new
+  def initialize(bot)
+    @bot = bot
   end
 
   def update_team_id(team_id)
@@ -10,7 +10,7 @@ class ForemanMessager
   end
 
   def send(message)
-    @slack_responder.send(message, @team_id, foreman_id)
+    @bot.send(message, @team_id, foreman_id)
   end
 
   private
