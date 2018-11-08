@@ -43,11 +43,12 @@ describe EventController do
 
     expect(bot).to receive(:send)
 
-    payload = { user: "Fabien",
-                type: "event_callback",
-                token: "token",
-                event: { type: "message", text: "all orders?" }
-              }.to_json
+    payload = {
+      user: "Fabien",
+      type: "event_callback",
+      token: "token",
+      event: { type: "message", text: "all orders?" },
+    }.to_json
 
     post '/events', payload
 
