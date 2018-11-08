@@ -10,8 +10,17 @@ require 'tiny_logger'
 class EventController < Sinatra::Base
   attr_reader :message_handler
 
-  def initialize
-    @message_handler = MessageHandler.new(bot: Bot.new)
+  def initialize(app: nil, message_handler:)
+    super(app)
+    @message_handler = message_handler || create_message_handler
+  end
+
+  def create_message_handler
+    MessageHandler.new(
+      bot: Bot.new,
+      user_info_provider: UserInfoProvider.new,
+      mark_all_out: MarkAllOut.new
+    )
   end
 
   post '/events' do
@@ -47,7 +56,7 @@ class EventController < Sinatra::Base
 
       if message?(event_data) && !message_from_bot?(event_data)
         Logger.info("Receives Data #{event_data}")
-        @message_handler.handle(team_id, event_data)
+        message_handler.handle(team_id, event_data)
       end
     end
   end

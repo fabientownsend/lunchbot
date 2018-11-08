@@ -13,10 +13,10 @@ class MessageHandler < FeatureFlag
   release_for 'Fabien Townsend'
 
   def initialize(args = {})
-    @mark_all_out = args[:mark_all_out] || MarkAllOut.new
+    @mark_all_out = args[:mark_all_out]
     @request_parser = RequestParser.new
     @bot = args[:bot]
-    @user_info = args[:user_info_provider] || UserInfoProvider.new
+    @user_info = args[:user_info_provider]
     @foreman_messager = ForemanMessager.new(@bot)
     @alert = AlertForeman.new(@foremanMessager)
   end
