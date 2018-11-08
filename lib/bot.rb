@@ -8,13 +8,11 @@ class Bot
     Logger.info("BOT RESPONSE: #{message}, to: #{user_id}")
 
     begin
-      Thread.new do
-        client.chat_postMessage(
-          as_user: 'true',
-          channel: user_id,
-          text: message
-        )
-      end
+      client.chat_postMessage(
+        as_user: 'true',
+        channel: user_id,
+        text: message
+      )
     rescue StandardError => error
       Logger.alert(error)
     end
