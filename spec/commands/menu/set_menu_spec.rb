@@ -9,7 +9,8 @@ RSpec.describe Commands::SetMenu do
     @foreman = Apprentice.new(
       user_name: "Fabien Townsend",
       slack_id: "valid id",
-      office: "london"
+      office: "london",
+      is_foreman: true
     )
     @foreman.save
 

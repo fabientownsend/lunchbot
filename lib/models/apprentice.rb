@@ -35,6 +35,11 @@ class Apprentice
     apprentice
   end
 
+  def self.foreman?(slack_id)
+    apprentice = Apprentice.first(:slack_id => slack_id, :is_foreman => true)
+    !apprentice.nil?
+  end
+
   def self.set_as_foreman(id, office)
     foreman = Apprentice.first(:office => office, :is_foreman => true)
     foreman.update(:is_foreman => false) if foreman
