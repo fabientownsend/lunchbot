@@ -1,14 +1,12 @@
 require 'days'
-require 'foreman_checker'
 require 'models/crafter'
+require 'models/apprentice'
 require 'models/order'
 require 'mark_all_out'
 require 'commands/order/customer_provider'
 
 module Commands
   class Reminder
-    include ForemanChecker
-
     def prepare(data)
       @channel_id = data[:channel_id]
       @team_id = data[:team_id]
@@ -17,7 +15,7 @@ module Commands
     end
 
     def run
-      if foreman?(@user_id)
+      if Apprentice.foreman?(@user_id)
         @mark_all_out.update
         format_response(not_ordered_members).strip
       else

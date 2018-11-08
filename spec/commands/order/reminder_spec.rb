@@ -18,7 +18,8 @@ RSpec.describe Commands::Reminder do
   before(:each) do
     foreman = Apprentice.new(
       user_name: "Will",
-      slack_id: "user id"
+      slack_id: "user id",
+      is_foreman: true
     )
     foreman.save
   end

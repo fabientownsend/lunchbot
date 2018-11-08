@@ -18,6 +18,19 @@ RSpec.describe Apprentice do
     expect(apprentice.is_foreman).to be true
   end
 
+  it "says if user is a foreman" do
+    Apprentice.create(user_id: "the id", office: "london")
+    Apprentice.set_as_foreman("the id", "london")
+
+    expect(Apprentice.foreman?("the id")).to be true
+  end
+
+  it "says if user is not a foreman" do
+    Apprentice.create(user_id: "the id", office: "london")
+
+    expect(Apprentice.foreman?("the id")).to be false
+  end
+
   it "removes previous foreman if one was found" do
     Apprentice.create(user_id: "Margarette", office: "london")
     Apprentice.create(user_id: "Claudia", office: "london")
