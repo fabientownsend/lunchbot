@@ -38,7 +38,7 @@ class EventController < Sinatra::Base
   end
 
   def invalid_token?(token)
-    !SLACK_CONFIG[:slack_verification_token] == token
+    !(ENV['SLACK_VERIFICATION_TOKEN'] == token)
   end
 
   def verify_url(data)
