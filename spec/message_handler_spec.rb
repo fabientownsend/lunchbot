@@ -116,34 +116,6 @@ RSpec.describe MessageHandler do
     expect(fake_response.message).to eq(bot_response)
   end
 
-  it "return no guest when empty" do
-    message_from_slack(user_message: "guests?")
-
-    expect(fake_response.message).to eq("no guest")
-  end
-
-  it "return list of guests" do
-    message_from_slack(user_message: "order: burger")
-    message_from_slack(user_message: "order -james smith-: burger")
-    message_from_slack(user_message: "order -jean bon-: burger")
-    message_from_slack(user_message: "guests?")
-
-    expect(fake_response.message).to eq("james smith\njean bon")
-  end
-
-  it "return list of guests after guest removed" do
-    message_from_slack(user_message: "order: burger")
-    message_from_slack(user_message: "order -james smith-: burger")
-    message_from_slack(user_message: "order -jean bon-: burger")
-    message_from_slack(user_message: "guests?")
-
-    expect(fake_response.message).to eq("james smith\njean bon")
-
-    message_from_slack(user_message: "remove guest: jean bon")
-    message_from_slack(user_message: "guests?")
-    expect(fake_response.message).to eq("james smith")
-  end
-
   it "return the sum of food by type" do
     Crafter.create(user_id: recipient, user_name: "Fabien", office: "london")
     message_from_slack(user_message: "order: burger")

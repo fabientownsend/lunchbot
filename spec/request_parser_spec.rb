@@ -65,11 +65,6 @@ RSpec.describe RequestParser do
     expect(user_request.parse(request)).to be_a(Commands::PlaceOrderGuest)
   end
 
-  it "return GetAllGuests" do
-    request = { user_message: "guests?" }
-    expect(user_request.parse(request)).to be_a(Commands::GetAllGuests)
-  end
-
   it "return RemoveGuestOrder" do
     request = { user_message: "remove guest: james" }
     expect(user_request.parse(request)).to be_a(Commands::RemoveGuestOrder)
