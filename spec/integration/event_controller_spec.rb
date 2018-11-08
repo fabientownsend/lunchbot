@@ -30,21 +30,16 @@ describe EventController do
   end
 
   it "fails when the request contains a wrong token" do
-    cached_token = ENV['SLACK_VERIFICATION_TOKEN']
-
-    ENV['SLACK_VERIFICATION_TOKEN'] = "token"
+    allow(ENV).to receive(:[]).with('SLACK_VERIFICATION_TOKEN').and_return("token")
 
     post '/events', { token: "wrong-token" }.to_json
 
     expect(last_response.status).to eql 403
-
-    ENV['SLACK_VERIFICATION_TOKEN'] = cached_token
   end
 
   it "processes user message" do
-    cached_token = ENV['SLACK_VERIFICATION_TOKEN']
-
-    ENV['SLACK_VERIFICATION_TOKEN'] = "token"
+    allow(ENV).to receive(:[]).and_call_original
+    allow(ENV).to receive(:[]).with('SLACK_VERIFICATION_TOKEN').and_return("token")
 
     expect(bot).to receive(:send)
 
@@ -57,7 +52,5 @@ describe EventController do
     post '/events', payload
 
     expect(last_response.status).to eql 200
-
-    ENV['SLACK_VERIFICATION_TOKEN'] = cached_token
   end
 end
