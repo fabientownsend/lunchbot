@@ -1,7 +1,7 @@
 class Bot
 
-  def initialize(client: nil)
-    @client = client || Slack::Web::Client.new
+  def initialize
+    @client = Slack::Web::Client.new
   end
 
   def send(message, user_id)
