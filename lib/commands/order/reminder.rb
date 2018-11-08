@@ -13,8 +13,6 @@ module Commands
     end
 
     def prepare(data)
-      @channel_id = data[:channel_id]
-      @team_id = data[:team_id]
       @user_id = data[:user_id]
       @mark_all_out = data[:mark_all_out]
 
