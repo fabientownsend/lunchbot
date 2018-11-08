@@ -5,7 +5,7 @@ require 'rspec'
 require 'rack/test'
 require 'json'
 
-describe 'The HelloWorld App' do
+describe EventController do
   include Rack::Test::Methods
 
   let(:mark_all_out)       { FakeMarkAllOut.new }
