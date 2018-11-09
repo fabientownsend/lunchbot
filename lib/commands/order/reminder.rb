@@ -24,16 +24,19 @@ module Commands
 
       @mark_all_out.update
 
-      c = Order.have_not_ordered(@requester.office).map { |a| "<@#{a.slack_id}>" }
-      g = Order.host_without_order(@requester.office).map do |o|
-        "#{o.user_name} host: <@#{o.host}>"
+      crafter_to_remind = Order.crafter_without_order(@requester.office).map do |crafter|
+        "<@#{crafter.slack_id}>"
       end
 
-      if c.empty? && g.empty?
+      guest_to_remind = Order.host_without_order(@requester.office).map do |guest|
+        "#{guest.user_name} host: <@#{guest.host}>"
+      end
+
+      if crafter_to_remind.empty? && guest_to_remind.empty?
         return "Everyone has an order."
       end
 
-      (c + g).join("\n").strip
+      (crafter_to_remind + guest_to_remind).join("\n").strip
     end
   end
 end

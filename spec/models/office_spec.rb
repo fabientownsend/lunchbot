@@ -53,7 +53,7 @@ RSpec.describe Order do
       :date => Days.monday
     ).save
 
-    expect(Order.have_not_ordered("london")).to include(Crafter.profile("the id"))
+    expect(Order.crafter_without_order("london")).to include(Crafter.profile("the id"))
   end
 
   it "returns empty array if every crafter ordered a lunch" do
@@ -67,7 +67,7 @@ RSpec.describe Order do
       :date => Days.monday
     ).save
 
-    expect(Order.have_not_ordered("london")).to eq([])
+    expect(Order.crafter_without_order("london")).to eq([])
   end
 
   it "returns guest's name and host when without order" do
