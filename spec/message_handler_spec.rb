@@ -35,6 +35,11 @@ RSpec.describe MessageHandler do
 
   include CommandInfo
 
+  it "return all commands info when request is for help" do
+    message_from_slack(user_message: "help")
+    expect(fake_bot.message).to eq(all_command_info)
+  end
+
   it "returns the url when you ask the menu which is not provided" do
     Crafter.new(
       user_name: "Fabien",
