@@ -24,7 +24,7 @@ module Commands
 
       @mark_all_out.update
 
-      crafter_to_remind = Order.crafter_without_order(@requester.office).map do |crafter|
+      crafters_to_remind = Order.crafter_without_order(@requester.office).map do |crafter|
         "<@#{crafter.slack_id}>"
       end
 
@@ -32,11 +32,11 @@ module Commands
         "#{guest.user_name} host: <@#{guest.host}>"
       end
 
-      if crafter_to_remind.empty? && guest_to_remind.empty?
+      if crafters_to_remind.empty? && guest_to_remind.empty?
         return "Everyone has an order."
       end
 
-      (crafter_to_remind + guest_to_remind).join("\n").strip
+      (crafters_to_remind + guest_to_remind).join("\n").strip
     end
   end
 end
