@@ -7,39 +7,26 @@ require 'commands/order/customer_provider'
 
 module Commands
   class Reminder
-    def prepare(data)
-      @channel_id = data[:channel_id]
-      @team_id = data[:team_id]
-      @user_id = data[:user_id]
-      @mark_all_out = data[:mark_all_out]
-    end
-
-    def run
-      if Apprentice.foreman?(@user_id)
-        @mark_all_out.update
-        format_response(not_ordered_members).strip
-      else
-        "You are not the foreman!"
-      end
-    end
-
     def applies_to?(request)
       request = request[:user_message].downcase
       request == "remind"
     end
 
-    private
+    def prepare(data)
+      @user_id = data[:user_id]
+      @mark_all_out = data[:mark_all_out]
 
-    def format_response(orders)
-      if orders.empty?
-        "Everyone has an order."
-      else
-        orders.join("\n")
-      end
+      @requester = Crafter.profile(data[:user_id])
     end
 
-    def not_ordered_members
-      CustomerProvider.new.customers_without_order
+    def run
+      return "You are not the foreman!" if !Apprentice.foreman?(@user_id)
+
+      @mark_all_out.update
+      not_ordered_members = CustomerProvider.new.customers_without_order
+
+      return "Everyone has an order." if not_ordered_members.empty?
+      not_ordered_members.join("\n").strip
     end
   end
 end
