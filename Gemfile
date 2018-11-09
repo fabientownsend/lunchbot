@@ -17,6 +17,7 @@ group :test, :development do
   gem 'dm-sqlite-adapter', '1.2.0'
   gem 'rspec', '~> 3.0'
   gem 'rubocop-airbnb', '2.0.0'
+  gem 'rack-test'
   gem 'sqlite3', '1.3.13'
 end
 

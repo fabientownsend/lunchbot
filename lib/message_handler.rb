@@ -4,7 +4,7 @@ require 'alert_foreman'
 require 'foreman_messager'
 require 'mark_all_out'
 require 'request_parser'
-require 'response'
+require 'bot'
 require 'tiny_logger'
 require 'user_info_provider'
 require 'feature_flag'
@@ -13,16 +13,11 @@ class MessageHandler < FeatureFlag
   release_for 'Fabien Townsend'
 
   def initialize(args = {})
-    @mark_all_out = args[:mark_all_out] || MarkAllOut.new
+    @mark_all_out = args[:mark_all_out]
     @request_parser = RequestParser.new
-    if args[:response]
-      @response = args[:response]
-    else
-      @response = Response.new
-      @response.setup
-    end
-    @user_info = args[:user_info_provider] || UserInfoProvider.new
-    @foreman_messager = ForemanMessager.new
+    @bot = args[:bot]
+    @user_info = args[:user_info_provider]
+    @foreman_messager = ForemanMessager.new(@bot)
     @alert = AlertForeman.new(@foremanMessager)
   end
 
@@ -38,13 +33,13 @@ class MessageHandler < FeatureFlag
     end
 
     if !Crafter.has_office?(data[:user_id]) && !Commands::AddOffice.add_office_request?(data)
-      @response.send("You need to add your office. ex: \"office: london\"", recipient)
+      @bot.send("You need to add your office. ex: \"office: london\"", recipient)
       return
     end
 
     unless returned_command.nil?
       response = deal_with_command(returned_command)
-      @response.send(response, recipient)
+      @bot.send(response, recipient)
     end
   end
 

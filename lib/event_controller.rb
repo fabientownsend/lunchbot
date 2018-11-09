@@ -3,14 +3,24 @@ $LOAD_PATH << File.expand_path('../lib', File.dirname(__FILE__))
 require 'sinatra/base'
 require 'slack-ruby-client'
 
+require 'bot'
 require 'message_handler'
 require 'tiny_logger'
 
 class EventController < Sinatra::Base
   attr_reader :message_handler
 
-  def initialize
-    @message_handler = MessageHandler.new
+  def initialize(app: nil, message_handler: nil)
+    super(app)
+    @message_handler = message_handler || create_message_handler
+  end
+
+  def create_message_handler
+    MessageHandler.new(
+      bot: Bot.new,
+      user_info_provider: UserInfoProvider.new,
+      mark_all_out: MarkAllOut.new
+    )
   end
 
   post '/events' do
@@ -18,12 +28,7 @@ class EventController < Sinatra::Base
 
     verify_token(request_data)
     verify_url(request_data)
-
-    begin
-      Thread.new { handle_event(request_data) }
-    rescue StandardError => error
-      Logger.alert(error)
-    end
+    handle_event(request_data)
 
     status 200
   end
@@ -37,7 +42,7 @@ class EventController < Sinatra::Base
   end
 
   def invalid_token?(token)
-    !SLACK_CONFIG[:slack_verification_token] == token
+    !(ENV['SLACK_VERIFICATION_TOKEN'] == token)
   end
 
   def verify_url(data)
@@ -51,7 +56,7 @@ class EventController < Sinatra::Base
 
       if message?(event_data) && !message_from_bot?(event_data)
         Logger.info("Receives Data #{event_data}")
-        @message_handler.handle(team_id, event_data)
+        message_handler.handle(team_id, event_data)
       end
     end
   end

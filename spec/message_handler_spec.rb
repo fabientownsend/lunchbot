@@ -3,12 +3,12 @@ require 'commands/help'
 require 'commands/order/add_guest'
 require 'days'
 require 'fake_mark_all_out'
-require 'fake_response'
+require 'fake_bot'
 require 'fake_user_info_provider'
 require 'message_handler'
 
 RSpec.describe MessageHandler do
-  let(:fake_response) { FakeResponse.new }
+  let(:fake_bot) { FakeBot.new }
   let(:fake_mark_all_out) { FakeMarkAllOut.new }
   let(:fake_user_info_provider) { FakeUserInfoProvider.new }
   let(:team_id) { "T026MULUJ" }
@@ -18,7 +18,7 @@ RSpec.describe MessageHandler do
   let(:message_handler) do
     MessageHandler.new(
       mark_all_out: fake_mark_all_out,
-      response: fake_response,
+      bot: fake_bot,
       user_info_provider: fake_user_info_provider
     )
   end
@@ -38,7 +38,7 @@ RSpec.describe MessageHandler do
   it "return all commands info when request is for help" do
     message_from_slack(user_message: "help")
 
-    expect(fake_response.message).to eq(all_command_info)
+    expect(fake_bot.message).to eq(all_command_info)
   end
 
   it "returns the url when you ask the menu which is not provided" do
@@ -51,20 +51,20 @@ RSpec.describe MessageHandler do
     message_from_slack(user_message: "menu?", new_recipient: "user id")
 
     bot_response = "The menu for this week is: no url provided"
-    expect(fake_response.message).to eq(bot_response)
+    expect(fake_bot.message).to eq(bot_response)
   end
 
   it "responds with the order you just placed" do
     Crafter.create(user_id: recipient, user_name: "Fabien", office: "london")
     message_from_slack(user_message: "order: hamburger")
 
-    expect(fake_response.message).to eq("Will just ordered `hamburger`.")
-    expect(fake_response.user_id).to eq(channel_id)
+    expect(fake_bot.message).to eq("Will just ordered `hamburger`.")
+    expect(fake_bot.user_id).to eq(channel_id)
   end
 
   it "tells you if your order is invalid" do
     message_from_slack(user_message: "order:")
-    expect(fake_response.message).to eq("That is not a valid order.")
+    expect(fake_bot.message).to eq("That is not a valid order.")
   end
 
   it "returns list of users that doesn't ordered yet" do
@@ -75,7 +75,7 @@ RSpec.describe MessageHandler do
 
     bot_response =
       "<@FabienUserId>\n<@WillUserId>\njames smith host: <@id host>"
-    expect(fake_response.message).to eq(bot_response)
+    expect(fake_bot.message).to eq(bot_response)
   end
 
   it "return list of users that doesn't ordered yet" do
@@ -86,11 +86,11 @@ RSpec.describe MessageHandler do
 
     bot_response =
       "<@FabienUserId>\n<@WillUserId>\njames smith host: <@id host>"
-    expect(fake_response.message).to eq(bot_response)
+    expect(fake_bot.message).to eq(bot_response)
 
     message_from_slack(user_message: "remove guest: james smith")
     message_from_slack(user_message: "remind")
-    expect(fake_response.message).to eq("<@FabienUserId>\n<@WillUserId>")
+    expect(fake_bot.message).to eq("<@FabienUserId>\n<@WillUserId>")
   end
 
   it "return a list without the people who ordered" do
@@ -100,20 +100,20 @@ RSpec.describe MessageHandler do
     message_from_slack(user_message: "order -james-: pomme")
     message_from_slack(user_message: "remind")
 
-    expect(fake_response.message).to eq("<@WillUserId>\n<@D3S6XE6SZ>")
+    expect(fake_bot.message).to eq("<@WillUserId>\n<@D3S6XE6SZ>")
   end
 
   it "return in the channel by default" do
     message_from_slack(user_message: "remind")
 
-    expect(fake_response.user_id).to eq(channel_id)
+    expect(fake_bot.user_id).to eq(channel_id)
   end
 
   it "return confirmation guest order" do
     message_from_slack(user_message: "order -james smith-: burger")
 
     bot_response = "james smith's order for burger has been placed!"
-    expect(fake_response.message).to eq(bot_response)
+    expect(fake_bot.message).to eq(bot_response)
   end
 
   it "return the sum of food by type" do
@@ -124,7 +124,7 @@ RSpec.describe MessageHandler do
     message_from_slack(user_message: "order -harry potter-: fish")
     message_from_slack(user_message: "all food orders")
 
-    expect(fake_response.message).to eq("burger: 3\nfish: 1")
+    expect(fake_bot.message).to eq("burger: 3\nfish: 1")
   end
 
   private
