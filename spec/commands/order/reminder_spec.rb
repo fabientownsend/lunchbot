@@ -4,13 +4,9 @@ require 'fake_mark_all_out'
 
 RSpec.describe Commands::Reminder do
   let(:reminder) { Commands::Reminder.new }
-  let(:data) do
+  let(:reminder_request) do
     {
-      user_message: "message",
       user_id: "user id",
-      user_name: "user name",
-      channel_id: "channel id",
-      team_id: "team id",
       mark_all_out: FakeMarkAllOut.new,
     }
   end
@@ -24,80 +20,53 @@ RSpec.describe Commands::Reminder do
     foreman.save
   end
 
-  it "return all the person that didn't order" do
-    reminder.prepare(data)
-    response = reminder.run
+  it "returns list of people with line breaker" do
+    Crafter.all.destroy
+    Crafter.create(user_id: "user id", office: "london")
+    Crafter.create(user_id: "WillUserId", office: "london")
 
-    expect(response).to eq("<@FabienUserId>\n<@WillUserId>")
+    reminder.prepare(reminder_request)
+
+    expect(reminder.run).to eq("<@user id>\n<@WillUserId>")
   end
 
   it "tell you when there is no orders" do
-    Helper.order(
-      user_id: "FabienUserId",
-      user_name: "fabien",
-      user_message: "burger",
-      date: Days.monday
-    )
-    Helper.order(
-      user_id: "WillUserId",
-      user_name: "will",
-      user_message: "burger",
-      date: Days.monday
-    )
+    allow(Order).to receive(:have_not_ordered).and_return([])
+    allow(Order).to receive(:host_without_order).and_return([])
+    Crafter.create(user_id: "user id", office: "london")
 
-    reminder.prepare(data)
+    reminder.prepare(reminder_request)
     response = reminder.run
 
     expect(response).to eq("Everyone has an order.")
   end
 
-  it "doesn't remind people who placed an order" do
-    Helper.order(
-      user_id: "FabienUserId",
-      user_name: "will",
-      user_message: "burger",
-      date: Days.monday
-    )
-
-    reminder.prepare(data)
-    response = reminder.run
-
-    expect(response).to eq("<@WillUserId>")
-  end
-
-  it "doesn't consider the order from the previous weeks" do
-    Helper.order_previous_monday(
-      user_id: "FabienUserId",
-      user_name: "will",
-      user_message: "burger"
-    )
-
-    reminder.prepare(data)
-    response = reminder.run
-
-    expect(response).to eq("<@FabienUserId>\n<@WillUserId>")
-  end
-
   it "remind the guest's host if they don't have an order" do
-    Helper.add_guest("jean gaston")
-    reminder.prepare(data)
+    Crafter.all.destroy
+    Crafter.create(user_id: "user id", office: "london")
+
+    Order.new(
+      :user_name => "jean gaston",
+      :host => "user id",
+      :date => Days.monday
+    ).save
+
+    Order.new(
+      :user_name => "paul",
+      :host => "user id",
+      :date => Days.monday
+    ).save
+
+    reminder.prepare(reminder_request)
     response = reminder.run
 
     expect(response) .to eq(
-      "<@FabienUserId>\n<@WillUserId>\njean gaston host: <@host id>"
+      "<@user id>\njean gaston host: <@user id>\npaul host: <@user id>"
     )
   end
 
-  it "doesn't remind guest form the previous weeks" do
-    Helper.add_guest_previous_monday("jean gaston")
-    reminder.prepare(data)
-    response = reminder.run
-
-    expect(response).to eq("<@FabienUserId>\n<@WillUserId>")
-  end
-
   it "return a message when you are not allowed to see the result" do
-    reminder.prepare(data.merge(user_id: "another id"))
+    reminder.prepare(reminder_request.merge(user_id: "another id"))
     response = reminder.run
 
     expect(response).to eq("You are not the foreman!")
