@@ -2,15 +2,15 @@ require 'models/office'
 
 RSpec.describe Office do
   it "tells the offices available" do
-    expect(Office.list).to eq(["london", "madison"])
+    expect(Office.locations).to eq(["london", "madison"])
   end
 
   it "tells if an office is part of the list" do
-    expect(Office.available?("london")).to eq(true)
+    expect(Office.new("london")).to be_available
   end
 
   it "tells if an office is not part of the list" do
-    expect(Office.available?("new york")).to eq(false)
+    expect(Office.new("new york")).not_to be_available
   end
 
   it "returns user without order" do
