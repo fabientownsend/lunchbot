@@ -1,46 +1,16 @@
-require 'models/order'
-require 'models/crafter'
-require 'date'
+require 'models/office'
 
-RSpec.describe Order do
-  it "only returns order from office requested" do
-    Crafter.create(user_id: "the id", office: "london")
-    Crafter.create(user_id: "bob id", office: "new york")
-    Order.new(
-      :user_name => "Tom",
-      :user_id => "bob id",
-      :lunch => "A lunch",
-      :date => Days.monday
-    ).save
-    order = Order.new(
-      :user_name => "Tom",
-      :user_id => "the id",
-      :lunch => "A lunch",
-      :date => Days.monday
-    )
-    order.save
-
-    expect(Order.placed_in("london")).to include(order)
+RSpec.describe Office do
+  it "tells the offices available" do
+    expect(Office.locations).to eq(["london", "madison"])
   end
 
-  it "does not include order from a different office" do
-    Crafter.create(user_id: "the id", office: "london")
-    Crafter.create(user_id: "bob id", office: "new york")
-    excluded_order = Order.new(
-      :user_name => "Tom",
-      :user_id => "bob id",
-      :lunch => "A lunch",
-      :date => Days.monday
-    )
-    excluded_order.save
-    Order.new(
-      :user_name => "Tom",
-      :user_id => "the id",
-      :lunch => "A lunch",
-      :date => Days.monday
-    ).save
+  it "tells if an office is part of the list" do
+    expect(Office.new("london")).to be_available
+  end
 
-    expect(Order.placed_in("london")).not_to include(excluded_order)
+  it "tells if an office is not part of the list" do
+    expect(Office.new("new york")).not_to be_available
   end
 
   it "returns user without order" do

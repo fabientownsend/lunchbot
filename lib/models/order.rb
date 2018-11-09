@@ -1,4 +1,6 @@
 require 'data_mapper'
+require 'date'
+require 'days'
 
 class Order
   include DataMapper::Resource
