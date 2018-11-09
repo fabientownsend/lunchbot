@@ -7,10 +7,6 @@ class CustomerProvider
     crafters_wihtout_order + guests_without_order
   end
 
-  def everyone
-    (crafters + guests).join("\n")
-  end
-
   private
 
   def crafters_wihtout_order

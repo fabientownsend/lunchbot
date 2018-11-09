@@ -24,7 +24,6 @@ module CommandInfo
     "To place an order | `order: food`\n" \
     "To see someone elses order | `order? @name_of_person`\n" \
     "To see all orders | `all orders?`\n" \
-    "To see all orders with user ids | `everyone`\n" \
     "To see sum of orders | `all food orders`\n" \
     "To copy someones order | `copy order: @username`"
   end
