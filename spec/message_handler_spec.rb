@@ -67,42 +67,6 @@ RSpec.describe MessageHandler do
     expect(fake_bot.message).to eq("That is not a valid order.")
   end
 
-  it "returns list of users that doesn't ordered yet" do
-    allow(Crafter).to receive(:profile).and_return(true)
-    allow(Apprentice).to receive(:foreman?).and_return(true)
-    add_guest("james smith")
-    message_from_slack(user_message: "remind")
-
-    bot_response =
-      "<@FabienUserId>\n<@WillUserId>\njames smith host: <@id host>"
-    expect(fake_bot.message).to eq(bot_response)
-  end
-
-  it "return list of users that doesn't ordered yet" do
-    allow(Crafter).to receive(:profile).and_return(true)
-    allow(Apprentice).to receive(:foreman?).and_return(true)
-    add_guest("james smith")
-    message_from_slack(user_message: "remind")
-
-    bot_response =
-      "<@FabienUserId>\n<@WillUserId>\njames smith host: <@id host>"
-    expect(fake_bot.message).to eq(bot_response)
-
-    message_from_slack(user_message: "remove guest: james smith")
-    message_from_slack(user_message: "remind")
-    expect(fake_bot.message).to eq("<@FabienUserId>\n<@WillUserId>")
-  end
-
-  it "return a list without the people who ordered" do
-    allow(Apprentice).to receive(:foreman?).and_return(true)
-
-    message_from_slack(user_message: "order: fish", new_recipient: "FabienUserId")
-    message_from_slack(user_message: "order -james-: pomme")
-    message_from_slack(user_message: "remind")
-
-    expect(fake_bot.message).to eq("<@WillUserId>\n<@D3S6XE6SZ>")
-  end
-
   it "return in the channel by default" do
     message_from_slack(user_message: "remind")
 
