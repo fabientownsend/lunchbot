@@ -3,7 +3,6 @@ require 'models/crafter'
 require 'models/apprentice'
 require 'models/order'
 require 'mark_all_out'
-require 'commands/order/customer_provider'
 
 module Commands
   class Reminder
