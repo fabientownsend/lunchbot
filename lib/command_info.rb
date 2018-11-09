@@ -18,16 +18,23 @@ module CommandInfo
     "To delete a crafter | `delete crafter slack_user_name`"
   end
 
+  def guest
+    "To add a guest with no order | `add guest: name of guest`\n" \
+    "To remove a guest | `remove guest: name of guest`\n" \
+    "To place an order for a guest (this also creates a guest if the name" \
+    "given does not exist) | `order -name of guest-: food`"
+  end
+
   def order
     "To place an order | `order: food`\n" \
-    "To see someone elses order | `order? @name_of_person`\n" \
     "To see all orders | `all orders?`\n" \
-    "To copy someones order | `copy order: @username`"
+    "To copy someone's order | `copy order: @username`"
   end
 
   def foreman
     "To find out this weeks foreman | `foreman`\n" \
     "To add yourself as a new forman | `add apprentice`"
+    "To remind people without order | `remind`"
   end
 
   def issues
