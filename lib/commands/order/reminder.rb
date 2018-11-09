@@ -25,7 +25,9 @@ module Commands
       @mark_all_out.update
 
       c = Order.have_not_ordered(@requester.office).map { |a| "<@#{a.slack_id}>" }
-      g = Order.host_without_order(@requester.office).map { |o| "#{o.user_name} host: <@#{o.host}>" }
+      g = Order.host_without_order(@requester.office).map do |o|
+        "#{o.user_name} host: <@#{o.host}>"
+      end
 
       if c.empty? && g.empty?
         return "Everyone has an order."
