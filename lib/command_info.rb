@@ -15,17 +15,7 @@ module CommandInfo
   end
 
   def other
-    "To remind everyone who hasn't ordered | `remind`\n" \
-    "To mark yourself as out | `out`"
     "To delete a crafter | `delete crafter slack_user_name`"
-  end
-
-  def order
-    "To place an order | `order: food`\n" \
-    "To see someone elses order | `order? @name_of_person`\n" \
-    "To see all orders | `all orders?`\n" \
-    "To see sum of orders | `all food orders`\n" \
-    "To copy someones order | `copy order: @username`"
   end
 
   def guest
@@ -35,9 +25,16 @@ module CommandInfo
     "given does not exist) | `order -name of guest-: food`"
   end
 
+  def order
+    "To place an order | `order: food`\n" \
+    "To see all orders | `all orders?`\n" \
+    "To copy someone's order | `copy order: @username`"
+  end
+
   def foreman
     "To find out this weeks foreman | `foreman`\n" \
     "To add yourself as a new forman | `add apprentice`"
+    "To remind people without order | `remind`"
   end
 
   def issues

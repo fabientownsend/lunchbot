@@ -37,7 +37,6 @@ RSpec.describe MessageHandler do
 
   it "return all commands info when request is for help" do
     message_from_slack(user_message: "help")
-
     expect(fake_bot.message).to eq(all_command_info)
   end
 
