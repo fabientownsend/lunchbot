@@ -11,7 +11,7 @@ module CommandInfo
 
   def menu
     "To set a menu | `new menu www.menu-url.com`\n" \
-    "To get this weeks menu | `menu?`"
+    "To get this week's menu | `menu?`"
   end
 
   def other
@@ -32,9 +32,9 @@ module CommandInfo
   end
 
   def foreman
-    "To find out this weeks foreman | `foreman`\n" \
-    "To add yourself as a new forman | `add apprentice`"
-    "To remind people without order | `remind`"
+    "To find out this week's foreman | `foreman`\n" \
+    "To add yourself as the new foreman | `add apprentice`"
+    "To remind people with no order | `remind`"
   end
 
   def issues
