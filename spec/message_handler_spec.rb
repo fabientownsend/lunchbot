@@ -30,7 +30,7 @@ RSpec.describe MessageHandler do
     )
     foreman.save
     allow(Date).to receive(:today).and_return Days.monday
-    allow(Crafter).to receive(:has_office?).and_return(true)
+    allow(User).to receive(:has_office?).and_return(true)
   end
 
   include CommandInfo
@@ -42,7 +42,7 @@ RSpec.describe MessageHandler do
   end
 
   it "returns the url when you ask the menu which is not provided" do
-    Crafter.new(
+    User.new(
       user_name: "Fabien",
       slack_id: "user id",
       office: "london"
@@ -55,7 +55,7 @@ RSpec.describe MessageHandler do
   end
 
   it "responds with the order you just placed" do
-    Crafter.create(user_id: recipient, user_name: "Fabien", office: "london")
+    User.create(user_id: recipient, user_name: "Fabien", office: "london")
     message_from_slack(user_message: "order: hamburger")
 
     expect(fake_bot.message).to eq("Will just ordered `hamburger`.")
@@ -81,7 +81,7 @@ RSpec.describe MessageHandler do
   end
 
   it "return the sum of food by type" do
-    Crafter.create(user_id: recipient, user_name: "Fabien", office: "london")
+    User.create(user_id: recipient, user_name: "Fabien", office: "london")
     message_from_slack(user_message: "order: burger")
     message_from_slack(user_message: "order -james smith-: burger")
     message_from_slack(user_message: "order -jean bon-: burger")

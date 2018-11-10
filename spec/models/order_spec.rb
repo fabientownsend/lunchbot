@@ -1,11 +1,11 @@
 require 'models/order'
-require 'models/crafter'
+require 'models/user'
 require 'date'
 
 RSpec.describe Order do
   it "only returns order from office requested" do
-    Crafter.create(user_id: "the id", office: "london")
-    Crafter.create(user_id: "bob id", office: "new york")
+    User.create(user_id: "the id", office: "london")
+    User.create(user_id: "bob id", office: "new york")
     Order.new(
       :user_name => "Tom",
       :user_id => "bob id",
@@ -24,8 +24,8 @@ RSpec.describe Order do
   end
 
   it "does not include order from a different office" do
-    Crafter.create(user_id: "the id", office: "london")
-    Crafter.create(user_id: "bob id", office: "new york")
+    User.create(user_id: "the id", office: "london")
+    User.create(user_id: "bob id", office: "new york")
     excluded_order = Order.new(
       :user_name => "Tom",
       :user_id => "bob id",

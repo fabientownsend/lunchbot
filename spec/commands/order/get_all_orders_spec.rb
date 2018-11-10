@@ -1,6 +1,6 @@
 require 'commands/order/get_all_orders_command'
 require 'models/order'
-require 'models/crafter'
+require 'models/user'
 require 'date'
 require 'days'
 
@@ -8,13 +8,13 @@ RSpec.describe Commands::GetAllOrders do
   let(:get_all_orders_command) { Commands::GetAllOrders.new }
 
   before(:each) do
-    Crafter.create(
+    User.create(
       user_id: "asdf",
       user_name: "will",
       office: "london"
     )
 
-    Crafter.create(
+    User.create(
       user_id: "qwer",
       user_name: "fabien",
       office: "london"
@@ -113,8 +113,8 @@ RSpec.describe Commands::GetAllOrders do
   end
 
   it "returns names based on the crafter database" do
-    Crafter.create(user_id: "asdf", user_name: "will", office: "london")
-    Crafter.create(user_id: "qwer", user_name: "fabien", office: "london")
+    User.create(user_id: "asdf", user_name: "will", office: "london")
+    User.create(user_id: "qwer", user_name: "fabien", office: "london")
     Helper.order(
       user_id: "asdf",
       user_name: "no name",
@@ -135,8 +135,8 @@ RSpec.describe Commands::GetAllOrders do
   end
 
   it "returns order name from a guest" do
-    Crafter.create(user_id: "asdf", user_name: "will", office: "london")
-    Crafter.create(user_id: "qwer", user_name: "fabien", office: "london")
+    User.create(user_id: "asdf", user_name: "will", office: "london")
+    User.create(user_id: "qwer", user_name: "fabien", office: "london")
 
     Helper.order(
       user_id: "asdf",

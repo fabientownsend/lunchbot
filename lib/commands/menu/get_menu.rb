@@ -1,4 +1,4 @@
-require 'models/crafter'
+require 'models/user'
 require 'models/menu'
 require 'tiny_logger'
 
@@ -10,7 +10,7 @@ module Commands
     end
 
     def prepare(data)
-      @crafter = Crafter.profile(data[:user_id])
+      @crafter = User.profile(data[:user_id])
     end
 
     def run

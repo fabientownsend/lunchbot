@@ -1,10 +1,10 @@
 require 'commands/order/place_order'
 require 'models/order'
-require 'models/crafter'
+require 'models/user'
 
 RSpec.describe Commands::PlaceOrder do
   before(:each) do
-    Crafter.create(
+    User.create(
       user_id: "asdf",
       user_name: "james",
       office: "london"
@@ -30,8 +30,8 @@ RSpec.describe Commands::PlaceOrder do
   end
 
   it "save different order when user id is different" do
-    Crafter.create(user_id: "qwer", user_name: "user_name", office: "london")
-    Crafter.create(user_id: "asdf", user_name: "user_name", office: "london")
+    User.create(user_id: "qwer", user_name: "user_name", office: "london")
+    User.create(user_id: "asdf", user_name: "user_name", office: "london")
     Helper.order(user_id: "asdf", user_name: "will", user_message: "burger")
     Helper.order(user_id: "qwer", user_name: "fabien", user_message: "fish")
 
@@ -59,12 +59,12 @@ RSpec.describe Commands::PlaceOrder do
       user_email: "email@email.com"
     )
 
-    expect(Crafter.last(slack_id: "asdf")).not_to eq(nil)
-    expect(Crafter.last(email: "email@email.com")).not_to eq(nil)
+    expect(User.last(slack_id: "asdf")).not_to eq(nil)
+    expect(User.last(email: "email@email.com")).not_to eq(nil)
   end
 
   it "update users without email" do
-    expect(Crafter.last(slack_id: "FabienUserId").email).to eq(nil)
+    expect(User.last(slack_id: "FabienUserId").email).to eq(nil)
 
     Helper.order(
       user_id: "FabienUserId",
@@ -73,11 +73,11 @@ RSpec.describe Commands::PlaceOrder do
       user_email: "fabien@email.com"
     )
 
-    expect(Crafter.last(slack_id: "FabienUserId").email) .to eq("fabien@email.com")
+    expect(User.last(slack_id: "FabienUserId").email) .to eq("fabien@email.com")
   end
 
   it "Ask user to add location when user do not have a location" do
-    Crafter.create(
+    User.create(
       user_name: "Fabien Townsend",
       user_id: "a new user"
     )

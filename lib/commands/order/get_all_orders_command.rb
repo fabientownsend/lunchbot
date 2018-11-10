@@ -1,5 +1,5 @@
 require 'days'
-require 'models/crafter'
+require 'models/user'
 require 'models/order'
 require 'tiny_logger'
 
@@ -24,7 +24,7 @@ module Commands
     def orders
       orders_of_the_week = []
 
-      crafter = Crafter.profile(@crafter_id)
+      crafter = User.profile(@crafter_id)
 
       if crafter
         orders_of_the_week = Order.placed_in(crafter.office)
@@ -42,7 +42,7 @@ module Commands
       if guest?(order)
         order.user_name
       else
-        Crafter.profile(order.user_id).user_name if Crafter.profile(order.user_id)
+        User.profile(order.user_id).user_name if User.profile(order.user_id)
       end
     end
 

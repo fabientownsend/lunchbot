@@ -16,7 +16,7 @@ module Commands
       @user_email = data[:user_email]
       @date = data[:date] || Date.today
 
-      Crafter.create(data) unless Crafter.profile(data[:user_id])
+      User.create(data) unless User.profile(data[:user_id])
     end
 
     def run
@@ -26,7 +26,7 @@ module Commands
 
       return "That is not a valid order." if @lunch.empty?
 
-      if !Crafter.has_office?(@user_id)
+      if !User.has_office?(@user_id)
         return "You need to add your office. ex: \"office: london\""
       end
 
@@ -36,13 +36,13 @@ module Commands
     private
 
     def update_user
-      user = Crafter.last(:slack_id => @user_id)
+      user = User.last(:slack_id => @user_id)
       user.email = @user_email
       user.save
     end
 
     def user_dont_have_email?
-      crafter = Crafter.profile(@user_id)
+      crafter = User.profile(@user_id)
       !crafter.email
     end
 

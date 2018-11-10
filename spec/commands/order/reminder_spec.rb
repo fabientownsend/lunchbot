@@ -21,9 +21,9 @@ RSpec.describe Commands::Reminder do
   end
 
   it "returns list of people with line breaker" do
-    Crafter.all.destroy
-    Crafter.create(user_id: "user id", office: "london")
-    Crafter.create(user_id: "WillUserId", office: "london")
+    User.all.destroy
+    User.create(user_id: "user id", office: "london")
+    User.create(user_id: "WillUserId", office: "london")
 
     reminder.prepare(reminder_request)
 
@@ -33,7 +33,7 @@ RSpec.describe Commands::Reminder do
   it "tell you when there is no orders" do
     allow(Order).to receive(:crafter_without_order).and_return([])
     allow(Order).to receive(:host_without_order).and_return([])
-    Crafter.create(user_id: "user id", office: "london")
+    User.create(user_id: "user id", office: "london")
 
     reminder.prepare(reminder_request)
     response = reminder.run
@@ -42,8 +42,8 @@ RSpec.describe Commands::Reminder do
   end
 
   it "remind the guest's host if they don't have an order" do
-    Crafter.all.destroy
-    Crafter.create(user_id: "user id", office: "london")
+    User.all.destroy
+    User.create(user_id: "user id", office: "london")
 
     Order.new(
       :user_name => "jean gaston",

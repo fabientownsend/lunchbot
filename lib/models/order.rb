@@ -16,7 +16,7 @@ class Order
 
   def self.placed_in(office)
     orders = all(:date => Days.from_monday_to_friday)
-    crafters = Crafter.all(:office => office)
+    crafters = User.all(:office => office)
     orders.keep_if { |o| crafters.any? { |c| c.slack_id == o.user_id || c.slack_id == o.host } }
   end
 
@@ -43,13 +43,13 @@ class Order
 
   def self.crafter_without_order(office)
     orders = all(:date => Days.from_monday_to_friday)
-    crafters = Crafter.all(:office => office)
+    crafters = User.all(:office => office)
     crafters.delete_if { |c| orders.any? { |o| o.user_id == c.slack_id } }
   end
 
   def self.host_without_order(office)
     orders = all(:date => Days.from_monday_to_friday, :host.not => nil, :lunch => nil)
-    crafters = Crafter.all(:office => office)
+    crafters = User.all(:office => office)
     orders.keep_if { |o| crafters.any? { |c| c.slack_id == o.host } }
   end
 end

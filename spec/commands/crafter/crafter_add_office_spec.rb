@@ -12,7 +12,7 @@ RSpec.describe Commands::AddOffice do
   end
 
   it "adds the office to the user" do
-    Crafter.new(
+    User.new(
       :user_name => "Fabien",
       :slack_id => "1234",
       :email => "fabien@adsak.com"
@@ -23,14 +23,14 @@ RSpec.describe Commands::AddOffice do
     add_office_command.prepare(user_message: "office: London", user_id: "1234")
     response = add_office_command.run
 
-    crafter = Crafter.last(:slack_id => "1234")
+    crafter = User.last(:slack_id => "1234")
 
     expect(crafter.office).to eq("london")
     expect(response).to eq("You were added to the office: london")
   end
 
   it "does not add office is not available" do
-    Crafter.new(
+    User.new(
       :user_name => "Fabien",
       :slack_id => "1234",
       :email => "fabien@adsak.com"
@@ -44,7 +44,7 @@ RSpec.describe Commands::AddOffice do
   end
 
   it "does add office to apprentice if this person is an apprentice too" do
-    Crafter.new(
+    User.new(
       :user_name => "Fabien",
       :slack_id => "1234",
       :email => "fabien@adsak.com"

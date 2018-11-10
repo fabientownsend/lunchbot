@@ -1,6 +1,6 @@
 require 'commands/foreman/add_apprentice'
 require 'models/apprentice'
-require 'models/crafter'
+require 'models/user'
 
 RSpec.describe Commands::AddApprentice do
   let(:foreman) { Commands::AddApprentice.new }
@@ -12,7 +12,7 @@ RSpec.describe Commands::AddApprentice do
   end
 
   it "add a foreman to the database" do
-    Crafter.create(user_name: "will", user_id: "id", office: "london")
+    User.create(user_name: "will", user_id: "id", office: "london")
 
     foreman.prepare(user_id: "id", user_name: "will")
     foreman.run
@@ -22,7 +22,7 @@ RSpec.describe Commands::AddApprentice do
   end
 
   it "returns a successful message when an apprentice is added" do
-    Crafter.create(user_name: "will", user_id: "id", office: "london")
+    User.create(user_name: "will", user_id: "id", office: "london")
 
     foreman.prepare(user_id: "id", user_name: "will")
 
@@ -30,7 +30,7 @@ RSpec.describe Commands::AddApprentice do
   end
 
   it "returns an error message when the apprentice is already registered" do
-    Crafter.create(user_name: "will", user_id: "id", office: "london")
+    User.create(user_name: "will", user_id: "id", office: "london")
 
     foreman.prepare(user_id: "id", user_name: "will")
     foreman.run

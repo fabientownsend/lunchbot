@@ -1,25 +1,25 @@
 require 'commands/crafter/delete_crafter'
 
-RSpec.describe Commands::DeleteCrafter do
+RSpec.describe Commands::DeleteUser do
   it "applies to the command remove crafter" do
-    delete_crafter = Commands::DeleteCrafter.new
+    delete_crafter = Commands::DeleteUser.new
 
     result = delete_crafter.applies_to?(user_message: "delete crafter")
     expect(result).to eq(true)
   end
 
   it "returns true if message starts with delete crafter" do
-    delete_crafter = Commands::DeleteCrafter.new
+    delete_crafter = Commands::DeleteUser.new
     expect(delete_crafter.applies_to?(user_message: "delete crafter Fabien")).to eq(true)
   end
 
   it "returns false is message doesn't start with delete crafter" do
-    delete_crafter = Commands::DeleteCrafter.new
+    delete_crafter = Commands::DeleteUser.new
     expect(delete_crafter.applies_to?(user_message: "Hi Fabien")).to eq(false)
   end
 
   it "extacts crafter name Fabien from user message " do
-    delete_crafter = Commands::DeleteCrafter.new
+    delete_crafter = Commands::DeleteUser.new
     crafter_name = "Fabien Townsend"
 
     fake_data_from_slack = {
@@ -30,7 +30,7 @@ RSpec.describe Commands::DeleteCrafter do
   end
 
   it "extacts crafter name Katerina from user message " do
-    delete_crafter = Commands::DeleteCrafter.new
+    delete_crafter = Commands::DeleteUser.new
     crafter_name = "Katerina Georgiou"
     fake_data_from_slack = {
       user_message: "delete crafter #{crafter_name}",
@@ -40,7 +40,7 @@ RSpec.describe Commands::DeleteCrafter do
   end
 
   it "deletes cafter name from the database" do
-    delete_crafter = Commands::DeleteCrafter.new
+    delete_crafter = Commands::DeleteUser.new
     fake_data_from_slack = {
       user_message: "delete crafter Will",
     }
@@ -48,11 +48,11 @@ RSpec.describe Commands::DeleteCrafter do
     delete_crafter.prepare(fake_data_from_slack)
     delete_crafter.run
 
-    expect(Crafter.all.size).to eq(1)
+    expect(User.all.size).to eq(1)
   end
 
   it "return succes message when the crafter was deleted" do
-    delete_crafter = Commands::DeleteCrafter.new
+    delete_crafter = Commands::DeleteUser.new
     fake_data_from_slack = {
       user_message: "delete crafter Will",
     }

@@ -1,4 +1,4 @@
-require 'models/crafter'
+require 'models/user'
 require 'commands/crafter/add_office'
 require 'alert_foreman'
 require 'foreman_messager'
@@ -28,11 +28,11 @@ class MessageHandler < FeatureFlag
     return data[:user_message] if data[:user_message].nil?
     returned_command = @request_parser.parse(data)
 
-    unless Crafter.profile(data[:user_id])
-      Crafter.create(data)
+    unless User.profile(data[:user_id])
+      User.create(data)
     end
 
-    if !Crafter.has_office?(data[:user_id]) && !Commands::AddOffice.add_office_request?(data)
+    if !User.has_office?(data[:user_id]) && !Commands::AddOffice.add_office_request?(data)
       @bot.send("You need to add your office. ex: \"office: london\"", recipient)
       return
     end

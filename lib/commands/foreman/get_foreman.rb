@@ -7,7 +7,7 @@ module Commands
     end
 
     def prepare(data)
-      @requester = Crafter.profile(data[:user_id])
+      @requester = User.profile(data[:user_id])
     end
 
     def run

@@ -8,7 +8,7 @@ RSpec.describe Commands::GetForeman do
   end
 
   it "return a message when no foreman found" do
-    Crafter.create(user_name: "will", user_id: "id one", office: "london")
+    User.create(user_name: "will", user_id: "id one", office: "london")
 
     foreman.prepare(user_id: "id one")
 
@@ -16,7 +16,7 @@ RSpec.describe Commands::GetForeman do
   end
 
   it "gets the forman who is in the same office than the requester" do
-    Crafter.create(user_name: "pomme de terre", user_id: "id one", office: "london")
+    User.create(user_name: "pomme de terre", user_id: "id one", office: "london")
     Apprentice.create(user_name: "will", user_id: "id two", office: "london")
     Apprentice.set_as_foreman("id two", "london")
 
@@ -27,7 +27,7 @@ RSpec.describe Commands::GetForeman do
   end
 
   it "does not find a foreman when no foreman for an office" do
-    Crafter.create(user_name: "billy", user_id: "id one", office: "london")
+    User.create(user_name: "billy", user_id: "id one", office: "london")
     Apprentice.create(user_name: "bob", user_id: "id two", office: "new york")
     Apprentice.set_as_foreman("id two", "new york")
 

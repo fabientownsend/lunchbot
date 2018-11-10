@@ -1,5 +1,5 @@
 require 'days'
-require 'models/crafter'
+require 'models/user'
 require 'models/apprentice'
 require 'models/order'
 require 'mark_all_out'
@@ -15,7 +15,7 @@ module Commands
       @user_id = data[:user_id]
       @mark_all_out = data[:mark_all_out]
 
-      @requester = Crafter.profile(data[:user_id])
+      @requester = User.profile(data[:user_id])
     end
 
     def run
