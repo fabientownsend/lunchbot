@@ -1,7 +1,7 @@
-require 'models/crafter'
+require 'models/user'
 
 module Commands
-  class DeleteCrafter
+  class DeleteUser
     def applies_to?(request)
       request = request[:user_message].downcase
       request.strip.downcase.start_with?("delete crafter")
@@ -13,7 +13,7 @@ module Commands
     end
 
     def run
-      crafter = Crafter.last(:user_name => @crafter_name)
+      crafter = User.last(:user_name => @crafter_name)
 
       if crafter.destroy
         "#{@crafter_name} has been removed."

@@ -3,7 +3,7 @@ require 'commands/order/add_guest'
 require 'commands/order/place_order_guest'
 require 'commands/order/place_order'
 require 'coveralls'
-require 'models/crafter'
+require 'models/user'
 require 'data_mapper'
 require 'date'
 require 'days'
@@ -67,7 +67,7 @@ class Helper
   end
 
   def self.add_foreman(data)
-    Crafter.create(user_name: data[:name], user_id: data[:id], office: "london")
+    User.create(user_name: data[:name], user_id: data[:id], office: "london")
     id = data[:id]
     user_name = data[:name]
     add_apprentice = Commands::AddApprentice.new
@@ -82,14 +82,14 @@ RSpec.configure do |config|
   config.before(:each) do
     DataMapper.finalize.auto_migrate!
 
-    crafter = Crafter.new(
+    crafter = User.new(
       user_name: "Fabien",
       slack_id: "FabienUserId",
       office: "london"
     )
     crafter.save
 
-    crafter = Crafter.new(
+    crafter = User.new(
       user_name: "Will",
       slack_id: "WillUserId",
       office: "london"

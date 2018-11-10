@@ -17,7 +17,7 @@ RSpec.describe Commands::SetForeman do
   end
 
   it "respond with error message if user not found" do
-    Crafter.create(user_name: "name", user_id: "id", office: "london")
+    User.create(user_name: "name", user_id: "id", office: "london")
     set_foreman.prepare(
       user_id: "id",
       user_name: "name",
@@ -27,13 +27,13 @@ RSpec.describe Commands::SetForeman do
   end
 
   it "set foreman if belongs to the same office than requester" do
-    Crafter.create(user_name: "name", user_id: "id", office: "london")
+    User.create(user_name: "name", user_id: "id", office: "london")
     set_foreman.prepare(fake_data)
     expect(set_foreman.run).to eq("<@w_id> is now the foreman!")
   end
 
   it "does not set foreman if user not found in the same office" do
-    Crafter.create(user_name: "name", user_id: "id", office: "new york")
+    User.create(user_name: "name", user_id: "id", office: "new york")
     set_foreman.prepare(fake_data)
     expect(set_foreman.run).to eq("That person is not an apprentice!")
   end

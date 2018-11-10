@@ -11,7 +11,7 @@ module Commands
       request = data[:user_message]
       foreman = format_foreman(request)
       @foreman_id = foreman[/(?<=\<@)(\w+)(?=>)/]
-      @requester = Crafter.profile(data[:user_id])
+      @requester = User.profile(data[:user_id])
     end
 
     def run

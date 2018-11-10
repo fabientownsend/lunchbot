@@ -1,5 +1,5 @@
 require "models/apprentice"
-require "models/crafter"
+require "models/user"
 
 module Commands
   class AddApprentice
@@ -8,7 +8,7 @@ module Commands
     end
 
     def prepare(data)
-      @crafter = Crafter.profile(data[:user_id])
+      @crafter = User.profile(data[:user_id])
     end
 
     def run

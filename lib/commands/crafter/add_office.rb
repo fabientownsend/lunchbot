@@ -1,5 +1,5 @@
 require 'models/apprentice'
-require 'models/crafter'
+require 'models/user'
 require 'models/office'
 require 'tiny_logger'
 
@@ -17,7 +17,7 @@ module Commands
 
     def prepare(data)
       @office = Office.new(parse_office_location(data))
-      @crafter = Crafter.profile(data[:user_id])
+      @crafter = User.profile(data[:user_id])
       @apprentice = Apprentice.profile(data[:user_id])
     end
 

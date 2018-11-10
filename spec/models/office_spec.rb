@@ -14,8 +14,8 @@ RSpec.describe Office do
   end
 
   it "returns user without order" do
-    Crafter.create(user_id: "the id", office: "london")
-    Crafter.create(user_id: "bob id", office: "london")
+    User.create(user_id: "the id", office: "london")
+    User.create(user_id: "bob id", office: "london")
     Order.new(
       :user_name => "Tom",
       :user_id => "bob id",
@@ -23,12 +23,12 @@ RSpec.describe Office do
       :date => Days.monday
     ).save
 
-    expect(Order.crafter_without_order("london")).to include(Crafter.profile("the id"))
+    expect(Order.crafter_without_order("london")).to include(User.profile("the id"))
   end
 
   it "returns empty array if every crafter ordered a lunch" do
-    Crafter.all.destroy
-    Crafter.create(user_id: "the id", office: "london")
+    User.all.destroy
+    User.create(user_id: "the id", office: "london")
 
     Order.new(
       :user_name => "Tom",
@@ -41,8 +41,8 @@ RSpec.describe Office do
   end
 
   it "returns guest's name and host when without order" do
-    Crafter.create(user_id: "from london", office: "london")
-    Crafter.create(user_id: "bob id", office: "london")
+    User.create(user_id: "from london", office: "london")
+    User.create(user_id: "bob id", office: "london")
     Order.new(
       :user_name => "Tom",
       :user_id => "bob id",
@@ -62,8 +62,8 @@ RSpec.describe Office do
   end
 
   it "keeps guest for a specific office" do
-    Crafter.create(user_id: "from london", office: "london")
-    Crafter.create(user_id: "from new york", office: "new york")
+    User.create(user_id: "from london", office: "london")
+    User.create(user_id: "from new york", office: "new york")
     Order.new(
       :user_name => "Tom",
       :user_id => "bob id",

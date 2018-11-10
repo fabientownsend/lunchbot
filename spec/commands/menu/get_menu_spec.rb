@@ -1,5 +1,5 @@
 require 'commands/menu/get_menu'
-require 'models/crafter'
+require 'models/user'
 require 'models/menu'
 
 RSpec.describe Commands::GetMenu do
@@ -21,7 +21,7 @@ RSpec.describe Commands::GetMenu do
   end
 
   it "return that the url isn't provided if it's the case" do
-    Crafter.new(
+    User.new(
       user_name: "Fabien",
       slack_id: "user id",
       office: "london"
@@ -33,7 +33,7 @@ RSpec.describe Commands::GetMenu do
   end
 
   it "does returns the menu from a different office" do
-    Crafter.new(
+    User.new(
       user_name: "Fabien",
       slack_id: "user id 8",
       office: "london"
@@ -47,7 +47,7 @@ RSpec.describe Commands::GetMenu do
   end
 
   it "does not return the menu from a different office" do
-    Crafter.new(
+    User.new(
       user_name: "Fabien",
       slack_id: "user id 8",
       office: "Somewhere else"
