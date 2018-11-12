@@ -30,7 +30,7 @@ RSpec.describe Commands::AllFoodOrders do
     place_order("qwer", "fabien", "burger")
     place_order("poiu", "james", "fish")
 
-    Order.create(
+    Order.new(
       user_name: "james",
       lunch: "rice",
       date: previous_week
