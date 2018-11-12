@@ -8,16 +8,16 @@ module Commands
       "all food orders" == request
     end
 
-    def prepare(data) end
+    def prepare(data)
+      @crafter = User.profile(data[:user_id])
+    end
 
     def run
-      count_meal = Order.aggregate(
-        :lunch,
-        :all.count,
-        date: Days.from_monday_to_friday
-      )
+      bla = Order.placed_in(@crafter.office).each_with_object(Hash.new(0)) do |obj, h|
+        h[obj.lunch] += 1
+      end
 
-      count_meal.map { |lunch, total| format_text(lunch, total) }.join.strip
+      bla.map { |lunch, total| format_text(lunch, total) }.join.strip
     end
 
     def format_text(lunch, total)
