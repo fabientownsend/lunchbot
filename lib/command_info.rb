@@ -33,7 +33,7 @@ module CommandInfo
 
   def foreman
     "To find out this week's foreman | `foreman`\n" \
-    "To add yourself as the new foreman | `add apprentice`"
+    "To add yourself as the new foreman | `add apprentice`" \
     "To remind people with no order | `remind`"
   end
 
