@@ -23,12 +23,14 @@ class User
   end
 
   def self.create(user)
-    User.new(
+    user = User.new(
       :user_name => user[:user_name],
       :slack_id => user[:user_id],
       :email => user[:user_email],
       :office => user[:office]
-    ).save
+    )
+    Logger.alert("Creating user: #{user.inspect}")
+    user.save
   end
 
   def add_office(office)
