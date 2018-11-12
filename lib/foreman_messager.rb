@@ -5,12 +5,8 @@ class ForemanMessager
     @bot = bot
   end
 
-  def update_team_id(team_id)
-    @team_id = team_id
-  end
-
   def send(message)
-    @bot.send(message, @team_id, foreman_id)
+    @bot.send(message, foreman_id)
   end
 
   private
