@@ -9,19 +9,31 @@ module Commands
     end
 
     def prepare(data)
-      @user = User.profile(data[:user_id])
+      @requester = User.profile(data[:user_id])
     end
 
     def run
-      counted_lunch = Order.placed_in(@user.office).each_with_object(Hash.new(0)) do |obj, hash|
-        hash[obj.lunch] += 1
-      end
-
-      counted_lunch.map { |lunch, total| format_text(lunch, total) }.join.strip
+      counted_orders.map do |order, count|
+        render_orders_count(order, count)
+      end.join.strip
     end
 
-    def format_text(lunch, total)
-      "#{lunch}: #{total}\n" unless lunch.nil?
+    private
+
+    attr_reader :requester
+
+    def counted_orders
+      orders.each_with_object(Hash.new(0)) do |order, results|
+        results[order.lunch] += 1
+      end
+    end
+
+    def orders
+      Order.placed_in(requester.office)
+    end
+
+    def render_orders_count(order, count)
+      "#{order}: #{count}\n" unless order.nil?
     end
   end
 end
