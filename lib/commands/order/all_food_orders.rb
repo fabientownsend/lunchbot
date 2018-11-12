@@ -9,11 +9,11 @@ module Commands
     end
 
     def prepare(data)
-      @crafter = User.profile(data[:user_id])
+      @user = User.profile(data[:user_id])
     end
 
     def run
-      counted_lunch = Order.placed_in(@crafter.office).each_with_object(Hash.new(0)) do |obj, hash|
+      counted_lunch = Order.placed_in(@user.office).each_with_object(Hash.new(0)) do |obj, hash|
         hash[obj.lunch] += 1
       end
 
