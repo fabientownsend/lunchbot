@@ -13,11 +13,11 @@ module Commands
     end
 
     def run
-      bla = Order.placed_in(@crafter.office).each_with_object(Hash.new(0)) do |obj, h|
-        h[obj.lunch] += 1
+      counted_lunch = Order.placed_in(@crafter.office).each_with_object(Hash.new(0)) do |obj, hash|
+        hash[obj.lunch] += 1
       end
 
-      bla.map { |lunch, total| format_text(lunch, total) }.join.strip
+      counted_lunch.map { |lunch, total| format_text(lunch, total) }.join.strip
     end
 
     def format_text(lunch, total)
