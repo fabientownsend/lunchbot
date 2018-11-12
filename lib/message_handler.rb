@@ -43,6 +43,10 @@ class MessageHandler < FeatureFlag
     end
   end
 
+  def alert_foreman(message)
+    @foreman_messager.send(message)
+  end
+
   private
 
   def deal_with_command(command)

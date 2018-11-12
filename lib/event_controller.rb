@@ -33,6 +33,11 @@ class EventController < Sinatra::Base
     status 200
   end
 
+  error do
+    error_message = "Sorry there was an error: #{env['sinatra.error'].message}"
+    message_handler.alert_foreman(error_message)
+  end
+
   private
 
   def verify_token(data)
