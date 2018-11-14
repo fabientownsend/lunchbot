@@ -4,7 +4,8 @@ require "models/user"
 module Commands
   class AddApprentice
     def applies_to?(request)
-      "add apprentice" == request[:user_message].strip.downcase
+      request = request[:user_message].strip.downcase
+      request == "add apprentice" || request == "add foreman"
     end
 
     def prepare(data)

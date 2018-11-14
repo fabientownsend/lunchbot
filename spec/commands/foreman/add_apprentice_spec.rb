@@ -11,6 +11,12 @@ RSpec.describe Commands::AddApprentice do
     expect(response).to be true
   end
 
+  it "applies the command when the message is add foreman" do
+    response = foreman.applies_to?(user_message: "  Add foreman  ")
+
+    expect(response).to be true
+  end
+
   it "add a foreman to the database" do
     User.create(user_name: "will", user_id: "id", office: "london")
 
