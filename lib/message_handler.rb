@@ -21,10 +21,9 @@ class MessageHandler < FeatureFlag
     @alert = AlertForeman.new(@foremanMessager)
   end
 
-  def handle(team_id, event_data)
+  def handle(event_data)
     recipient = event_data['channel'] || event_data['user']
-    @foreman_messager.update_team_id(team_id)
-    data = format_data(team_id, event_data)
+    data = format_data(event_data)
     return data[:user_message] if data[:user_message].nil?
     returned_command = @request_parser.parse(data)
 
@@ -52,14 +51,13 @@ class MessageHandler < FeatureFlag
     response
   end
 
-  def format_data(team_id, event_data)
+  def format_data(event_data)
     {
       user_message: event_data['text'],
       user_id: event_data['user'],
       user_name: @user_info.real_name(event_data['user']),
       user_email: @user_info.email(event_data['user']),
       channel_id: event_data['channel'],
-      team_id: team_id,
       mark_all_out: @mark_all_out,
       alert: @alert,
     }

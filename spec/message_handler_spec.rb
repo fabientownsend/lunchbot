@@ -11,7 +11,6 @@ RSpec.describe MessageHandler do
   let(:fake_bot) { FakeBot.new }
   let(:fake_mark_all_out) { FakeMarkAllOut.new }
   let(:fake_user_info_provider) { FakeUserInfoProvider.new }
-  let(:team_id) { "T026MULUJ" }
   let(:recipient) { "D3S6XE6SZ" }
   let(:channel_id) { "CHANNELID" }
 
@@ -96,7 +95,7 @@ RSpec.describe MessageHandler do
     user_message = args[:user_message]
     new_recipient = args[:new_recipient] || recipient
     event_data = create_event_data(user_message, new_recipient)
-    message_handler.handle(team_id, event_data)
+    message_handler.handle(event_data)
   end
 
   def create_event_data(message, recipient)

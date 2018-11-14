@@ -51,12 +51,11 @@ class EventController < Sinatra::Base
 
   def handle_event(data)
     if data['type'] == 'event_callback'
-      team_id = data['team_id']
       event_data = data['event']
 
       if message?(event_data) && !message_from_bot?(event_data)
         Logger.info("Receives Data #{event_data}")
-        message_handler.handle(team_id, event_data)
+        message_handler.handle(event_data)
       end
     end
   end

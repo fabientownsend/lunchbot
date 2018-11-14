@@ -84,7 +84,6 @@ RSpec.describe RequestParser do
     request = {
       user_message: "remind",
       channel_id: "asdf",
-      team_id: "team id",
     }
 
     expect(user_request.parse(request)).to be_a(Commands::Reminder)
