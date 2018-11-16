@@ -1,7 +1,5 @@
 require 'models/user'
 require 'commands/crafter/add_office'
-require 'alert_foreman'
-require 'foreman_messager'
 require 'mark_all_out'
 require 'request_parser'
 require 'bot'
@@ -17,8 +15,6 @@ class MessageHandler < FeatureFlag
     @request_parser = RequestParser.new
     @bot = args[:bot]
     @user_info = args[:user_info_provider]
-    @foreman_messager = ForemanMessager.new(@bot)
-    @alert = AlertForeman.new(@foremanMessager)
   end
 
   def handle(event_data)
@@ -59,7 +55,6 @@ class MessageHandler < FeatureFlag
       user_email: @user_info.email(event_data['user']),
       channel_id: event_data['channel'],
       mark_all_out: @mark_all_out,
-      alert: @alert,
     }
   end
 end
