@@ -21,7 +21,7 @@ module CommandInfo
   def commands
     Dir.glob("lib/commands/**/*.rb").
       map { |path| File.basename(path).gsub(".rb", "") }.
-      map { |file_name| file_name.split("_").map { |slice| slice.capitalize}.join }.
+      map { |file_name| file_name.split("_").map { |slice| slice.capitalize }.join }.
       map { |class_name| "Commands::#{class_name}" }.
       map { |full_class_name| Object.const_get(full_class_name) }
   end
