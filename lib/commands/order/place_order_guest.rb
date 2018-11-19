@@ -5,7 +5,9 @@ require 'days'
 module Commands
   class PlaceOrderGuest
     def self.description
-      "Place an order for a guest (this also creates a guest if the name given does not exist) | `order -name of guest-: food`"
+      "Place an order for a guest " \
+      "(this also creates a guest if the name given does not exist) " \
+      "| `order -name of guest-: food`"
     end
 
     def applies_to?(request)
