@@ -6,7 +6,7 @@ require 'tiny_logger'
 module Commands
   class GetAllOrders
     def self.description
-      "To see all orders | `all orders?`"
+      "See all orders | `all orders?`"
     end
 
     def applies_to?(request)

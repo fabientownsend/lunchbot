@@ -11,7 +11,7 @@ module CommandInfo
   private
 
   def command_descriptions
-    commands.map(&:description).compact.join("\n")
+    commands.map(&:description).compact.sort.join("\n")
   end
 
   def commands

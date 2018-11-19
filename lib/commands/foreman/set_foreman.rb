@@ -3,7 +3,7 @@ require 'models/apprentice'
 module Commands
   class SetForeman
     def self.description
-      "To add yourself as the new foreman | `add apprentice`"
+      "Add yourself as the new foreman | `add apprentice`"
     end
 
     def applies_to?(request)

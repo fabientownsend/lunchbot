@@ -5,7 +5,7 @@ require 'days'
 module Commands
   class MarkOut
     def self.description
-      "To mark yourself out: `out`"
+      "Mark yourself out: `out`"
     end
 
     def applies_to?(request)

@@ -7,7 +7,7 @@ require 'mark_all_out'
 module Commands
   class Reminder
     def self.description
-      "To remind people with no order | `remind`"
+      "Remind people with no order | `remind`"
     end
 
     def applies_to?(request)

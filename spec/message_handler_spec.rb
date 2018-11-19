@@ -43,20 +43,20 @@ RSpec.describe MessageHandler do
 
       Join the channel #lunchbot_dev
 
-      To remind people with no order | `remind`
-      To place an order | `order: food`
-      To add a guest with no order | `add guest: name of guest`
-      To copy someone's order | `copy order: @username`
-      To remove a guest | `remove guest: name of guest`
-      To mark yourself out: `out`
-      To place an order for a guest (this also creates a guest if the name given does not exist) | `order -name of guest-: food`
-      To see all orders | `all orders?`
-      To find out this week's foreman | `foreman`
-      To add yourself as the new foreman | `add apprentice`
-      To add yourself as the new foreman | `add apprentice`
-      To set a menu | `new menu www.menu-url.com`
-      To get this week's menu | `menu?`
-      To delete a crafter | `delete crafter slack_user_name`
+      Add a guest with no order | `add guest: name of guest`
+      Add yourself as the new foreman | `add apprentice`
+      Add yourself as the new foreman | `add apprentice`
+      Copy someone's order | `copy order: @username`
+      Delete a crafter | `delete crafter slack_user_name`
+      Find out this week's foreman | `foreman`
+      Get this week's menu | `menu?`
+      Mark yourself out: `out`
+      Place an order for a guest (this also creates a guest if the name given does not exist) | `order -name of guest-: food`
+      Place an order | `order: food`
+      Remind people with no order | `remind`
+      Remove a guest | `remove guest: name of guest`
+      See all orders | `all orders?`
+      Set a menu | `new menu www.menu-url.com`
     HEREDOC
 
     expect(fake_bot.message).to eq(help_message)

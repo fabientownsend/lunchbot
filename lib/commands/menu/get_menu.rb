@@ -5,7 +5,7 @@ require 'tiny_logger'
 module Commands
   class GetMenu
     def self.description
-      "To get this week's menu | `menu?`"
+      "Get this week's menu | `menu?`"
     end
 
     def applies_to?(request)
