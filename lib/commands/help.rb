@@ -4,6 +4,10 @@ module Commands
   class Help
     include CommandInfo
 
+    def self.description
+      # not implemented
+    end
+
     def applies_to?(request)
       request = request[:user_message].downcase
       request == "help" || request == "hello"

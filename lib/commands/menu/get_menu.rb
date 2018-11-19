@@ -4,6 +4,10 @@ require 'tiny_logger'
 
 module Commands
   class GetMenu
+    def self.description
+      "To get this week's menu | `menu?`"
+    end
+
     def applies_to?(request)
       request = request[:user_message].downcase
       request.downcase.strip == "menu?"

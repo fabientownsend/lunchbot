@@ -5,6 +5,9 @@ require 'tiny_logger'
 
 module Commands
   class AddOffice
+    def self.description
+    end
+
     def self.add_office_request?(request)
       request = request[:user_message].downcase
       request.strip.downcase.start_with?("office:")

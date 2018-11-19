@@ -4,6 +4,10 @@ require 'days'
 
 module Commands
   class PlaceOrder
+    def self.description
+      "To place an order | `order: food`"
+    end
+
     def applies_to?(request)
       request = request[:user_message].downcase
       request.start_with?("order:")

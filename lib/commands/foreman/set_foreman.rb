@@ -2,6 +2,10 @@ require 'models/apprentice'
 
 module Commands
   class SetForeman
+    def self.description
+      "To add yourself as the new foreman | `add apprentice`"
+    end
+
     def applies_to?(request)
       request = request[:user_message].downcase
       request.start_with? "set foreman:"

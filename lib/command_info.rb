@@ -1,47 +1,35 @@
 module CommandInfo
   def all_command_info
-    info_array.join("\n")
+    <<~HEREDOC
+      #{report_issues}
+      #{join_the_channel}
+
+      #{command_descriptions}
+    HEREDOC
   end
 
   private
 
-  def info_array
-    [issues, menu, order, foreman, other, guest]
+  def command_descriptions
+    commands.map(&:description).compact.join("\n")
   end
 
-  def menu
-    "To set a menu | `new menu www.menu-url.com`\n" \
-    "To get this week's menu | `menu?`"
+  def commands
+    Dir.glob("lib/commands/**/*.rb")
+      .map { |path| File.basename(path).gsub(".rb", "") }
+      .map { |file_name| file_name.split("_").map { |slice| slice.capitalize}.join }
+      .map { |class_name| "Commands::#{class_name}" }
+      .map { |full_class_name| Object.const_get(full_class_name) }
   end
 
-  def other
-    "To delete a crafter | `delete crafter slack_user_name`"
+  def report_issues
+    <<~HEREDOC
+      :bug: Want to report a bug or have an idea for a new feature? :package:
+      Share it here: :loudspeaker: <https://github.com/fabientownsend/lunchbot/issues/new> :loudspeaker:
+    HEREDOC
   end
 
-  def guest
-    "To add a guest with no order | `add guest: name of guest`\n" \
-    "To remove a guest | `remove guest: name of guest`\n" \
-    "To place an order for a guest (this also creates a guest if the name" \
-    "given does not exist) | `order -name of guest-: food`"
-  end
-
-  def order
-    "To place an order | `order: food`\n" \
-    "To see all orders | `all orders?`\n" \
-    "To copy someone's order | `copy order: @username`"
-  end
-
-  def foreman
-    "To find out this week's foreman | `foreman`\n" \
-    "To add yourself as the new foreman | `add apprentice`" \
-    "To remind people with no order | `remind`"
-  end
-
-  def issues
-    ":bug: Want to report a bug or have an idea for a new feature? :package:\n" \
-    "Share it here: :loudspeaker: <https://github.com/fabientownsend/lunchbot/issues/new>" \
-    ":loudspeaker:\n" \
-    "Join the channel #lunchbot_dev" \
-    "\n\n"
+  def join_the_channel
+    "Join the channel #lunchbot_dev"
   end
 end

@@ -2,6 +2,9 @@ require 'models/apprentice'
 
 module Commands
   class RemoveApprentice
+    def self.description
+    end
+
     def run
       apprentice = Apprentice.last(slack_id: @user_id)
       if apprentice.nil?

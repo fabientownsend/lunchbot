@@ -4,6 +4,10 @@ require 'days'
 
 module Commands
   class CopyOrder
+    def self.description
+      "To copy someone's order | `copy order: @username`"
+    end
+
     def applies_to?(request)
       request = request[:user_message].downcase
       request.start_with?("copy order:")
