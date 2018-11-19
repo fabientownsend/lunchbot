@@ -32,8 +32,6 @@ RSpec.describe MessageHandler do
     allow(User).to receive(:has_office?).and_return(true)
   end
 
-  include CommandInfo
-
   it "return all commands info when request is for help" do
     message_from_slack(user_message: "help")
 
