@@ -24,6 +24,7 @@ module Commands
     private
 
     def command_descriptions
+      load_commands
       commands.
         map(&:description).
         compact.
@@ -32,11 +33,17 @@ module Commands
     end
 
     def commands
-      Dir.glob("lib/commands/**/*.rb").
-        map { |path| File.basename(path).gsub(".rb", "") }.
-        map { |file_name| file_name.split("_").map { |slice| slice.capitalize }.join }.
-        map { |class_name| "Commands::#{class_name}" }.
-        map { |full_class_name| Object.const_get(full_class_name) }
+      Commands.constants.map do |command|
+        Object.const_get("Commands::#{command}")
+      end
+    end
+
+    def load_commands
+      command_files.each { |file| require file }
+    end
+
+    def command_files
+      Dir["#{File.dirname(__FILE__)}/commands/**/*.rb"]
     end
 
     def report_issues
