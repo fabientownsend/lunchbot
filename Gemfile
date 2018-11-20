@@ -15,6 +15,7 @@ gem 'logglier', '~> 0.2.11'
 
 group :test, :development do
   gem 'dm-sqlite-adapter', '1.2.0'
+  gem 'pry'
   gem 'rspec', '~> 3.0'
   gem 'rubocop-airbnb', '2.0.0'
   gem 'rack-test'
