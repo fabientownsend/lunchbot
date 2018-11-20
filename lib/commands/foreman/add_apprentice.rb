@@ -3,6 +3,10 @@ require "models/user"
 
 module Commands
   class AddApprentice
+    def self.description
+      "Add yourself as the new foreman | `add apprentice`"
+    end
+
     def applies_to?(request)
       request = request[:user_message].strip.downcase
       request == "add apprentice" || request == "add foreman"

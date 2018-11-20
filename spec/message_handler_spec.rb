@@ -32,11 +32,32 @@ RSpec.describe MessageHandler do
     allow(User).to receive(:has_office?).and_return(true)
   end
 
-  include CommandInfo
-
   it "return all commands info when request is for help" do
     message_from_slack(user_message: "help")
-    expect(fake_bot.message).to eq(all_command_info)
+
+    help_message = <<~HEREDOC
+      :bug: Want to report a bug or have an idea for a new feature? :package:
+      Share it here: :loudspeaker: <https://github.com/fabientownsend/lunchbot/issues/new> :loudspeaker:
+
+      Join the channel #lunchbot_dev
+
+      Add a guest with no order | `add guest: name of guest`
+      Add yourself as the new foreman | `add apprentice`
+      Add yourself as the new foreman | `add apprentice`
+      Copy someone's order | `copy order: @username`
+      Delete a crafter | `delete crafter slack_user_name`
+      Find out this week's foreman | `foreman`
+      Get this week's menu | `menu?`
+      Mark yourself out: `out`
+      Place an order for a guest (this also creates a guest if the name given does not exist) | `order -name of guest-: food`
+      Place an order | `order: food`
+      Remind people with no order | `remind`
+      Remove a guest | `remove guest: name of guest`
+      See all orders | `all orders?`
+      Set a menu | `new menu www.menu-url.com`
+    HEREDOC
+
+    expect(fake_bot.message).to eq(help_message)
   end
 
   it "returns the url when you ask the menu which is not provided" do

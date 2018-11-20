@@ -4,6 +4,12 @@ require 'days'
 
 module Commands
   class PlaceOrderGuest
+    def self.description
+      "Place an order for a guest " \
+      "(this also creates a guest if the name given does not exist) " \
+      "| `order -name of guest-: food`"
+    end
+
     def applies_to?(request)
       request = request[:user_message].downcase
       request.start_with?("order -") && get_string_between_dash(request)

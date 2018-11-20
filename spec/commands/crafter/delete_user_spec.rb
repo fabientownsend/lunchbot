@@ -1,4 +1,4 @@
-require 'commands/crafter/delete_crafter'
+require 'commands/crafter/delete_user'
 
 RSpec.describe Commands::DeleteUser do
   it "applies to the command remove crafter" do

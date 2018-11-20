@@ -5,6 +5,10 @@ require 'tiny_logger'
 
 module Commands
   class GetAllOrders
+    def self.description
+      "See all orders | `all orders?`"
+    end
+
     def applies_to?(request)
       request = request[:user_message].downcase
       request == "all orders?"

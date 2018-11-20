@@ -2,6 +2,10 @@ require 'models/user'
 
 module Commands
   class DeleteUser
+    def self.description
+      "Delete a crafter | `delete crafter slack_user_name`"
+    end
+
     def applies_to?(request)
       request = request[:user_message].downcase
       request.strip.downcase.start_with?("delete crafter")

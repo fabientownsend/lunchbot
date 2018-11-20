@@ -1,4 +1,4 @@
-require 'commands/order/get_all_orders_command'
+require 'commands/order/get_all_orders'
 require 'models/order'
 require 'models/user'
 require 'date'

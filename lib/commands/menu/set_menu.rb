@@ -3,6 +3,10 @@ require 'models/apprentice'
 
 module Commands
   class SetMenu
+    def self.description
+      "Set a menu | `new menu www.menu-url.com`"
+    end
+
     def applies_to?(request)
       request = request[:user_message].downcase
       request = request.downcase.strip
