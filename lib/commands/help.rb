@@ -41,9 +41,9 @@ module Commands
 
     def report_issues
       <<~HEREDOC
-      :bug: Want to report a bug or have an idea for a new feature? :package:
-      Share it here: :loudspeaker: <https://github.com/fabientownsend/lunchbot/issues/new> :loudspeaker:
-    HEREDOC
+        :bug: Want to report a bug or have an idea for a new feature? :package:
+        Share it here: :loudspeaker: <https://github.com/fabientownsend/lunchbot/issues/new> :loudspeaker:
+      HEREDOC
     end
 
     def join_the_channel
