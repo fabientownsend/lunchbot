@@ -1,7 +1,6 @@
 module Commands
   class Help
     def self.description
-      # not implemented
     end
 
     def applies_to?(request)
