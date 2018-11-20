@@ -5,7 +5,6 @@ module Commands
     release_for 'FabieN Townsend'
 
     def self.description
-      # not implemented
     end
 
     def applies_to?(request)
