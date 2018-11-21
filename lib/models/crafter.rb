@@ -33,7 +33,6 @@ class User
   end
 
   def add_office(office)
-    self.office = office
-    save
+    User.update(office => office)
   end
 end
