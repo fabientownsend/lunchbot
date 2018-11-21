@@ -8,6 +8,7 @@ class User
   property :slack_id, String, length: 255
   property :email, String, length: 255
   property :office, String, length: 255
+  property :is_foreman, Boolean, :default => false
 
   def self.with_office
     all(:office.not => nil)
