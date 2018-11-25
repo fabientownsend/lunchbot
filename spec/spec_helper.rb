@@ -1,3 +1,4 @@
+ENV['RACK_ENV'] = 'test'
 require 'commands/foreman/add_apprentice'
 require 'commands/order/add_guest'
 require 'commands/order/place_order_guest'
@@ -77,6 +78,8 @@ class Helper
 end
 
 RSpec.configure do |config|
+  config.filter_run_when_matching(focus: true)
+
   DataMapper.setup(:default, "sqlite::memory:")
 
   config.before(:each) do
