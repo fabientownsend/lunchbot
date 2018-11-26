@@ -32,7 +32,7 @@ RSpec.describe SlackApi::Checker do
   end
 
   it "does an answer when the message is not from a robot" do
-    checker = SlackApi::Checker.new(slack_data())
+    checker = SlackApi::Checker.new(slack_data)
 
     expect(checker.require_answer?).to eq(true)
   end
@@ -42,8 +42,8 @@ RSpec.describe SlackApi::Checker do
       "type" => args[:type] || "event_callback",
       "event" => {
         "type" => args[:event_type] || "message",
-        "bot_id" => args[:bot_id]
-      }
+        "bot_id" => args[:bot_id],
+      },
     }
   end
 end
