@@ -3,18 +3,23 @@ require 'models/user'
 require 'date'
 
 RSpec.describe Order do
+  before do
+    @user_id_london = "user id london"
+    @user_id_new_work =  "user id new york"
+    User.create(user_id: @user_id_london, office: "london")
+    User.create(user_id: @user_id_new_work, office: "new york")
+  end
+
   it "only returns order from office requested" do
-    User.create(user_id: "the id", office: "london")
-    User.create(user_id: "bob id", office: "new york")
-    Order.new(
+    Order.place(
       :user_name => "Tom",
-      :user_id => "bob id",
+      :user_id => @user_id_new_work,
       :lunch => "A lunch",
       :date => Days.monday
-    ).save
+    )
     order = Order.new(
       :user_name => "Tom",
-      :user_id => "the id",
+      :user_id => @user_id_london,
       :lunch => "A lunch",
       :date => Days.monday
     )
@@ -24,21 +29,20 @@ RSpec.describe Order do
   end
 
   it "does not include order from a different office" do
-    User.create(user_id: "the id", office: "london")
-    User.create(user_id: "bob id", office: "new york")
-    excluded_order = Order.new(
+    excluded_order = {
       :user_name => "Tom",
-      :user_id => "bob id",
+      :user_id => @user_id_new_york,
+      :lunch => "A lunch",
+      :date => Days.monday,
+    }
+    Order.place(excluded_order)
+
+    Order.place(
+      :user_name => "Tom",
+      :user_id => @user_id_london,
       :lunch => "A lunch",
       :date => Days.monday
     )
-    excluded_order.save
-    Order.new(
-      :user_name => "Tom",
-      :user_id => "the id",
-      :lunch => "A lunch",
-      :date => Days.monday
-    ).save
 
     expect(Order.placed_in("london")).not_to include(excluded_order)
   end
@@ -59,15 +63,17 @@ RSpec.describe Order do
     expect(Order.placed_for("an id")).to eq(nil)
   end
 
-  it "not find an order from previous week" do
-    order = {
-      user_name: "bob",
-      user_id: "an id",
-      lunch: "burger",
-      date: Days.monday - 1,
-    }
-    Order.place(order)
+  context "order from previous week" do
+    it "not find an order from previous week" do
+      order = {
+        user_name: "bob",
+        user_id: "an id",
+        lunch: "burger",
+        date: Days.monday - 1,
+      }
+      Order.place(order)
 
-    expect(Order.placed_for("an id")).to eq(nil)
+      expect(Order.placed_for("an id")).to eq(nil)
+    end
   end
 end
