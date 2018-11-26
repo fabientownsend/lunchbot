@@ -79,7 +79,7 @@ RSpec.describe EventController do
         event: {
           type: args[:event_type] || "message",
           text: "menu?",
-          bot_id: args[:bot] || false,
+          bot_id: args[:bot],
         },
       })
     end
