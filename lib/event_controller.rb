@@ -4,7 +4,7 @@ require 'sinatra/base'
 require 'slack-ruby-client'
 
 require 'bot'
-require 'checker'
+require 'request'
 require 'message_handler'
 require 'tiny_logger'
 
@@ -51,8 +51,8 @@ class EventController < Sinatra::Base
   end
 
   def handle_event(data)
-    checker = SlackApi::Checker.new(data)
-    return unless checker.require_answer?
+    request = SlackApi::Request.new(data)
+    return unless request.require_answer?
 
     Logger.info("Received data #{data['event']}")
     message_handler.handle(data['event'])

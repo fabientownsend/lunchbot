@@ -1,5 +1,5 @@
 module SlackApi
-  class Checker
+  class Request
     def initialize(data)
       @data = data
     end
