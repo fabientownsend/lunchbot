@@ -5,15 +5,15 @@ require 'date'
 RSpec.describe Order do
   before do
     @user_id_london = "user id london"
-    @user_id_new_work =  "user id new york"
+    @user_id_new_york =  "user id new york"
     User.create(user_id: @user_id_london, office: "london")
-    User.create(user_id: @user_id_new_work, office: "new york")
+    User.create(user_id: @user_id_new_york, office: "new york")
   end
 
   it "only returns order from office requested" do
     Order.place(
       :user_name => "Tom",
-      :user_id => @user_id_new_work,
+      :user_id => @user_id_new_york,
       :lunch => "A lunch",
       :date => Days.monday
     )
