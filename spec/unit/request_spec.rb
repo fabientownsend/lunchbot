@@ -31,12 +31,6 @@ RSpec.describe SlackApi::Request do
     expect(request.requires_answer?).to eq(false)
   end
 
-  it "does not requests and answer when the message is from a robot" do
-    request = SlackApi::Request.new(slack_data(bot_id: "abc123"))
-
-    expect(request.requires_answer?).to eq(false)
-  end
-
   it "does an answer when the message is not from a robot" do
     request = SlackApi::Request.new(slack_data)
 
