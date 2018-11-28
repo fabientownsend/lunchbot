@@ -57,6 +57,18 @@ RSpec.describe SlackApi::Request do
     expect(request.valid_token?).to eq(true)
   end
 
+  it "is a url verification request for setting up slack api" do
+    request = SlackApi::Request.new(slack_data(type: "url_verification"))
+
+    expect(request.url_verification?).to eq(true)
+  end
+
+  it "is not a url verificatio request when setting up slack api" do
+    request = SlackApi::Request.new(slack_data(type: "not_url_verification"))
+
+    expect(request.url_verification?).to eq(false)
+  end
+
   def mock_env(key, value)
     allow(ENV).to receive(:[]).with(key).and_return(value)
   end

@@ -12,6 +12,10 @@ module SlackApi
       (ENV['SLACK_VERIFICATION_TOKEN'] == @data["token"])
     end
 
+    def url_verification?
+      @data["type"] == 'url_verification'
+    end
+
     private
 
     def event_callback?
