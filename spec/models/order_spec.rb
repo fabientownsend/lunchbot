@@ -65,13 +65,12 @@ RSpec.describe Order do
 
   context "order from previous week" do
     it "not find an order from previous week" do
-      order = {
+      Order.place({
         user_name: "bob",
         user_id: "an id",
         lunch: "burger",
         date: Days.monday - 1,
-      }
-      Order.place(order)
+      })
 
       expect(Order.placed_for("an id")).to eq(nil)
     end
