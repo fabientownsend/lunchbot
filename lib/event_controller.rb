@@ -4,6 +4,7 @@ require 'sinatra/base'
 require 'slack-ruby-client'
 
 require 'bot'
+require 'request'
 require 'message_handler'
 require 'tiny_logger'
 
@@ -50,25 +51,10 @@ class EventController < Sinatra::Base
   end
 
   def handle_event(data)
-    return unless event_callback?(data)
+    request = SlackApi::Request.new(data)
+    return unless request.requires_answer?
 
-    event_data = data['event']
-
-    if message?(event_data) && !message_from_bot?(event_data)
-      Logger.info("Received data #{event_data}")
-      message_handler.handle(event_data)
-    end
-  end
-
-  def event_callback?(data)
-    data['type'] == 'event_callback'
-  end
-
-  def message?(event_data)
-    event_data['type'] == 'message'
-  end
-
-  def message_from_bot?(event_data)
-    event_data['bot_id']
+    Logger.info("Received data #{data['event']}")
+    message_handler.handle(data['event'])
   end
 end

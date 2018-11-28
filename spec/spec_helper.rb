@@ -79,6 +79,8 @@ end
 
 RSpec.configure do |config|
   config.filter_run_when_matching(focus: true)
+  config.filter_gems_from_backtrace 'rack', 'rack-test', 'sinatra'
+  config.order = :random
 
   DataMapper.setup(:default, "sqlite::memory:")
 
