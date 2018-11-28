@@ -4,7 +4,7 @@ module SlackApi
       @data = data
     end
 
-    def require_answer?
+    def requires_answer?
       event_callback? && message? && !robot?
     end
 

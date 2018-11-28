@@ -52,7 +52,7 @@ class EventController < Sinatra::Base
 
   def handle_event(data)
     request = SlackApi::Request.new(data)
-    return unless request.require_answer?
+    return unless request.requires_answer?
 
     Logger.info("Received data #{data['event']}")
     message_handler.handle(data['event'])
