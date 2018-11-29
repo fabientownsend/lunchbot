@@ -43,7 +43,6 @@ RSpec.describe MessageHandler do
 
       Add a guest with no order | `add guest: name of guest`
       Add yourself as the new foreman | `add apprentice`
-      Add yourself as the new foreman | `add apprentice`
       Copy someone's order | `copy order: @username`
       Delete a crafter | `delete crafter slack_user_name`
       Find out this week's foreman | `foreman`
@@ -55,6 +54,7 @@ RSpec.describe MessageHandler do
       Remove a guest | `remove guest: name of guest`
       See all orders | `all orders?`
       Set a menu | `new menu www.menu-url.com`
+      Set an \"apparentice\" as the current foreman | `set foreman: @name_of_the_person`
     HEREDOC
 
     expect(fake_bot.message).to eq(help_message)
