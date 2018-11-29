@@ -26,34 +26,26 @@ class EventController < Sinatra::Base
 
   post '/events' do
     request_data = JSON.parse(request.body.read)
+    request = SlackApi::Request.new(request_data)
 
-    verify_token(request_data)
-    verify_url(request_data)
-    handle_event(request_data)
+    if !request.valid_token?
+      halt 403, "Invalid Slack verification token received"
+    end
+
+    if request.url_verification?
+      body request_data['challenge'].to_s
+    end
+
+    if request.requires_answer?
+      handle_event(request_data)
+    end
 
     status 200
   end
 
   private
 
-  def verify_token(data)
-    if invalid_token?(data['token'])
-      halt 403, "Invalid Slack verification token received: #{data['token']}"
-    end
-  end
-
-  def invalid_token?(token)
-    !(ENV['SLACK_VERIFICATION_TOKEN'] == token)
-  end
-
-  def verify_url(data)
-    body data['challenge'].to_s if data['type'] == 'url_verification'
-  end
-
   def handle_event(data)
-    request = SlackApi::Request.new(data)
-    return unless request.requires_answer?
-
     Logger.info("Received data #{data['event']}")
     message_handler.handle(data['event'])
   end
