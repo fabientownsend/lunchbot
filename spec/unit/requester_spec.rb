@@ -5,7 +5,7 @@ RSpec.describe SlackApi::Requester do
     t = {
       "event" => {
         "text" => "  MESsage  ",
-        "user" => "Xe87 "
+        "user" => "Xe87 ",
       },
     }
 
