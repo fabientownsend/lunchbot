@@ -14,7 +14,7 @@ class UserInfoProvider
 
   def email(user_id)
     data = user_data(user_id)
-    data['error'].nil? ? data['user']['email'] : data['error']
+    data['error'].nil? ? data['user']['profile']['email'] : data['error']
   end
 
   private
