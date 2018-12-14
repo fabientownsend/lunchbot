@@ -4,7 +4,6 @@ require "models/user"
 module Commands
   class AddApprentice
     def self.description
-      "Add yourself as the new foreman | `add apprentice`"
     end
 
     def applies_to?(request)
