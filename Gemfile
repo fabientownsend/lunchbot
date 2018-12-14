@@ -3,7 +3,7 @@ ruby '2.5.1'
 
 gem 'coveralls', require: false
 gem 'httparty'
-gem 'rake'
+gem "rack", ">= 1.6.11"
 gem 'sinatra', '~> 1.4.7'
 gem 'slack-ruby-client', '~> 0.13.1'
 
