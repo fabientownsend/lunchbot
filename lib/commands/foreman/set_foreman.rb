@@ -3,7 +3,7 @@ require 'models/apprentice'
 module Commands
   class SetForeman
     def self.description
-      "Set an \"apparentice\" as the current foreman | `set foreman: @name_of_the_person`"
+      "Set someone as the current foreman | `foreman: [@slack_username`]"
     end
 
     def applies_to?(request)

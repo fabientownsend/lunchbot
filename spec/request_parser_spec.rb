@@ -46,12 +46,12 @@ RSpec.describe RequestParser do
   end
 
   it "return foreman when it's a correct request" do
-    request = { user_message: "foreman" }
+    request = { user_message: "foreman?" }
     expect(user_request.parse(request)).to be_a(Commands::GetForeman)
   end
 
   it "return all orders command  when it's a correct request" do
-    request = { user_message: "all orders?" }
+    request = { user_message: "orders?" }
     expect(user_request.parse(request)).to be_a(Commands::GetAllOrders)
   end
 

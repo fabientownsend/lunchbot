@@ -5,7 +5,7 @@ require 'days'
 module Commands
   class CopyOrder
     def self.description
-      "Copy someone's order | `copy order: @username`"
+      "Copy someone's order | `copy order: [@slack_username]`"
     end
 
     def applies_to?(request)

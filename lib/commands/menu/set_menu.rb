@@ -4,7 +4,7 @@ require 'models/apprentice'
 module Commands
   class SetMenu
     def self.description
-      "Set a menu | `new menu www.menu-url.com`"
+      "Set a menu | `menu: www.menu-url.com`"
     end
 
     def applies_to?(request)

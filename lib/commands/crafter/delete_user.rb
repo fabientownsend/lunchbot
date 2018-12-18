@@ -3,7 +3,7 @@ require 'models/user'
 module Commands
   class DeleteUser
     def self.description
-      "Delete a crafter | `delete crafter slack_user_name`"
+      "Delete a user | `delete user: [@slack_username]`"
     end
 
     def applies_to?(request)

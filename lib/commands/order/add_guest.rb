@@ -5,7 +5,7 @@ require 'days'
 module Commands
   class AddGuest
     def self.description
-      "Add a guest with no order | `add guest: name of guest`"
+      "Add a guest with no order | `add guest: [guest_name]`"
     end
 
     def applies_to?(request)
