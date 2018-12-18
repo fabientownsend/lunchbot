@@ -23,18 +23,19 @@ RSpec.describe Commands::AddOffice do
     add_office_command.prepare(user_message: "office: London", user_id: "1234")
     response = add_office_command.run
 
-    crafter = User.last(:slack_id => "1234")
+    user = User.last(:slack_id => "1234")
 
-    expect(crafter.office).to eq("london")
+    expect(user.office).to eq("london")
     expect(response).to eq("You were added to the office: london")
   end
 
-  it "does not add office is not available" do
+  it "does not add office if office is not available" do
     User.new(
       :user_name => "Fabien",
       :slack_id => "1234",
       :email => "fabien@adsak.com"
     ).save
+
     add_office_command = Commands::AddOffice.new
 
     add_office_command.prepare(user_message: "office: random office", user_id: "1234")
@@ -43,25 +44,7 @@ RSpec.describe Commands::AddOffice do
     expect(response).to eq("The offices available are: London, Madison")
   end
 
-  it "does add office to apprentice if this person is an apprentice too" do
-    User.new(
-      :user_name => "Fabien",
-      :slack_id => "1234",
-      :email => "fabien@adsak.com"
-    ).save
-    Apprentice.new(
-      user_name: "Fabien Townsend",
-      slack_id: "1234"
-    ).save
-    add_office_command = Commands::AddOffice.new
-
-    add_office_command.prepare(user_message: "london", user_id: "1234")
-    add_office_command.run
-
-    expect(Apprentice.profile("1234").office).to eq("london")
-  end
-
-  it "does nothing if crafter or apprentice does no exist" do
+  it "does nothing if user does no exist" do
     add_office_command = Commands::AddOffice.new
 
     add_office_command.prepare(user_message: "london", user_id: "does not exist")

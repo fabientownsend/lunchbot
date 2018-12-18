@@ -41,10 +41,10 @@ class Order
     save
   end
 
-  def self.crafter_without_order(office)
+  def self.user_without_order(office)
     orders = all(:date => Days.from_monday_to_friday)
-    crafters = User.all(:office => office)
-    crafters.delete_if { |c| orders.any? { |o| o.user_id == c.slack_id } }
+    users = User.all(:office => office)
+    users.delete_if { |c| orders.any? { |o| o.user_id == c.slack_id } }
   end
 
   def self.host_without_order(office)

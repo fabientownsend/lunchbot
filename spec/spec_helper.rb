@@ -87,18 +87,16 @@ RSpec.configure do |config|
   config.before(:each) do
     DataMapper.finalize.auto_migrate!
 
-    crafter = User.new(
+    User.new(
       user_name: "Fabien",
       slack_id: "FabienUserId",
       office: "london"
-    )
-    crafter.save
+    ).save
 
-    crafter = User.new(
+    User.new(
       user_name: "Will",
       slack_id: "WillUserId",
       office: "london"
-    )
-    crafter.save
+    ).save
   end
 end

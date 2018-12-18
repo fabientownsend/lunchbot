@@ -31,7 +31,7 @@ RSpec.describe Commands::Reminder do
   end
 
   it "tell you when there is no orders" do
-    allow(Order).to receive(:crafter_without_order).and_return([])
+    allow(Order).to receive(:user_without_order).and_return([])
     allow(Order).to receive(:host_without_order).and_return([])
     User.create(user_id: "user id", office: "london")
 

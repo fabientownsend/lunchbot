@@ -35,12 +35,12 @@ module Commands
     private
 
     def people_to_remind
-      crafters_to_remind + guests_to_remind
+      users_to_remind + guests_to_remind
     end
 
-    def crafters_to_remind
-      Order.crafter_without_order(@requester.office).map do |crafter|
-        "<@#{crafter.slack_id}>"
+    def users_to_remind
+      Order.user_without_order(@requester.office).map do |user|
+        "<@#{user.slack_id}>"
       end
     end
 
