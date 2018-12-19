@@ -3,6 +3,8 @@ require 'models/apprentice'
 
 module Commands
   class SetMenu
+    KIN_URL = "kin.orderswift.com".freeze
+
     def self.description
       "Set a menu | `new menu www.menu-url.com`"
     end
@@ -57,7 +59,7 @@ module Commands
     end
 
     def kin?(url)
-      url.include?("kin.orderswift.com")
+      url.include?(KIN_URL)
     end
   end
 end
