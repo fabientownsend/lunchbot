@@ -106,6 +106,13 @@ RSpec.describe Commands::SetMenu do
     expect(Menu.last.office).to eq(@foreman.office)
   end
 
+  it "complains about choosing kin" do
+    url = "https://kin.orderswift.com/menu/"
+    response = set_menu_link(url: url)
+
+    expect(response).to include("Kin again?! :eye-roll: fine ...")
+  end
+
   private
 
   def set_menu_link(args)

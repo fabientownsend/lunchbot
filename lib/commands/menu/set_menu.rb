@@ -3,6 +3,8 @@ require 'models/apprentice'
 
 module Commands
   class SetMenu
+    KIN_URL = "kin.orderswift.com".freeze
+
     def self.description
       "Set a menu | `new menu www.menu-url.com`"
     end
@@ -20,19 +22,27 @@ module Commands
 
     def run
       return "You need to add your office. ex: \"office: london\"" unless @apprentice.office
-      return "You are not the foreman!" unless Apprentice.foreman?(@apprentice.slack_id)
+      return "You are not the foreman!" unless foreman?(@apprentice)
 
-      update_url
+      menu_url = extract_url(@user_message)
+
+      return "That is not a valid URL!" if !menu_url
+
+      save_menu(menu_url)
+      respond(menu_url)
     end
 
     private
 
-    def update_url
-      if extract_url(@user_message)
-        save_url(extract_url(@user_message))
-        "<!here> Menu has been set: #{extract_url(@user_message)}"
+    def foreman?(apprentice)
+      Apprentice.foreman?(apprentice.slack_id)
+    end
+
+    def respond(menu_url)
+      if kin?(menu_url)
+        "Kin again?! :eye-roll: fine ... <!here> Menu has been set: #{menu_url}"
       else
-        "That is not a valid URL!"
+        "<!here> Menu has been set: #{menu_url}"
       end
     end
 
@@ -44,8 +54,12 @@ module Commands
       request[/#{protocol}?#{subdomain}?#{domain}#{path}?/]
     end
 
-    def save_url(url)
+    def save_menu(url)
       Menu.new(url: url, date: Time.now, office: @apprentice.office).save
+    end
+
+    def kin?(url)
+      url.include?(KIN_URL)
     end
   end
 end
