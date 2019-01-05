@@ -3,11 +3,11 @@ require "models/apprentice"
 module Commands
   class GetForeman
     def self.description
-      "Find out this week's foreman | `foreman`"
+      "Show this week's foreman | `foreman?`"
     end
 
     def applies_to?(request)
-      "foreman" == request[:user_message].downcase.strip
+      "foreman?" == request[:user_message].downcase.strip
     end
 
     def prepare(data)

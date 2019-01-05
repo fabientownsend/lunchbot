@@ -6,7 +6,7 @@ module Commands
     KIN_URL = "kin.orderswift.com".freeze
 
     def self.description
-      "Set a menu | `new menu www.menu-url.com`"
+      "Set a menu | `menu: www.menu-url.com`"
     end
 
     def applies_to?(request)

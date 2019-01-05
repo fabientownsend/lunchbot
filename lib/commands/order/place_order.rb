@@ -5,7 +5,7 @@ require 'days'
 module Commands
   class PlaceOrder
     def self.description
-      "Place an order | `order: food`"
+      "Place an order | `order: [menu_item]`"
     end
 
     def applies_to?(request)

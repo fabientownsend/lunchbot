@@ -4,7 +4,7 @@ RSpec.describe Commands::GetForeman do
   let(:foreman) { Commands::GetForeman.new }
 
   it "applies the command when the message is not striped and lowercase" do
-    expect(foreman.applies_to?(user_message: "  foreman  ")).to be true
+    expect(foreman.applies_to?(user_message: "  foreman?  ")).to be true
   end
 
   it "return a message when no foreman found" do

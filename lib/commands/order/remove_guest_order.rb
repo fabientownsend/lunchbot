@@ -4,7 +4,7 @@ require 'days'
 module Commands
   class RemoveGuestOrder
     def self.description
-      "Remove a guest | `remove guest: name of guest`"
+      "Remove a guest | `remove guest: [guest_name]`"
     end
 
     def applies_to?(request)
