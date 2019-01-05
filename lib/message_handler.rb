@@ -35,13 +35,13 @@ class MessageHandler < FeatureFlag
     end
 
     command = @request_parser.parse(data)
-    unless request.nil?
+    unless command.nil?
       response = run(command)
       @bot.send(response, recipient)
     end
   end
 
-    private
+  private
 
   def get_recipient(data)
     data[:channel_id] || data[:user_id]
