@@ -8,6 +8,7 @@ class User
   property :slack_id, String, length: 255
   property :email, String, length: 255
   property :office, String, length: 255
+  property :is_foreman, Boolean, :default => false
 
   def self.with_office
     all(:office.not => nil)
@@ -18,8 +19,8 @@ class User
   end
 
   def self.has_office?(slack_id)
-    crafter = User.last(:slack_id => slack_id)
-    !crafter.office.nil?
+    user = User.last(:slack_id => slack_id)
+    !user.office.nil?
   end
 
   def self.create(user)
@@ -32,7 +33,23 @@ class User
   end
 
   def add_office(office)
-    self.office = office
-    save
+    User.update(office => office)
+  end
+
+  def self.foreman_for_office(office)
+    User.first(:office => office, :is_foreman => true)
+  end
+
+  def self.foreman?(slack_id)
+    user = User.first(:slack_id => slack_id, :is_foreman => true)
+    !user.nil?
+  end
+
+  def self.set_as_foreman(id, office)
+    foreman = User.first(:office => office, :is_foreman => true)
+    foreman.update(:is_foreman => false) if foreman
+
+    user = User.last(:slack_id => id)
+    user.update(:is_foreman => true)
   end
 end
