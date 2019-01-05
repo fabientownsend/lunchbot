@@ -82,6 +82,11 @@ RSpec.configure do |config|
   config.filter_gems_from_backtrace 'rack', 'rack-test', 'sinatra'
   config.order = :random
 
+  # bundle exec rspec --tag fast
+  config.define_derived_metadata(file_path: /spec\/unit/) do |meta|
+    meta[:fast] = true
+  end
+
   DataMapper.setup(:default, "sqlite::memory:")
 
   config.before(:each) do
