@@ -11,43 +11,62 @@ class MessageHandler < FeatureFlag
   release_for 'Fabien Townsend'
 
   def initialize(args = {})
-    @mark_all_out = args[:mark_all_out]
+    @mark_all_out = args[:mark_all_out] # TODO - this doesnt seem to be used here.
     @request_parser = RequestParser.new
     @bot = args[:bot]
     @user_info = args[:user_info_provider]
   end
 
   def handle(event_data)
-    recipient = event_data['channel'] || event_data['user']
-    data = format_data(event_data)
-    return data[:user_message] if data[:user_message].nil?
-    returned_command = @request_parser.parse(data)
+    data = format(event_data)
 
-    unless User.profile(data[:user_id])
+    if hasnt_message?(data)
+      return data[:user_message]
+    end
+
+    if hasnt_user?(data)
       User.create(data)
     end
 
-    if !User.has_office?(data[:user_id]) && !Commands::AddOffice.add_office_request?(data)
+    recipient = get_recipient(data)
+    if hasnt_office?(data)
       @bot.send("You need to add your office. ex: \"office: london\"", recipient)
       return
     end
 
-    unless returned_command.nil?
-      response = deal_with_command(returned_command)
+    command = @request_parser.parse(data)
+    unless request.nil?
+      response = run(command)
       @bot.send(response, recipient)
     end
   end
 
-  private
+    private
 
-  def deal_with_command(command)
+  def get_recipient(data)
+    data[:channel_id] || data[:user_id]
+  end
+
+  def hasnt_message?(data)
+    data[:user_message].nil?
+  end
+
+  def hasnt_office?(data)
+    !User.has_office?(data[:user_id]) && !Commands::AddOffice.add_office_request?(data)
+  end
+
+  def hasnt_user?(data)
+    User.profile(data[:user_id]).nil?
+  end
+
+  def run(command)
     Logger.info("COMMAND RUN")
     response = command.run
     Logger.info("COMMAND RESPONSE: #{response}")
     response
   end
 
-  def format_data(event_data)
+  def format(event_data)
     {
       user_message: event_data['text'],
       user_id: event_data['user'],
