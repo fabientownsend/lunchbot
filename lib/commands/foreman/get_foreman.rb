@@ -1,5 +1,3 @@
-require "models/apprentice"
-
 module Commands
   class GetForeman
     def self.description
@@ -15,13 +13,9 @@ module Commands
     end
 
     def run
-      apprentice = Apprentice.foreman_for_office(@requester.office)
-
-      if apprentice
-        "The foreman for this week is #{apprentice.user_name}"
-      else
-        "There are no foreman!"
-      end
+      foreman = User.foreman_for_office(@requester.office)
+      return "There are no foreman!" if !foreman
+      "The foreman for this week is #{foreman.user_name}"
     end
   end
 end

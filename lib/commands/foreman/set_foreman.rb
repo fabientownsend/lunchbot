@@ -1,5 +1,3 @@
-require 'models/apprentice'
-
 module Commands
   class SetForeman
     def self.description
@@ -19,13 +17,12 @@ module Commands
     end
 
     def run
-      person = Apprentice.profile(@foreman_id)
-      if person && person.office == @requester.office
-        Apprentice.set_as_foreman(@foreman_id, @requester.office)
-        "<@#{@foreman_id}> is now the foreman!"
-      else
-        "That person is not an apprentice!"
-      end
+      user = User.profile(@foreman_id)
+      return "User not found." if !user
+      return "User must belong to the same office as you." if user.office != @requester.office
+
+      User.set_as_foreman(@foreman_id, @requester.office)
+      "<@#{@foreman_id}> is now the foreman!"
     end
 
     private

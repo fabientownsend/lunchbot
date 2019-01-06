@@ -1,10 +1,11 @@
-require 'models/apprentice'
 require 'models/user'
 require 'models/office'
 require 'tiny_logger'
 
 module Commands
   class AddOffice
+    attr_reader :user, :office
+
     def self.description
     end
 
@@ -20,41 +21,29 @@ module Commands
 
     def prepare(data)
       @office = Office.new(parse_office_location(data))
-      @crafter = User.profile(data[:user_id])
-      @apprentice = Apprentice.profile(data[:user_id])
+      @user = User.profile(data[:user_id])
     end
 
     def run
       return ""                 unless user
-      return office_unavailable unless @office.available?
+      return office_unavailable unless office.available?
 
-      if @crafter
-        @crafter.add_office(@office.location)
-        log_office_added
-      end
+      user.add_office(office.location)
+      log_office_added
 
-      if @apprentice
-        @apprentice.add_office(@office.location)
-        log_office_added
-      end
-
-      "You were added to the office: #{@office.location}"
+      "You were added to the office: #{office.location}"
     end
 
     private
 
-    def user
-      @crafter || @apprentice
-    end
-
     def log_office_added
       Logger.info(
-        "#{@office.location} was added to #{user.user_name}"
+        "#{office.location} was added to #{user.user_name}"
       )
     end
 
     def office_unavailable
-      Logger.info("#{@crafter.user_name} used an unavailable office: #{@office.location}")
+      Logger.info("#{user.user_name} used an unavailable office: #{office.location}")
       "The offices available are: #{Office.locations.map(&:capitalize).join(", ")}"
     end
 

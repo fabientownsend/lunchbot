@@ -15,8 +15,8 @@ module Commands
     end
 
     def prepare(data)
-      @crafter_name = data[:user_name]
-      @crafter_id = data[:user_id]
+      @user_name = data[:user_name]
+      @user_id = data[:user_id]
     end
 
     def run
@@ -28,10 +28,10 @@ module Commands
     def orders
       orders_of_the_week = []
 
-      crafter = User.profile(@crafter_id)
+      user = User.profile(@user_id)
 
-      if crafter
-        orders_of_the_week = Order.placed_in(crafter.office)
+      if user
+        orders_of_the_week = Order.placed_in(user.office)
       end
 
       orders_of_the_week.map do |order|

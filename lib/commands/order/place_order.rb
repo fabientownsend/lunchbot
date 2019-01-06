@@ -46,8 +46,8 @@ module Commands
     end
 
     def user_dont_have_email?
-      crafter = User.profile(@user_id)
-      !crafter.email
+      user = User.profile(@user_id)
+      !user.email
     end
 
     def format_lunch(request)

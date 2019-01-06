@@ -39,7 +39,7 @@ RSpec.describe Commands::RemoveGuestOrder do
     expect(response).to eq("james smith has been removed.")
   end
 
-  it "doesn't remove a crafter" do
+  it "doesn't remove a user" do
     Helper.order_guest(name: "james smith", meal: "burger")
     Helper.order_guest(name: "jean bon", meal: "burger")
     User.create(user_id: "asdf", user_name: "will", office: "london")

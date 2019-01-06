@@ -19,8 +19,8 @@ class User
   end
 
   def self.has_office?(slack_id)
-    crafter = User.last(:slack_id => slack_id)
-    !crafter.office.nil?
+    user = User.last(:slack_id => slack_id)
+    !user.office.nil?
   end
 
   def self.create(user)
@@ -35,6 +35,10 @@ class User
   def add_office(office)
     self.office = office
     save
+  end
+
+  def self.foreman_for_office(office)
+    User.first(:office => office, :is_foreman => true)
   end
 
   def self.foreman?(slack_id)

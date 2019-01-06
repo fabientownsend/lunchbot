@@ -1,38 +1,38 @@
 require 'commands/foreman/get_foreman'
 
 RSpec.describe Commands::GetForeman do
-  let(:foreman) { Commands::GetForeman.new }
+  let(:command) { Commands::GetForeman.new }
 
   it "applies the command when the message is not striped and lowercase" do
-    expect(foreman.applies_to?(user_message: "  foreman?  ")).to be true
+    expect(command.applies_to?(user_message: "  foreman?  ")).to be true
   end
 
   it "return a message when no foreman found" do
     User.create(user_name: "will", user_id: "id one", office: "london")
 
-    foreman.prepare(user_id: "id one")
+    command.prepare(user_id: "id one")
 
-    expect(foreman.run).to eq("There are no foreman!")
+    expect(command.run).to eq("There are no foreman!")
   end
 
-  it "gets the forman who is in the same office than the requester" do
+  it "gets the foreman who is in the same office as the requester" do
     User.create(user_name: "pomme de terre", user_id: "id one", office: "london")
-    Apprentice.create(user_name: "will", user_id: "id two", office: "london")
-    Apprentice.set_as_foreman("id two", "london")
+    User.create(user_name: "will", user_id: "id two", office: "london")
+    User.set_as_foreman("id two", "london")
 
-    foreman.prepare(user_id: "id one")
-    response = foreman.run
+    command.prepare(user_id: "id one")
+    response = command.run
 
     expect(response).to eq("The foreman for this week is will")
   end
 
   it "does not find a foreman when no foreman for an office" do
     User.create(user_name: "billy", user_id: "id one", office: "london")
-    Apprentice.create(user_name: "bob", user_id: "id two", office: "new york")
-    Apprentice.set_as_foreman("id two", "new york")
+    User.create(user_name: "bob", user_id: "id two", office: "new york")
+    User.set_as_foreman("id two", "new york")
 
-    foreman.prepare(user_id: "id one")
-    response = foreman.run
+    command.prepare(user_id: "id one")
+    response = command.run
 
     expect(response).to eq("There are no foreman!")
   end

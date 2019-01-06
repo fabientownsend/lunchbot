@@ -6,7 +6,7 @@ RSpec.describe Commands::SetMenu do
   let(:menu) { Commands::SetMenu.new }
 
   before(:each) do
-    @foreman = Apprentice.new(
+    @foreman = User.new(
       user_name: "Fabien Townsend",
       slack_id: "valid id",
       office: "london",
@@ -14,13 +14,13 @@ RSpec.describe Commands::SetMenu do
     )
     @foreman.save
 
-    Apprentice.new(
+    User.new(
       user_name: "Fabien another apprentice",
       slack_id: "valid id 2",
       office: "london"
     ).save
 
-    Apprentice.new(
+    User.new(
       user_name: "Fabien Townsend",
       slack_id: "valid id 3"
     ).save
