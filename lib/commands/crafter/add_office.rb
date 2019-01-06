@@ -4,6 +4,8 @@ require 'tiny_logger'
 
 module Commands
   class AddOffice
+    attr_reader :user, :office
+
     def self.description
     end
 
@@ -23,27 +25,27 @@ module Commands
     end
 
     def run
-      return ""                 unless @user
-      return office_unavailable unless @office.available?
+      return ""                 unless user
+      return office_unavailable unless office.available?
 
-      if @user
-        @user.add_office(@office.location)
+      if user
+        user.add_office(office.location)
         log_office_added
       end
 
-      "You were added to the office: #{@office.location}"
+      "You were added to the office: #{office.location}"
     end
 
     private
 
     def log_office_added
       Logger.info(
-        "#{@office.location} was added to #{@user.user_name}"
+        "#{office.location} was added to #{user.user_name}"
       )
     end
 
     def office_unavailable
-      Logger.info("#{@user.user_name} used an unavailable office: #{@office.location}")
+      Logger.info("#{user.user_name} used an unavailable office: #{office.location}")
       "The offices available are: #{Office.locations.map(&:capitalize).join(", ")}"
     end
 
