@@ -25,7 +25,7 @@ RSpec.describe Commands::SetForeman do
       user_message: "set foreman: <@unknown_user>"
     )
 
-    expect(set_foreman.run).to eq("Cannot execute command. User not found.")
+    expect(set_foreman.run).to eq("User not found.")
   end
 
   it "set the foreman only if the target user belongs to the same office as the requester" do
@@ -37,7 +37,8 @@ RSpec.describe Commands::SetForeman do
   it "does not set foreman if user not found in the same office" do
     User.create(user_name: "name", user_id: "id", office: "new york")
     set_foreman.prepare(fake_data)
-    expect(set_foreman.run).to eq("Cannot execute command. User must belong to the same office as you.")
+    message = "User must belong to the same office as you."
+    expect(set_foreman.run).to eq(message)
   end
 
   private

@@ -17,7 +17,10 @@ class Order
   def self.placed_in(office)
     orders = all(:date => Days.from_monday_to_friday)
     users = User.all(:office => office)
-    orders.keep_if { |order| users.any? { |user| user.slack_id == order.user_id || user.slack_id == order.host } }
+
+    orders.keep_if do |order|
+      users.any? { |user| user.slack_id == order.user_id || user.slack_id == order.host }
+    end
   end
 
   def self.place(order)
@@ -50,6 +53,9 @@ class Order
   def self.guests_without_order(office)
     orders = all(:date => Days.from_monday_to_friday, :host.not => nil, :lunch => nil)
     users = User.all(:office => office)
-    orders.keep_if { |order| users.any? { |user| user.slack_id == order.host } }
+
+    orders.keep_if do |order|
+      users.any? { |user| user.slack_id == order.host }
+    end
   end
 end

@@ -18,8 +18,8 @@ module Commands
 
     def run
       user = User.profile(@foreman_id)
-      return "Cannot execute command. User not found." if !user
-      return "Cannot execute command. User must belong to the same office as you." if user.office != @requester.office
+      return "User not found." if !user
+      return "User must belong to the same office as you." if user.office != @requester.office
 
       User.set_as_foreman(@foreman_id, @requester.office)
       "<@#{@foreman_id}> is now the foreman!"
