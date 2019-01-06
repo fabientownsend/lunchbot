@@ -11,22 +11,24 @@ RSpec.describe Commands::SetForeman do
   end
 
   before(:each) do
-    create_apprentice("Fabien", "f_id")
-    create_apprentice("Andrea", "a_id")
-    create_apprentice("Will", "w_id")
+    create_user("Fabien", "f_id")
+    create_user("Andrea", "a_id")
+    create_user("Will", "w_id")
   end
 
   it "respond with error message if user not found" do
     User.create(user_name: "name", user_id: "id", office: "london")
+
     set_foreman.prepare(
       user_id: "id",
       user_name: "name",
-      user_message: "set foreman: <@id>"
+      user_message: "set foreman: <@unknown_user>"
     )
-    expect(set_foreman.run).to eq("That person is not an apprentice!")
+
+    expect(set_foreman.run).to eq("Cannot execute command. User not found.")
   end
 
-  it "set foreman if belongs to the same office than requester" do
+  it "set the foreman only if the target user belongs to the same office as the requester" do
     User.create(user_name: "name", user_id: "id", office: "london")
     set_foreman.prepare(fake_data)
     expect(set_foreman.run).to eq("<@w_id> is now the foreman!")
@@ -35,13 +37,13 @@ RSpec.describe Commands::SetForeman do
   it "does not set foreman if user not found in the same office" do
     User.create(user_name: "name", user_id: "id", office: "new york")
     set_foreman.prepare(fake_data)
-    expect(set_foreman.run).to eq("That person is not an apprentice!")
+    expect(set_foreman.run).to eq("Cannot execute command. User must belong to the same office as you.")
   end
 
   private
 
-  def create_apprentice(name, id)
-    Apprentice.new(
+  def create_user(name, id)
+    User.new(
       user_name: name,
       slack_id: id,
       office: 'london'
