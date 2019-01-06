@@ -44,7 +44,7 @@ class EventController < Sinatra::Base
   end
 
   post '/commands' do
-    Logger.info("Slash command request body: #{request.body}")
+    Logger.info("Slash command request body: #{request.body.read}")
     status 200
   end
 
