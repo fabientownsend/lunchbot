@@ -6,12 +6,12 @@ RSpec.describe RequestParser do
   let(:user_request) { RequestParser.new }
 
   it "is not case sensitive" do
-    request = { user_message: "NEW mEnU www.mENU.CoM" }
+    request = { user_message: "mEnU: www.mENU.CoM" }
     expect(user_request.parse(request)).to be_a(Commands::SetMenu)
   end
 
   it "return menu when the request is a menu" do
-    request = { user_message: "new menu www.menu.com" }
+    request = { user_message: "menu: www.menu.com" }
     expect(user_request.parse(request)).to be_a(Commands::SetMenu)
   end
 

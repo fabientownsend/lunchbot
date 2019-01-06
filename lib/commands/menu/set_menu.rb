@@ -11,7 +11,7 @@ module Commands
     def applies_to?(request)
       request = request[:user_message].downcase
       request = request.downcase.strip
-      request.split.size == 3 && request.include?("new menu")
+      request.include?("menu:")
     end
 
     def prepare(data)

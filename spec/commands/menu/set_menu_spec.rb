@@ -3,7 +3,7 @@ require 'models/apprentice'
 require 'models/menu'
 
 RSpec.describe Commands::SetMenu do
-  let(:menu) { Commands::SetMenu.new }
+  let(:command) { Commands::SetMenu.new }
 
   before(:each) do
     @foreman = User.new(
@@ -27,19 +27,19 @@ RSpec.describe Commands::SetMenu do
   end
 
   it "applies to the command" do
-    response = menu.applies_to?(user_message: "new menu www.menu.com")
+    response = command.applies_to?(user_message: "menu: www.menu.com")
 
     expect(response).to be true
   end
 
   it "is not case sensitive" do
-    response = menu.applies_to?(user_message: "New Menu www.menu.com")
+    response = command.applies_to?(user_message: "Menu: www.menu.com")
 
     expect(response).to be true
   end
 
   it "is not space sensitive" do
-    response = menu.applies_to?(user_message: "  new menu    www.menu.com   ")
+    response = command.applies_to?(user_message: "  menu:    www.menu.com   ")
 
     expect(response).to be true
   end
@@ -50,7 +50,7 @@ RSpec.describe Commands::SetMenu do
     expect(response).to eq("You are not the foreman!")
   end
 
-  it "test the new feature whish require office" do
+  it "requires the requester to have an office" do
     response = set_menu_link(url: "no an url", overwrite_slack_id: "valid id 3")
 
     expect(response).to eq("You need to add your office. ex: \"office: london\"")
@@ -70,7 +70,7 @@ RSpec.describe Commands::SetMenu do
   end
 
   it "extracts the first url" do
-    response = set_menu_link(url: "new menu: <http://www.test.com|www.test.com>")
+    response = set_menu_link(url: "menu: <http://www.test.com|www.test.com>")
 
     expect(response).to eq("<!here> Menu has been set: http://www.test.com")
   end
@@ -118,7 +118,7 @@ RSpec.describe Commands::SetMenu do
   def set_menu_link(args)
     url = args[:url]
     from_id = args[:overwrite_slack_id] || "valid id"
-    menu.prepare(user_message: url, user_id: from_id)
-    menu.run
+    command.prepare(user_message: url, user_id: from_id)
+    command.run
   end
 end
