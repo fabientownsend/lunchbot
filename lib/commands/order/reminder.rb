@@ -1,6 +1,5 @@
 require 'days'
 require 'models/user'
-require 'models/apprentice'
 require 'models/order'
 require 'mark_all_out'
 
@@ -23,7 +22,7 @@ module Commands
     end
 
     def run
-      return "You are not the foreman!" if !Apprentice.foreman?(@user_id)
+      return "You are not the foreman!" if !User.foreman?(@user_id)
 
       @mark_all_out.update
 
@@ -35,17 +34,17 @@ module Commands
     private
 
     def people_to_remind
-      crafters_to_remind + guests_to_remind
+      users_to_remind + guests_to_remind
     end
 
-    def crafters_to_remind
-      Order.crafter_without_order(@requester.office).map do |crafter|
-        "<@#{crafter.slack_id}>"
+    def users_to_remind
+      Order.users_without_order(@requester.office).map do |user|
+        "<@#{user.slack_id}>"
       end
     end
 
     def guests_to_remind
-      Order.host_without_order(@requester.office).map do |guest|
+      Order.guests_without_order(@requester.office).map do |guest|
         "#{guest.user_name} host: <@#{guest.host}>"
       end
     end

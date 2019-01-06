@@ -23,7 +23,7 @@ RSpec.describe Office do
       :date => Days.monday
     ).save
 
-    expect(Order.crafter_without_order("london")).to include(User.profile("the id"))
+    expect(Order.users_without_order("london")).to include(User.profile("the id"))
   end
 
   it "returns empty array if every crafter ordered a lunch" do
@@ -37,7 +37,7 @@ RSpec.describe Office do
       :date => Days.monday
     ).save
 
-    expect(Order.crafter_without_order("london")).to eq([])
+    expect(Order.users_without_order("london")).to eq([])
   end
 
   it "returns guest's name and host when without order" do
@@ -58,7 +58,7 @@ RSpec.describe Office do
       :date => Days.monday
     ).save
 
-    expect(Order.host_without_order("london")).to eq(Order.all(user_id: "the id"))
+    expect(Order.guests_without_order("london")).to eq(Order.all(user_id: "the id"))
   end
 
   it "keeps guest for a specific office" do
@@ -78,6 +78,6 @@ RSpec.describe Office do
       :date => Days.monday
     ).save
 
-    expect(Order.host_without_order("london")).to eq(Order.all(user_id: "bob id"))
+    expect(Order.guests_without_order("london")).to eq(Order.all(user_id: "bob id"))
   end
 end
