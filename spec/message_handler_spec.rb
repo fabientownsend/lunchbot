@@ -23,7 +23,7 @@ RSpec.describe MessageHandler do
   end
 
   before(:each) do
-    foreman = Apprentice.new(
+    foreman = User.new(
       user_name: "Will",
       slack_id: recipient
     )
