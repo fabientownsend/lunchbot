@@ -20,16 +20,16 @@ class MessageHandler < FeatureFlag
   def handle(event_data)
     data = format(event_data)
 
-    if hasnt_message?(data)
+    if has_no_message?(data)
       return data[:user_message]
     end
 
-    if hasnt_user?(data)
+    if has_no_user?(data)
       User.create(data)
     end
 
     recipient = get_recipient(data)
-    if hasnt_office?(data)
+    if has_no_office?(data)
       @bot.send("You need to add your office. ex: \"office: london\"", recipient)
       return
     end
@@ -47,15 +47,15 @@ class MessageHandler < FeatureFlag
     data[:channel_id] || data[:user_id]
   end
 
-  def hasnt_message?(data)
+  def has_no_message?(data)
     data[:user_message].nil?
   end
 
-  def hasnt_office?(data)
+  def has_no_office?(data)
     !User.has_office?(data[:user_id]) && !Commands::AddOffice.add_office_request?(data)
   end
 
-  def hasnt_user?(data)
+  def has_no_user?(data)
     User.profile(data[:user_id]).nil?
   end
 
