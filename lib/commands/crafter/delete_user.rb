@@ -8,19 +8,19 @@ module Commands
 
     def applies_to?(request)
       request = request[:user_message].downcase
-      request.strip.downcase.start_with?("delete crafter")
+      request.strip.downcase.start_with?("delete user")
     end
 
     def prepare(data)
       message = data[:user_message]
-      @crafter_name = message.gsub("delete crafter", "").strip
+      @user_name = message.gsub("delete user:", "").strip
     end
 
     def run
-      crafter = User.last(:user_name => @crafter_name)
+      user = User.last(:user_name => @user_name)
 
-      if crafter.destroy
-        "#{@crafter_name} has been removed."
+      if user.destroy
+        "#{@user_name} has been removed."
       end
     end
   end

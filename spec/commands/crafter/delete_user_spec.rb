@@ -1,64 +1,57 @@
 require 'commands/crafter/delete_user'
 
 RSpec.describe Commands::DeleteUser do
-  it "applies to the command remove crafter" do
-    delete_crafter = Commands::DeleteUser.new
+  let(:command) { Commands::DeleteUser.new }
 
-    result = delete_crafter.applies_to?(user_message: "delete crafter")
+  it "applies to the command delete user" do
+    result = command.applies_to?(user_message: "delete user")
     expect(result).to eq(true)
   end
 
-  it "returns true if message starts with delete crafter" do
-    delete_crafter = Commands::DeleteUser.new
-    expect(delete_crafter.applies_to?(user_message: "delete crafter Fabien")).to eq(true)
+  it "returns true if message starts with delete user" do
+    expect(command.applies_to?(user_message: "delete user: Fabien")).to eq(true)
   end
 
-  it "returns false is message doesn't start with delete crafter" do
-    delete_crafter = Commands::DeleteUser.new
-    expect(delete_crafter.applies_to?(user_message: "Hi Fabien")).to eq(false)
+  it "returns false is message doesn't start with delete user" do
+    expect(command.applies_to?(user_message: "Hi Fabien")).to eq(false)
   end
 
-  it "extacts crafter name Fabien from user message " do
-    delete_crafter = Commands::DeleteUser.new
-    crafter_name = "Fabien Townsend"
+  it "extracts user name Fabien from user message " do
+    user_name = "Fabien Townsend"
 
     fake_data_from_slack = {
-      user_message: "delete crafter #{crafter_name}",
+      user_message: "delete user: #{user_name}",
     }
 
-    expect(delete_crafter.prepare(fake_data_from_slack)).to eq(crafter_name)
+    expect(command.prepare(fake_data_from_slack)).to eq(user_name)
   end
 
-  it "extacts crafter name Katerina from user message " do
-    delete_crafter = Commands::DeleteUser.new
-    crafter_name = "Katerina Georgiou"
+  it "extacts user name Katerina from user message " do
+    user_name = "Katerina Georgiou"
     fake_data_from_slack = {
-      user_message: "delete crafter #{crafter_name}",
+      user_message: "delete user: #{user_name}",
     }
 
-    expect(delete_crafter.prepare(fake_data_from_slack)).to eq(crafter_name)
+    expect(command.prepare(fake_data_from_slack)).to eq(user_name)
   end
 
-  it "deletes cafter name from the database" do
-    delete_crafter = Commands::DeleteUser.new
+  it "deletes user from the database" do
     fake_data_from_slack = {
-      user_message: "delete crafter Will",
+      user_message: "delete user: Will",
     }
 
-    delete_crafter.prepare(fake_data_from_slack)
-    delete_crafter.run
+    command.prepare(fake_data_from_slack)
 
-    expect(User.all.size).to eq(1)
+    expect { command.run }.to change(User, :count).by(-1)
   end
 
-  it "return succes message when the crafter was deleted" do
-    delete_crafter = Commands::DeleteUser.new
+  it "return success message when the user was deleted" do
     fake_data_from_slack = {
-      user_message: "delete crafter Will",
+      user_message: "delete user: Will",
     }
 
-    delete_crafter.prepare(fake_data_from_slack)
-    message = delete_crafter.run
+    command.prepare(fake_data_from_slack)
+    message = command.run
 
     expect(message).to eq("Will has been removed.")
   end
