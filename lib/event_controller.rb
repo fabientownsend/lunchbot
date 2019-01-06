@@ -43,6 +43,11 @@ class EventController < Sinatra::Base
     status 200
   end
 
+  post '/commands' do
+    Logger.info("Slash command request: #{request}")
+    status 200
+  end
+
   private
 
   def handle_event(data)
