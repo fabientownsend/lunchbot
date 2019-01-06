@@ -16,7 +16,7 @@ RSpec.describe RequestParser do
   end
 
   it "returns set foreman when the request is to a set the foreman" do
-    request = { user_message: "set foreman: " }
+    request = { user_message: "foreman: " }
     expect(user_request.parse(request)).to be_a(Commands::SetForeman)
   end
 
