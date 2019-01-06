@@ -6,7 +6,7 @@ module Commands
 
     def applies_to?(request)
       request = request[:user_message].downcase
-      request.start_with? "set foreman:"
+      request.start_with? "foreman:"
     end
 
     def prepare(data)

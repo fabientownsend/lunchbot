@@ -12,7 +12,7 @@ RSpec.describe Commands::GetForeman do
 
     command.prepare(user_id: "id one")
 
-    expect(command.run).to eq("There are no foreman!")
+    expect(command.run).to eq("There is no foreman!")
   end
 
   it "gets the foreman who is in the same office as the requester" do
@@ -34,6 +34,6 @@ RSpec.describe Commands::GetForeman do
     command.prepare(user_id: "id one")
     response = command.run
 
-    expect(response).to eq("There are no foreman!")
+    expect(response).to eq("There is no foreman!")
   end
 end
