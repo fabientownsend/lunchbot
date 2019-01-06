@@ -28,10 +28,8 @@ module Commands
       return ""                 unless user
       return office_unavailable unless office.available?
 
-      if user
-        user.add_office(office.location)
-        log_office_added
-      end
+      user.add_office(office.location)
+      log_office_added
 
       "You were added to the office: #{office.location}"
     end
