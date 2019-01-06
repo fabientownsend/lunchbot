@@ -37,6 +37,10 @@ class User
     save
   end
 
+  def self.foreman_for_office(office)
+    User.first(:office => office, :is_foreman => true)
+  end
+
   def self.foreman?(slack_id)
     user = User.first(:slack_id => slack_id, :is_foreman => true)
     !user.nil?
