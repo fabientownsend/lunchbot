@@ -1,5 +1,4 @@
 require 'commands/crafter/add_office'
-require 'models/apprentice'
 
 RSpec.describe Commands::AddOffice do
   it "applies the command when required" do
@@ -35,33 +34,30 @@ RSpec.describe Commands::AddOffice do
       :slack_id => "1234",
       :email => "fabien@adsak.com"
     ).save
-    add_office_command = Commands::AddOffice.new
 
+    add_office_command = Commands::AddOffice.new
     add_office_command.prepare(user_message: "office: random office", user_id: "1234")
     response = add_office_command.run
 
     expect(response).to eq("The offices available are: London, Madison")
   end
 
-  it "does add office to apprentice if this person is an apprentice too" do
+  it "adds office to user" do
     User.new(
       :user_name => "Fabien",
       :slack_id => "1234",
       :email => "fabien@adsak.com"
     ).save
-    Apprentice.new(
-      user_name: "Fabien Townsend",
-      slack_id: "1234"
-    ).save
+
     add_office_command = Commands::AddOffice.new
 
     add_office_command.prepare(user_message: "london", user_id: "1234")
     add_office_command.run
 
-    expect(Apprentice.profile("1234").office).to eq("london")
+    expect(User.profile("1234").office).to eq("london")
   end
 
-  it "does nothing if crafter or apprentice does no exist" do
+  it "does nothing if user does no exist" do
     add_office_command = Commands::AddOffice.new
 
     add_office_command.prepare(user_message: "london", user_id: "does not exist")
