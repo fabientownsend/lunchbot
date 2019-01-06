@@ -12,10 +12,10 @@ class OutChecker
   end
 
   def out?(slack_id)
-    crafter(slack_id).out_friday?
+    user(slack_id).out_friday?
   end
 
-  def crafter(slack_id)
+  def user(slack_id)
     @bamboo_id = @employee_finder.employee_id(slack_id)
     self
   end

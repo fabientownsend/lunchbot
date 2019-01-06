@@ -26,7 +26,7 @@ RSpec.describe Office do
     expect(Order.users_without_order("london")).to include(User.profile("the id"))
   end
 
-  it "returns empty array if every crafter ordered a lunch" do
+  it "returns empty array if every user ordered a lunch" do
     User.all.destroy
     User.create(user_id: "the id", office: "london")
 

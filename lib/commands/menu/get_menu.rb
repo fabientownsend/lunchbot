@@ -14,18 +14,18 @@ module Commands
     end
 
     def prepare(data)
-      @crafter = User.profile(data[:user_id])
+      @user = User.profile(data[:user_id])
     end
 
     def run
-      return if !@crafter
+      return if !@user
 
-      if !@crafter.office
+      if !@user.office
         return "You need to add your office. ex: \"office: london\""
       end
 
-      if Menu.url_to_menu_for(@crafter.office)
-        "The menu for this week is: #{Menu.url_to_menu_for(@crafter.office)}"
+      if Menu.url_to_menu_for(@user.office)
+        "The menu for this week is: #{Menu.url_to_menu_for(@user.office)}"
       else
         "The menu for this week is: no url provided"
       end

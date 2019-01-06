@@ -22,9 +22,9 @@ RSpec.describe Commands::AddOffice do
     add_office_command.prepare(user_message: "office: London", user_id: "1234")
     response = add_office_command.run
 
-    crafter = User.last(:slack_id => "1234")
+    user = User.last(:slack_id => "1234")
 
-    expect(crafter.office).to eq("london")
+    expect(user.office).to eq("london")
     expect(response).to eq("You were added to the office: london")
   end
 

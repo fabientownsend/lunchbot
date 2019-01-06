@@ -112,7 +112,7 @@ RSpec.describe Commands::GetAllOrders do
     expect(response).to eq(list_all_orders)
   end
 
-  it "returns names based on the crafter database" do
+  it "returns names based on the user database" do
     User.create(user_id: "asdf", user_name: "will", office: "london")
     User.create(user_id: "qwer", user_name: "fabien", office: "london")
     Helper.order(

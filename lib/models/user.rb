@@ -19,8 +19,8 @@ class User
   end
 
   def self.has_office?(slack_id)
-    crafter = User.last(:slack_id => slack_id)
-    !crafter.office.nil?
+    user = User.last(:slack_id => slack_id)
+    !user.office.nil?
   end
 
   def self.create(user)
