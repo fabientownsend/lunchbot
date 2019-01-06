@@ -1,5 +1,4 @@
 require 'models/menu'
-require 'models/apprentice'
 
 module Commands
   class SetMenu
@@ -17,12 +16,12 @@ module Commands
 
     def prepare(data)
       @user_message = data[:user_message]
-      @apprentice = Apprentice.profile(data[:user_id])
+      @user = User.profile(data[:user_id])
     end
 
     def run
-      return "You need to add your office. ex: \"office: london\"" unless @apprentice.office
-      return "You are not the foreman!" unless foreman?(@apprentice)
+      return "You need to add your office. ex: \"office: london\"" unless @user.office
+      return "You are not the foreman!" unless foreman?(@user)
 
       menu_url = extract_url(@user_message)
 
@@ -34,8 +33,8 @@ module Commands
 
     private
 
-    def foreman?(apprentice)
-      Apprentice.foreman?(apprentice.slack_id)
+    def foreman?(user)
+      User.foreman?(user.slack_id)
     end
 
     def respond(menu_url)
@@ -55,7 +54,7 @@ module Commands
     end
 
     def save_menu(url)
-      Menu.new(url: url, date: Time.now, office: @apprentice.office).save
+      Menu.new(url: url, date: Time.now, office: @user.office).save
     end
 
     def kin?(url)
