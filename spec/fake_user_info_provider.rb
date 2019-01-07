@@ -5,7 +5,7 @@ class FakeUserInfoProvider
   end
 
   def real_name(_user_id)
-    @names.reverse!.first
+    @names.last
   end
 
   def email(_user_id)

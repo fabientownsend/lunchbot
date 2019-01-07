@@ -7,7 +7,11 @@ module SlackApi
     attr_reader :name
     attr_reader :email
 
-    def initialize(args, slack_api_user: UserInfoProvider.new)
+    def initialize(slack_api_user: UserInfoProvider.new)
+      @slack_api_user = slack_api_user
+    end
+
+    def parse(args)
       @message = clean(args['event']['text'])
       @id = args['event']['user']
       @name = slack_api_user.real_name(args['event']['user'])
@@ -15,6 +19,8 @@ module SlackApi
     end
 
     private
+
+    attr_reader :slack_api_user
 
     def clean(data)
       data.strip.downcase

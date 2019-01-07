@@ -9,16 +9,19 @@ require 'feature_flag'
 
 class MessageHandler < FeatureFlag
   release_for 'Fabien Townsend'
+  attr_reader :requester
 
   def initialize(args = {})
     @mark_all_out = args[:mark_all_out]
     @request_parser = RequestParser.new
     @bot = args[:bot]
     @user_info = args[:user_info_provider]
+    @requester = SlackApi::Requester.new(slack_api_user: args[:user_info_provider])
   end
 
   def handle(event_data)
     recipient = event_data['channel'] || event_data['user']
+
     data = format_data(event_data)
     return data[:user_message] if data[:user_message].nil?
     returned_command = @request_parser.parse(data)
@@ -48,12 +51,12 @@ class MessageHandler < FeatureFlag
   end
 
   def format_data(event_data)
+    requester.parse('event' => event_data)
     {
-      user_message: event_data['text'],
-      user_id: event_data['user'],
-      user_name: @user_info.real_name(event_data['user']),
-      user_email: @user_info.email(event_data['user']),
-      channel_id: event_data['channel'],
+      user_message: requester.message,
+      user_id: requester.id,
+      user_name: requester.name,
+      user_email: requester.email,
       mark_all_out: @mark_all_out,
     }
   end

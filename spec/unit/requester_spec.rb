@@ -3,16 +3,15 @@ require_relative '../fake_user_info_provider'
 
 RSpec.describe SlackApi::Requester do
   it "parse the request for the commands" do
-    data_from_slack = {
-      "event" => {
-        "text" => "  MESsage  ",
-        "user" => "Xe87 ",
-      },
-    }
+    requester = SlackApi::Requester.new(slack_api_user: FakeUserInfoProvider.new)
 
-    requester = SlackApi::Requester.new(
-      data_from_slack,
-      slack_api_user: FakeUserInfoProvider.new
+    requester.parse(
+      {
+        "event" => {
+          "text" => "message",
+          "user" => "Xe87 ",
+        },
+      }
     )
 
     expect(requester.message).to eq("message")
@@ -20,21 +19,21 @@ RSpec.describe SlackApi::Requester do
   end
 
   it "returns information form slack API" do
-    data_from_slack = {
-      "event" => {
-        "text" => "message",
-        "user" => "Xe87 ",
-      },
-    }
-
     requester = SlackApi::Requester.new(
-      data_from_slack,
       slack_api_user: FakeUserInfoProvider.new(
         email: "bla@email.com",
         names: ["bob"]
       )
     )
 
+    requester.parse(
+      {
+        "event" => {
+          "text" => "message",
+          "user" => "Xe87 ",
+        },
+      }
+    )
 
     expect(requester.name).to eq("bob")
     expect(requester.email).to eq("bla@email.com")
