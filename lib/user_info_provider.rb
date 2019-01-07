@@ -8,7 +8,6 @@ class UserInfoProvider
 
   def real_name(user_id)
     data = user_data(user_id)
-    puts "TRACE #{data}"
     data['error'].nil? ? data['user']['real_name'] : data['error']
   end
 

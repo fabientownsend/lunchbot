@@ -1,18 +1,17 @@
+require 'user_info_provider'
+
 module SlackApi
   class Requester
     attr_reader :message
-    attr_reader :user_id
+    attr_reader :id
+    attr_reader :name
+    attr_reader :email
 
-    def initialize(args)
-      # do we need the data: user_name, user_email?
-      # channel_id is unused
-      # mark all out should not work for madison
-
-      # if user_name/email useful we should fetch from db
-      # then fetch from slack api
-
+    def initialize(args, slack_api_user: UserInfoProvider.new)
       @message = clean(args['event']['text'])
-      @user_id = args['event']['user']
+      @id = args['event']['user']
+      @name = slack_api_user.real_name(args['event']['user'])
+      @email = slack_api_user.email(args['event']['user'])
     end
 
     private
