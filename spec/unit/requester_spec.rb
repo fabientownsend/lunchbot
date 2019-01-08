@@ -58,4 +58,43 @@ RSpec.describe SlackApi::Requester do
 
     expect(requester.has_message?).to eq(false)
   end
+
+  it "recipient is a channel if channel is part of the data structure" do
+    requester = SlackApi::Requester.new(
+      slack_api_user: FakeUserInfoProvider.new(
+        email: "bla@email.com",
+        names: ["bob"]
+      )
+    )
+
+    requester.parse(
+      {
+        "event" => {
+          "user" => "user ",
+          "channel" => "channel",
+        },
+      }
+    )
+
+    expect(requester.recipient).to eq("channel")
+  end
+
+  it "recipient is a user if channel is part of the data structure" do
+    requester = SlackApi::Requester.new(
+      slack_api_user: FakeUserInfoProvider.new(
+        email: "bla@email.com",
+        names: ["bob"]
+      )
+    )
+
+    requester.parse(
+      {
+        "event" => {
+          "user" => "user",
+        },
+      }
+    )
+
+    expect(requester.recipient).to eq("user")
+  end
 end

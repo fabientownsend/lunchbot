@@ -21,7 +21,6 @@ class MessageHandler < FeatureFlag
   def handle(event_data)
     requester.parse('event' => event_data)
     return unless requester.has_message?
-    recipient = event_data['channel'] || event_data['user']
 
     data = format_data(event_data)
     returned_command = @request_parser.parse(data)
@@ -31,13 +30,13 @@ class MessageHandler < FeatureFlag
     end
 
     if !User.has_office?(requester.id) && !Commands::AddOffice.add_office_request?(data)
-      @bot.send("You need to add your office. ex: \"office: london\"", recipient)
+      @bot.send("You need to add your office. ex: \"office: london\"", requester.recipient)
       return
     end
 
     unless returned_command.nil?
       response = deal_with_command(returned_command)
-      @bot.send(response, recipient)
+      @bot.send(response, requester.recipient)
     end
   end
 
