@@ -26,11 +26,11 @@ class MessageHandler < FeatureFlag
     data = format_data(event_data)
     returned_command = @request_parser.parse(data)
 
-    unless User.profile(data[:user_id])
+    unless User.profile(requester.id)
       User.create(data)
     end
 
-    if !User.has_office?(data[:user_id]) && !Commands::AddOffice.add_office_request?(data)
+    if !User.has_office?(requester.id) && !Commands::AddOffice.add_office_request?(data)
       @bot.send("You need to add your office. ex: \"office: london\"", recipient)
       return
     end
