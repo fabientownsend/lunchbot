@@ -1,6 +1,5 @@
 require 'bot'
 require 'commands/crafter/add_office'
-require 'feature_flag'
 require 'mark_all_out'
 require 'models/user'
 require 'request_parser'
@@ -8,9 +7,7 @@ require 'requester'
 require 'tiny_logger'
 require 'user_info_provider'
 
-class MessageHandler < FeatureFlag
-  release_for 'Fabien Townsend'
-
+class MessageHandler
   def initialize(args = {})
     @mark_all_out = args[:mark_all_out]
     @request_parser = RequestParser.new
