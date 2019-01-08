@@ -1,29 +1,29 @@
-require 'models/user'
-require 'commands/crafter/add_office'
-require 'mark_all_out'
-require 'request_parser'
 require 'bot'
+require 'commands/crafter/add_office'
+require 'feature_flag'
+require 'mark_all_out'
+require 'models/user'
+require 'request_parser'
+require 'requester'
 require 'tiny_logger'
 require 'user_info_provider'
-require 'feature_flag'
 
 class MessageHandler < FeatureFlag
   release_for 'Fabien Townsend'
-  attr_reader :requester
 
   def initialize(args = {})
     @mark_all_out = args[:mark_all_out]
     @request_parser = RequestParser.new
     @bot = args[:bot]
-    @user_info = args[:user_info_provider]
     @requester = SlackApi::Requester.new(slack_api_user: args[:user_info_provider])
   end
 
   def handle(event_data)
+    requester.parse('event' => event_data)
+    return unless requester.has_message?
     recipient = event_data['channel'] || event_data['user']
 
     data = format_data(event_data)
-    return data[:user_message] if data[:user_message].nil?
     returned_command = @request_parser.parse(data)
 
     unless User.profile(data[:user_id])
@@ -43,6 +43,8 @@ class MessageHandler < FeatureFlag
 
   private
 
+  attr_reader :requester
+
   def deal_with_command(command)
     Logger.info("COMMAND RUN")
     response = command.run
@@ -51,7 +53,6 @@ class MessageHandler < FeatureFlag
   end
 
   def format_data(event_data)
-    requester.parse('event' => event_data)
     {
       user_message: requester.message,
       user_id: requester.id,

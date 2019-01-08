@@ -37,5 +37,25 @@ RSpec.describe SlackApi::Requester do
 
     expect(requester.name).to eq("bob")
     expect(requester.email).to eq("bla@email.com")
+    expect(requester.has_message?).to eq(true)
+  end
+
+  it "says if the requester has not a message" do
+    requester = SlackApi::Requester.new(
+      slack_api_user: FakeUserInfoProvider.new(
+        email: "bla@email.com",
+        names: ["bob"]
+      )
+    )
+
+    requester.parse(
+      {
+        "event" => {
+          "user" => "Xe87 ",
+        },
+      }
+    )
+
+    expect(requester.has_message?).to eq(false)
   end
 end

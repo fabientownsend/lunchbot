@@ -12,10 +12,14 @@ module SlackApi
     end
 
     def parse(args)
-      @message = clean(args['event']['text'])
+      @message = clean(args['event']['text'] || "")
       @id = args['event']['user']
       @name = slack_api_user.real_name(args['event']['user'])
       @email = slack_api_user.email(args['event']['user'])
+    end
+
+    def has_message?
+      !message.empty?
     end
 
     private
