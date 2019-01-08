@@ -4,22 +4,23 @@ require 'sinatra/base'
 require 'slack-ruby-client'
 
 require 'bot'
-require 'request'
 require 'message_handler'
+require 'request'
+require 'requester'
 require 'tiny_logger'
 
 class EventController < Sinatra::Base
-  attr_reader :message_handler
+  attr_reader :message_handler, :requester
 
-  def initialize(app: nil, message_handler: nil)
+  def initialize(app: nil, message_handler: nil, user_info_provider: UserInfoProvider.new)
     super(app)
     @message_handler = message_handler || create_message_handler
+    @requester = SlackApi::Requester.new(slack_api_user: user_info_provider)
   end
 
   def create_message_handler
     MessageHandler.new(
       bot: Bot.new,
-      user_info_provider: UserInfoProvider.new,
       mark_all_out: MarkAllOut.new
     )
   end
@@ -51,7 +52,8 @@ class EventController < Sinatra::Base
   private
 
   def handle_event(data)
+    requester.parse(data)
     Logger.info("Received data #{data['event']}")
-    message_handler.handle(data['event'])
+    message_handler.handle(requester)
   end
 end

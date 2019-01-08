@@ -2,6 +2,8 @@ require 'json'
 require 'rack/test'
 
 require 'event_controller'
+require 'fake_mark_all_out'
+require 'fake_user_info_provider'
 
 RSpec.describe EventController do
   include Rack::Test::Methods
@@ -10,11 +12,15 @@ RSpec.describe EventController do
   let(:message_handler) do
     MessageHandler.new(
       bot: bot,
-      user_info_provider: FakeUserInfoProvider.new,
       mark_all_out: FakeMarkAllOut.new
     )
   end
-  let(:app) { EventController.new(message_handler: message_handler) }
+  let(:app) do
+    EventController.new(
+      message_handler: message_handler,
+      user_info_provider: FakeUserInfoProvider.new,
+    )
+  end
 
   context "slack verification" do
     it "returns challenges value when request type is url_verification" do
@@ -78,6 +84,7 @@ RSpec.describe EventController do
         type: args[:type] || "event_callback",
         event: {
           type: args[:event_type] || "message",
+          user: "Fabien",
           text: "menu?",
           bot_id: args[:bot],
         },
@@ -87,7 +94,7 @@ RSpec.describe EventController do
 end
 
 class FakeBot
-  def send(message)
+  def send(message, _recipient)
     @message = message
   end
 

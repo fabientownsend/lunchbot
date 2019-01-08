@@ -12,15 +12,13 @@ class MessageHandler
     @mark_all_out = args[:mark_all_out]
     @request_parser = RequestParser.new
     @bot = args[:bot]
-    @requester = SlackApi::Requester.new(slack_api_user: args[:user_info_provider])
   end
 
-  def handle(event_data)
-    requester.parse('event' => event_data)
-
+  def handle(requester)
+    requester.message
     return unless requester.has_message?
 
-    data = format_data
+    data = format_data(requester)
     returned_command = @request_parser.parse(data)
 
     unless User.profile(requester.id)
@@ -49,7 +47,7 @@ class MessageHandler
     response
   end
 
-  def format_data
+  def format_data(requester)
     {
       user_message: requester.message,
       user_id: requester.id,

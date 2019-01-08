@@ -21,7 +21,7 @@ module SlackApi
     end
 
     def has_message?
-      !message.empty?
+      message != ""
     end
 
     private
