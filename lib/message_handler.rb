@@ -20,9 +20,10 @@ class MessageHandler < FeatureFlag
 
   def handle(event_data)
     requester.parse('event' => event_data)
+
     return unless requester.has_message?
 
-    data = format_data(event_data)
+    data = format_data
     returned_command = @request_parser.parse(data)
 
     unless User.profile(requester.id)
@@ -51,7 +52,7 @@ class MessageHandler < FeatureFlag
     response
   end
 
-  def format_data(event_data)
+  def format_data
     {
       user_message: requester.message,
       user_id: requester.id,
