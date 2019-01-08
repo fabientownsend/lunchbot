@@ -1,5 +1,4 @@
 ENV['RACK_ENV'] = 'test'
-require 'commands/foreman/add_apprentice'
 require 'commands/order/add_guest'
 require 'commands/order/place_order_guest'
 require 'commands/order/place_order'
@@ -65,15 +64,6 @@ class Helper
       date: Days.monday - 8
     )
     place_order_guest.run
-  end
-
-  def self.add_foreman(data)
-    User.create(user_name: data[:name], user_id: data[:id], office: "london")
-    id = data[:id]
-    user_name = data[:name]
-    add_apprentice = Commands::AddApprentice.new
-    add_apprentice.prepare(user_id: id, user_name: user_name)
-    add_apprentice.run
   end
 end
 

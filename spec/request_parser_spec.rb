@@ -70,16 +70,6 @@ RSpec.describe RequestParser do
     expect(user_request.parse(request)).to be_a(Commands::AddGuest)
   end
 
-  it "returns AddApprentice" do
-    request = { user_message: "add apprentice" }
-    expect(user_request.parse(request)).to be_a(Commands::AddApprentice)
-  end
-
-  it "returns RemoveApprentice" do
-    request = { user_message: "remove apprentice" }
-    expect(user_request.parse(request)).to be_a(Commands::RemoveApprentice)
-  end
-
   it "return remind command when it's a remind request" do
     request = {
       user_message: "remind",

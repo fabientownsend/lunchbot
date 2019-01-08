@@ -1,5 +1,4 @@
 require 'commands/menu/set_menu'
-require 'models/apprentice'
 require 'models/menu'
 
 RSpec.describe Commands::SetMenu do
@@ -15,7 +14,7 @@ RSpec.describe Commands::SetMenu do
     @foreman.save
 
     User.new(
-      user_name: "Fabien another apprentice",
+      user_name: "Fabien another user",
       slack_id: "valid id 2",
       office: "london"
     ).save
