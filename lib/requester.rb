@@ -12,12 +12,12 @@ module SlackApi
       @slack_api_user = slack_api_user
     end
 
-    def parse(args)
-      @email = slack_api_user.email(args['event']['user'])
-      @id = args['event']['user']
-      @message = clean(args['event']['text'] || "")
-      @name = slack_api_user.real_name(args['event']['user'])
-      @recipient = args['event']['channel'] || args['event']['user']
+    def parse(slack_parameters)
+      @email = slack_api_user.email(slack_parameters['event']['user'])
+      @id = slack_parameters['event']['user']
+      @message = clean(slack_parameters['event']['text'] || "")
+      @name = slack_api_user.real_name(slack_parameters['event']['user'])
+      @recipient = slack_parameters['event']['channel'] || slack_parameters['event']['user']
     end
 
     def has_message?
