@@ -1,44 +1,44 @@
-require 'models/user'
+require 'bot'
 require 'commands/crafter/add_office'
 require 'mark_all_out'
+require 'models/user'
 require 'request_parser'
-require 'bot'
+require 'requester'
 require 'tiny_logger'
 require 'user_info_provider'
-require 'feature_flag'
 
-class MessageHandler < FeatureFlag
-  release_for 'Fabien Townsend'
-
+class MessageHandler
   def initialize(args = {})
     @mark_all_out = args[:mark_all_out]
     @request_parser = RequestParser.new
     @bot = args[:bot]
-    @user_info = args[:user_info_provider]
   end
 
-  def handle(event_data)
-    recipient = event_data['channel'] || event_data['user']
-    data = format_data(event_data)
-    return data[:user_message] if data[:user_message].nil?
-    returned_command = @request_parser.parse(data)
+  def handle(requester)
+    return unless requester.has_message?
 
-    unless User.profile(data[:user_id])
-      User.create(data)
+    formated_data = format(requester)
+
+    unless User.profile(requester.id)
+      User.create(formated_data)
     end
 
-    if !User.has_office?(data[:user_id]) && !Commands::AddOffice.add_office_request?(data)
-      @bot.send("You need to add your office. ex: \"office: london\"", recipient)
+    if !User.has_office?(requester.id) && !Commands::AddOffice.add_office_request?(formated_data)
+      @bot.send("You need to add your office. ex: \"office: london\"", requester.recipient)
       return
     end
 
+    returned_command = @request_parser.parse(formated_data)
+
     unless returned_command.nil?
       response = deal_with_command(returned_command)
-      @bot.send(response, recipient)
+      @bot.send(response, requester.recipient)
     end
   end
 
   private
+
+  attr_reader :requester
 
   def deal_with_command(command)
     Logger.info("COMMAND RUN")
@@ -47,13 +47,12 @@ class MessageHandler < FeatureFlag
     response
   end
 
-  def format_data(event_data)
+  def format(requester)
     {
-      user_message: event_data['text'],
-      user_id: event_data['user'],
-      user_name: @user_info.real_name(event_data['user']),
-      user_email: @user_info.email(event_data['user']),
-      channel_id: event_data['channel'],
+      user_message: requester.message,
+      user_id: requester.id,
+      user_name: requester.name,
+      user_email: requester.email,
       mark_all_out: @mark_all_out,
     }
   end

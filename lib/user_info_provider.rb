@@ -8,13 +8,12 @@ class UserInfoProvider
 
   def real_name(user_id)
     data = user_data(user_id)
-    puts "TRACE #{data}"
     data['error'].nil? ? data['user']['real_name'] : data['error']
   end
 
   def email(user_id)
     data = user_data(user_id)
-    data['error'].nil? ? data['user']['email'] : data['error']
+    data['error'].nil? ? data['user']['profile']['email'] : data['error']
   end
 
   private

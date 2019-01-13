@@ -1,15 +1,17 @@
 require 'commands/help'
 require 'commands/order/add_guest'
 require 'days'
-require 'fake_mark_all_out'
 require 'fake_bot'
+require 'fake_mark_all_out'
 require 'fake_user_info_provider'
 require 'message_handler'
+require 'requester'
 
 RSpec.describe MessageHandler do
   let(:fake_bot) { FakeBot.new }
   let(:fake_mark_all_out) { FakeMarkAllOut.new }
   let(:fake_user_info_provider) { FakeUserInfoProvider.new }
+  let(:requester) { SlackApi::Requester.new(slack_api_user: FakeUserInfoProvider.new) }
   let(:recipient) { "D3S6XE6SZ" }
   let(:channel_id) { "CHANNELID" }
 
@@ -17,7 +19,6 @@ RSpec.describe MessageHandler do
     MessageHandler.new(
       mark_all_out: fake_mark_all_out,
       bot: fake_bot,
-      user_info_provider: fake_user_info_provider
     )
   end
 
@@ -114,7 +115,8 @@ RSpec.describe MessageHandler do
     user_message = args[:user_message]
     new_recipient = args[:new_recipient] || recipient
     event_data = create_event_data(user_message, new_recipient)
-    message_handler.handle(event_data)
+    requester.parse("event" => event_data)
+    message_handler.handle(requester)
   end
 
   def create_event_data(message, recipient)
