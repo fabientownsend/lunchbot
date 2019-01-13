@@ -9,8 +9,10 @@ RSpec.describe Commands::MarkOut do
     out.prepare(user_id: "id", user_name: "Will")
     out.run
 
-    expect(Order.last.lunch).to eq("out")
-    expect(Order.last.user_id).to eq("id")
+    expect(Order.last).to have_attributes(
+      lunch: "out",
+      user_id: "id"
+    )
   end
 
   it "update existing orders" do
@@ -25,8 +27,10 @@ RSpec.describe Commands::MarkOut do
     out.run
 
     expect(Order.count).to eq(1)
-    expect(Order.last.lunch).to eq("out")
-    expect(Order.last.user_id).to eq("id")
+    expect(Order.last).to have_attributes(
+      lunch: "out",
+      user_id: "id"
+    )
   end
 
   it "update the current week" do

@@ -101,8 +101,10 @@ RSpec.describe Commands::SetMenu do
     url = "https://arancinibrothers-catering.orderswift.com/menu/re_0UV"
     set_menu_link(url: url)
 
-    expect(Menu.last.url).to eq(url)
-    expect(Menu.last.office).to eq(@foreman.office)
+    expect(Menu.last).to have_attributes(
+      url: url,
+      office: @foreman.office
+    )
   end
 
   it "complains about choosing kin" do
