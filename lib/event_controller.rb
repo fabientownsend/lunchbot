@@ -19,10 +19,7 @@ class EventController < Sinatra::Base
   end
 
   def create_message_handler
-    MessageHandler.new(
-      bot: Bot.new,
-      mark_all_out: MarkAllOut.new
-    )
+    MessageHandler.new(bot: Bot.new)
   end
 
   post '/events' do
