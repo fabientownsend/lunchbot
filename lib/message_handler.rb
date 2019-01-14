@@ -1,15 +1,12 @@
 require 'bot'
 require 'commands/crafter/add_office'
-require 'mark_all_out'
 require 'models/user'
 require 'request_parser'
 require 'requester'
 require 'tiny_logger'
-require 'user_info_provider'
 
 class MessageHandler
   def initialize(args = {})
-    @mark_all_out = args[:mark_all_out]
     @request_parser = RequestParser.new
     @bot = args[:bot]
   end
@@ -24,21 +21,21 @@ class MessageHandler
     end
 
     if !User.has_office?(requester.id) && !Commands::AddOffice.add_office_request?(formated_data)
-      @bot.send("You need to add your office. ex: \"office: london\"", requester.recipient)
+      bot.send("You need to add your office. ex: \"office: london\"", requester.recipient)
       return
     end
 
-    returned_command = @request_parser.parse(formated_data)
+    returned_command = request_parser.parse(formated_data)
 
     unless returned_command.nil?
       response = deal_with_command(returned_command)
-      @bot.send(response, requester.recipient)
+      bot.send(response, requester.recipient)
     end
   end
 
   private
 
-  attr_reader :requester
+  attr_reader :requester, :bot, :request_parser
 
   def deal_with_command(command)
     Logger.info("COMMAND RUN")
@@ -53,7 +50,6 @@ class MessageHandler
       user_id: requester.id,
       user_name: requester.name,
       user_email: requester.email,
-      mark_all_out: @mark_all_out,
     }
   end
 end

@@ -16,15 +16,14 @@ module Commands
 
     def prepare(data)
       @user_id = data[:user_id]
-      @mark_all_out = data[:mark_all_out]
-
+      @mark_all_out = MarkAllOut.new
       @requester = User.profile(data[:user_id])
     end
 
     def run
-      return "You are not the foreman!" if !User.foreman?(@user_id)
+      return "You are not the foreman!" if !User.foreman?(user_id)
 
-      @mark_all_out.update
+      mark_all_out.update
 
       return "Everyone has an order." if people_to_remind.none?
 
@@ -33,18 +32,20 @@ module Commands
 
     private
 
+    attr_reader :user_id, :mark_all_out, :requester
+
     def people_to_remind
       users_to_remind + guests_to_remind
     end
 
     def users_to_remind
-      Order.users_without_order(@requester.office).map do |user|
+      Order.users_without_order(requester.office).map do |user|
         "<@#{user.slack_id}>"
       end
     end
 
     def guests_to_remind
-      Order.guests_without_order(@requester.office).map do |guest|
+      Order.guests_without_order(requester.office).map do |guest|
         "#{guest.user_name} host: <@#{guest.host}>"
       end
     end

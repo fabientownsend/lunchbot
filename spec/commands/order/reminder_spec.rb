@@ -1,17 +1,16 @@
 require 'commands/order/reminder'
 require 'days'
 require 'fake_mark_all_out'
+require 'mark_all_out'
 
 RSpec.describe Commands::Reminder do
   let(:command) { Commands::Reminder.new }
   let(:reminder_request) do
-    {
-      user_id: "user id",
-      mark_all_out: FakeMarkAllOut.new,
-    }
+    { user_id: "user id" }
   end
 
   before(:each) do
+    allow(MarkAllOut).to receive(:new).and_return(FakeMarkAllOut.new)
     User.all.destroy
 
     User.new(
