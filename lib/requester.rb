@@ -29,7 +29,7 @@ module SlackApi
     attr_reader :slack_api_user
 
     def clean(data)
-      data.strip.downcase
+      data.strip
     end
   end
 end
