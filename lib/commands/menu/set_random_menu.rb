@@ -2,6 +2,10 @@ require 'models/menu'
 
 module Commands
   class SetRandomMenu
+    def self.description
+      "Set a random menu | `surprise menu`"
+    end
+
     def applies_to?(request)
       request = request[:user_message].downcase.strip
       request.include?("surprise menu")
