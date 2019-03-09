@@ -43,7 +43,7 @@ RSpec.describe MessageHandler do
 
       Add a guest with no order | `add guest: [guest_name]`
       Copy someone's order | `copy order: [@slack_username]`
-      Delete a user | `delete user: [@slack_username]`
+      Delete a user | `delete user: slack_displayed_name`
       Get this week's menu | `menu?`
       Mark yourself out: `out`
       Place an order for a guest (this also creates a guest if the name given does not exist) | `order [guest_name]: [menu_item]`
