@@ -17,7 +17,6 @@ module Commands
     end
 
     def run
-      return "You need to add your office. ex: \"office: london\"" unless @user.office
       return "You are not the foreman!" unless foreman?(@user)
 
       save_menu(@random_menu_url)
