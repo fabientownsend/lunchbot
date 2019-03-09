@@ -51,9 +51,8 @@ module Commands
     end
 
     def format_lunch(request)
-      order = request.gsub("order:", "")
-      order[0] = "" if order[0] == " "
-      order
+      order = request.downcase.gsub("order:", "")
+      order.strip
     end
 
     def place_order

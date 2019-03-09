@@ -80,6 +80,13 @@ RSpec.describe MessageHandler do
     expect(fake_bot.user_id).to eq(channel_id)
   end
 
+  it "removes order from command when it has capital in 'Order:'" do
+    User.create(user_id: recipient, user_name: "Fabien", office: "london")
+    message_from_slack(user_message: "Order: burger")
+
+    expect(fake_bot.message).to eq("Will just ordered `burger`.")
+  end
+
   it "tells you if your order is invalid" do
     message_from_slack(user_message: "order:")
     expect(fake_bot.message).to eq("That is not a valid order.")
