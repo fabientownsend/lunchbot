@@ -5,7 +5,7 @@ module Commands
 
     def applies_to?(request)
       request = request[:user_message].downcase
-      request == "help" || request == "hello"
+      request == "help"
     end
 
     def prepare(data)
