@@ -52,6 +52,7 @@ RSpec.describe MessageHandler do
       Remove a guest | `remove guest: [guest_name]`
       See all orders | `orders?`
       Set a menu | `menu: www.menu-url.com`
+      Set a random menu | `surprise menu`
       Set someone as the current foreman | `foreman: [@slack_username`]
       Show this week's foreman | `foreman?`
     HEREDOC
