@@ -7,16 +7,17 @@ class RequestParser
     klass(requested_command(data)).prepare(data)
   end
 
+  def find_command?(data)
+    requested_command(data) != nil
+  end
+
   def requested_command(data)
     Commands.constants.detect { |command| klass(command).requested?(data) }
   end
 
   def klass(command)
-    return if command.nil?
     @kommand = Object.const_get("Commands::#{command}").new
     self
-  rescue StandardError => error
-    Logger.alert(error)
   end
 
   def requested?(data)

@@ -59,6 +59,23 @@ RSpec.describe MessageHandler do
     expect(fake_bot.message).to eq(help_message)
   end
 
+  it "reply nothing when it's not a lunchbot command" do
+    allow(User).to receive(:has_office?).and_return(false)
+    User.new(user_name: "Kendall", slack_id: "user id without office").save
+
+    message_from_slack(user_message: "Everyone good?", new_recipient: "user id without office")
+
+    expect(fake_bot.message).to eq(nil)
+  end
+
+  it "requests the user to set their office when they don't have one" do
+    User.new(user_name: "Fabien", slack_id: "user id").save
+
+    message_from_slack(user_message: "menu?", new_recipient: "user id")
+
+    expect(fake_bot.message).to eq("You need to add your office. ex: \"office: london\"")
+  end
+
   it "returns the url when you ask the menu which is not provided" do
     User.new(
       user_name: "Fabien",

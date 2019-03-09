@@ -20,17 +20,17 @@ class MessageHandler
       User.create(formated_data)
     end
 
-    if !User.has_office?(requester.id) && !Commands::AddOffice.add_office_request?(formated_data)
+    return if !request_parser.find_command?(formated_data)
+    returned_command = request_parser.parse(formated_data)
+
+    if !User.has_office?(requester.id) &&
+       !Commands::AddOffice.add_office_request?(formated_data) &&
       bot.send("You need to add your office. ex: \"office: london\"", requester.recipient)
       return
     end
 
-    returned_command = request_parser.parse(formated_data)
-
-    unless returned_command.nil?
-      response = deal_with_command(returned_command)
-      bot.send(response, requester.recipient)
-    end
+    response = deal_with_command(returned_command)
+    bot.send(response, requester.recipient)
   end
 
   private

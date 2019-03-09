@@ -20,7 +20,7 @@ class User
 
   def self.has_office?(slack_id)
     user = User.last(:slack_id => slack_id)
-    !user.office.nil?
+    user.office != nil
   end
 
   def self.create(user)
