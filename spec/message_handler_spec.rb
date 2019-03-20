@@ -46,7 +46,7 @@ RSpec.describe MessageHandler do
       Delete a user | `delete user: slack_displayed_name`
       Get this week's menu | `menu?`
       Mark yourself out: `out`
-      Place an order for a guest (this also creates a guest if the name given does not exist) | `order [guest_name]: [menu_item]`
+      Place an order for a guest (this also creates a guest if the name given does not exist) | `order - [guest_name] - : [menu_item]`
       Place an order | `order: [menu_item]`
       Remind people with no order | `remind`
       Remove a guest | `remove guest: [guest_name]`
