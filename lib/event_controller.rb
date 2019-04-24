@@ -51,6 +51,7 @@ class EventController < Sinatra::Base
   def handle_event(data)
     requester.parse(data)
     Logger.info("Received data #{data['event']}")
+    Logger.honey
     message_handler.handle(requester)
   end
 end
