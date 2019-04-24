@@ -6,7 +6,6 @@ gem 'httparty'
 gem "rack", ">= 1.6.11"
 gem 'sinatra', '~> 1.4.7'
 gem 'slack-ruby-client', '~> 0.13.1'
-gem 'honeycomb-beeline'
 
 gem 'data_mapper'
 gem 'dm-core'
