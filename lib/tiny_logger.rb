@@ -1,3 +1,4 @@
+require 'honeycomb-beeline'
 require 'logglier'
 
 class Logger
@@ -12,5 +13,11 @@ class Logger
 
     logger = Logglier.new(ENV['LOGGLIER_URL'], :threaded => true)
     logger.info(message)
+  end
+
+  def self.honey
+    return if ENV['RACK_ENV'] != 'production'
+
+    Honeycomb.add_field(ENV['RACK_ENV'], :greetee, "hello")
   end
 end
