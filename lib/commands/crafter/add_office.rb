@@ -1,3 +1,4 @@
+# typed: true
 require 'models/user'
 require 'models/office'
 require 'tiny_logger'

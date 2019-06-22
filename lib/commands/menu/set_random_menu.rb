@@ -1,3 +1,4 @@
+# typed: true
 require 'models/menu'
 
 module Commands

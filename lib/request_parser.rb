@@ -1,3 +1,4 @@
+# typed: true
 require 'tiny_logger'
 
 Dir["#{File.dirname(__FILE__)}/commands/**/*.rb"].each { |file| require file }

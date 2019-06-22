@@ -1,3 +1,4 @@
+# typed: false
 require 'models/user'
 
 RSpec.describe User do

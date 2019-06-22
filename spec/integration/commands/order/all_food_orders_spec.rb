@@ -1,3 +1,4 @@
+# typed: false
 require 'commands/order/all_food_orders'
 require 'date'
 require 'days'

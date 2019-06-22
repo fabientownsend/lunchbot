@@ -1,3 +1,4 @@
+# typed: true
 class Office
   LOCATIONS = ["london", "madison"].freeze
 

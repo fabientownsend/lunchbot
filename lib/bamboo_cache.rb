@@ -1,6 +1,12 @@
+# typed: true
 class BambooCache
   def whos_out
     @whos_out_data
+  end
+
+  sig { params(bla: String).returns(TrueClass) }
+  def lol(bla)
+    true
   end
 
   def employees

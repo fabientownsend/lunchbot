@@ -1,3 +1,4 @@
+# typed: false
 require 'models/order'
 require 'models/user'
 require 'date'

@@ -1,3 +1,4 @@
+# typed: false
 require 'commands/order/reminder'
 require 'days'
 require 'fake_mark_all_out'

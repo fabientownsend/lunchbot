@@ -1,3 +1,4 @@
+# typed: true
 require 'data_mapper'
 
 class Menu

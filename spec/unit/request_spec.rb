@@ -1,3 +1,4 @@
+# typed: false
 require 'request'
 
 RSpec.describe SlackApi::Request do

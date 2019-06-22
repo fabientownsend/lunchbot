@@ -20,6 +20,11 @@ Run the tests
 Bundle exec rspec
 ```
 
+Run the types checking
+```
+bundle exec srb tc
+```
+
 ## Coding Conventions
 To make the code consistent we ask you to use Rubocop.
 Note that Rubocop isn't configured to run on the pipeline, it's up to the

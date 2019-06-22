@@ -1,3 +1,4 @@
+# typed: false
 require 'commands/foreman/get_foreman'
 
 RSpec.describe Commands::GetForeman do

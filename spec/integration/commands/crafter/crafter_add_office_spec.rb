@@ -1,3 +1,4 @@
+# typed: false
 require 'commands/crafter/add_office'
 
 RSpec.describe Commands::AddOffice do

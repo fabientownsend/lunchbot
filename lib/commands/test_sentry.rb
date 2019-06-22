@@ -1,3 +1,4 @@
+# typed: true
 require 'feature_flag'
 
 module Commands

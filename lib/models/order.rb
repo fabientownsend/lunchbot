@@ -1,3 +1,4 @@
+# typed: false
 require 'data_mapper'
 require 'date'
 require 'days'

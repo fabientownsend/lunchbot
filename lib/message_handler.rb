@@ -1,3 +1,4 @@
+# typed: true
 require 'bot'
 require 'commands/crafter/add_office'
 require 'models/user'

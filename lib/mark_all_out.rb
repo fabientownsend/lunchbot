@@ -1,3 +1,4 @@
+# typed: true
 require 'bamboo_info_provider'
 require 'commands/order/mark_out'
 require 'models/user'

@@ -1,3 +1,4 @@
+# typed: true
 class FakeUserInfoProvider
   def initialize(email: "email@email.com", names: %w(Fabien Will))
     @email = email

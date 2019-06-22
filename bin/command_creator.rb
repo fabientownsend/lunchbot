@@ -1,3 +1,4 @@
+# typed: false
 verb, subject, file_name = ARGV
 
 def format_file_name(name)

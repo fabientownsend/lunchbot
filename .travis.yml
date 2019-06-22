@@ -9,3 +9,4 @@ install:
 script:
   - bundle exec rubocop
   - bundle exec rspec
+  - bundle exec srb tc

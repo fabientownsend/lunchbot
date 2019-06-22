@@ -1,3 +1,4 @@
+# typed: false
 require 'days'
 
 RSpec.describe Days do

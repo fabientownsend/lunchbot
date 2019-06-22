@@ -1,3 +1,4 @@
+# typed: false
 require 'commands/order/add_guest'
 require 'models/order'
 

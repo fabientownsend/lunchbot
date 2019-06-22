@@ -1,3 +1,4 @@
+# typed: false
 require 'feature_flag'
 
 class FeatureInProgress < FeatureFlag

@@ -1,3 +1,4 @@
+# typed: true
 require 'bamboo_employee_finder'
 require 'days'
 require 'date'

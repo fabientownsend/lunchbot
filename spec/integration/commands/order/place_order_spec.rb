@@ -1,3 +1,4 @@
+# typed: false
 require 'commands/order/place_order'
 require 'models/order'
 require 'models/user'

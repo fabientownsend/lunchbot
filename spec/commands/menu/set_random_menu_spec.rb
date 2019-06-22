@@ -1,3 +1,4 @@
+# typed: false
 require 'commands/menu/set_random_menu'
 
 RSpec.describe Commands::SetRandomMenu do

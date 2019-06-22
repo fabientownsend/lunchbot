@@ -1,3 +1,4 @@
+# typed: false
 require 'bamboo_cache'
 
 RSpec.describe BambooCache do

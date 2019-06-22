@@ -1,3 +1,4 @@
+# typed: false
 require 'commands/menu/set_menu'
 require 'commands/menu/get_menu'
 require 'request_parser'

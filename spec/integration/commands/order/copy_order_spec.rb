@@ -1,3 +1,4 @@
+# typed: false
 require 'commands/order/copy_order'
 require 'days'
 

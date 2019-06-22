@@ -1,3 +1,4 @@
+# typed: false
 require 'commands/menu/get_menu'
 require 'models/user'
 require 'models/menu'

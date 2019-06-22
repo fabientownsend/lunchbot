@@ -1,3 +1,4 @@
+# typed: true
 require 'models/order'
 require 'date'
 require 'days'

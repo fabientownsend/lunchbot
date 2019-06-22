@@ -1,3 +1,4 @@
+# typed: true
 module Commands
   class Help
     def self.description

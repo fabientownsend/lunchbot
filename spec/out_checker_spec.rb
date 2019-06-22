@@ -1,3 +1,4 @@
+# typed: false
 require 'out_checker'
 require 'fake_slack_info'
 

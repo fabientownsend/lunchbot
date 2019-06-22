@@ -1,3 +1,4 @@
+# typed: true
 class FakeSlackInfo
   def slack_id
     "id"

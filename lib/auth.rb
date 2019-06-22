@@ -1,3 +1,4 @@
+# typed: false
 require 'sinatra/base'
 require 'slack-ruby-client'
 require_relative 'models/auth_info'

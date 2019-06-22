@@ -1,3 +1,4 @@
+# typed: false
 require 'bamboo_employee_finder'
 require 'fake_slack_info'
 

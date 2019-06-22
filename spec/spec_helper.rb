@@ -1,3 +1,4 @@
+# typed: false
 ENV['RACK_ENV'] = 'test'
 require 'commands/order/add_guest'
 require 'commands/order/place_order_guest'

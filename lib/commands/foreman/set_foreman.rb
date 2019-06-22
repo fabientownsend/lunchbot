@@ -1,3 +1,4 @@
+# typed: true
 module Commands
   class SetForeman
     def self.description

@@ -1,3 +1,4 @@
+# typed: true
 class BambooEmployeeFinder
   def initialize(slack_users, bamboo_employees)
     @slack_users = slack_users

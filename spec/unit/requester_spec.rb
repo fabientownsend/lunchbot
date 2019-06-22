@@ -1,3 +1,4 @@
+# typed: false
 require 'requester'
 require_relative '../fake_user_info_provider'
 

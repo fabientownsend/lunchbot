@@ -1,3 +1,4 @@
+# typed: true
 require 'user_info_provider'
 
 module SlackApi

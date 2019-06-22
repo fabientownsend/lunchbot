@@ -1,3 +1,4 @@
+# typed: true
 class FeatureFlag
   @@tester_bucket = {}
 

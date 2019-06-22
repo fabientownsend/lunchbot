@@ -1,3 +1,4 @@
+# typed: false
 require 'commands/help'
 require 'commands/order/add_guest'
 require 'days'

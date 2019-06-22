@@ -1,3 +1,4 @@
+# typed: false
 require 'commands/crafter/delete_user'
 
 RSpec.describe Commands::DeleteUser do

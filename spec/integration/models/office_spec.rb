@@ -1,3 +1,4 @@
+# typed: false
 require 'models/office'
 
 RSpec.describe Office do

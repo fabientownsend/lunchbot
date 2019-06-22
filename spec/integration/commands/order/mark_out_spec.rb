@@ -1,3 +1,4 @@
+# typed: false
 require 'commands/order/mark_out'
 require 'models/order'
 require 'days'

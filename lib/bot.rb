@@ -1,3 +1,4 @@
+# typed: true
 class Bot
   def initialize
     @client = Slack::Web::Client.new
