@@ -1,5 +1,9 @@
 # typed: true
+require 'sorbet-runtime'
+
 class BambooCache
+  extend T::Sig
+
   def whos_out
     @whos_out_data
   end
