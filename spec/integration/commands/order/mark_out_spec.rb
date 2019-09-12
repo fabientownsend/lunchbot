@@ -44,7 +44,7 @@ RSpec.describe Commands::MarkOut do
     out.prepare(user_id: "id", user_name: "Will")
     out.run
 
-    expect(Order.first.lunch).to eq("burger")
+    expect(Order.first.lunch).to eq("Burger")
     expect(Order.last.lunch).to eq("out")
   end
 end

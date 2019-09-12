@@ -43,7 +43,7 @@ RSpec.describe Commands::GetAllOrders do
 
     get_all_orders_command.prepare(user_id: "qwer")
     response = get_all_orders_command.run
-    list_all_orders = "fabien: fish\nwill: burger"
+    list_all_orders = "fabien: Fish\nwill: Burger"
     expect(response).to eq(list_all_orders)
   end
 
@@ -58,7 +58,7 @@ RSpec.describe Commands::GetAllOrders do
 
     get_all_orders_command.prepare(user_id: "asdf")
     response = get_all_orders_command.run
-    list_all_orders = "will: burger"
+    list_all_orders = "will: Burger"
     expect(response).to eq(list_all_orders)
   end
 
@@ -80,7 +80,7 @@ RSpec.describe Commands::GetAllOrders do
 
     get_all_orders_command.prepare(user_id: "qwer")
     response = get_all_orders_command.run
-    list_all_orders = "fabien: fish\nwill: burger"
+    list_all_orders = "fabien: Fish\nwill: Burger"
     expect(response).to eq(list_all_orders)
   end
 
@@ -108,7 +108,7 @@ RSpec.describe Commands::GetAllOrders do
 
     get_all_orders_command.prepare(user_id: "qwer")
     response = get_all_orders_command.run
-    list_all_orders = "fabien: fish\nwill: burger"
+    list_all_orders = "fabien: Fish\nwill: Burger"
     expect(response).to eq(list_all_orders)
   end
 
@@ -130,7 +130,7 @@ RSpec.describe Commands::GetAllOrders do
 
     get_all_orders_command.prepare(user_id: "qwer")
     response = get_all_orders_command.run
-    list_all_orders = "fabien: fish\nwill: burger"
+    list_all_orders = "fabien: Fish\nwill: Burger"
     expect(response).to eq(list_all_orders)
   end
 
@@ -155,7 +155,7 @@ RSpec.describe Commands::GetAllOrders do
 
     get_all_orders_command.prepare(user_id: "qwer")
     response = get_all_orders_command.run
-    expect(response).to eq("fabien: fish\njames smith: burger\nwill: burger")
+    expect(response).to eq("fabien: Fish\njames smith: burger\nwill: Burger")
   end
 
   private
