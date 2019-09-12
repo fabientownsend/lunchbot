@@ -37,7 +37,7 @@ module Commands
       orders_of_the_week.map do |order|
         name = full_name(order)
         if !order.lunch.nil? && !name.nil?
-          "#{name}: #{order.lunch}"
+          "*#{name}*: `#{order.lunch}`"
         end
       end.compact.sort
     end
