@@ -21,14 +21,13 @@ class OutChecker
   end
 
   def out_friday?
-    employee_info = bamboohr_info(@bamboo_id)
-    return false unless employee_info
-    days_off(employee_info).any?(&:friday?)
+    employee = bamboohr_info(@bamboo_id)
+    return employee != nil && days_off(employee).any?(&:friday?)
   end
 
   def bamboohr_info(bamboo_id)
-    bamboo_calandar = @bamboo_info_provider.whos_out
-    bamboo_calandar.detect { |calandar| calandar["employeeId"] == bamboo_id }
+    bamboo_calendar = @bamboo_info_provider.whos_out
+    bamboo_calendar.detect { |calendar| calendar["employeeId"] == bamboo_id }
   end
 
   def days_off(employee_info)
