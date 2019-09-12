@@ -22,7 +22,7 @@ class OutChecker
 
   def out_friday?
     employee = bamboohr_info(@bamboo_id)
-    return employee != nil && days_off(employee).any?(&:friday?)
+    !employee.nil? && days_off(employee).any?(&:friday?)
   end
 
   def bamboohr_info(bamboo_id)
