@@ -51,8 +51,12 @@ module Commands
     end
 
     def format_lunch(request)
-      order = request.downcase.gsub("order:", "")
-      order.strip
+      request.
+        downcase.
+        gsub("order:", "").
+        gsub("`", "").
+        capitalize.
+        strip
     end
 
     def place_order

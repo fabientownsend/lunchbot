@@ -19,7 +19,7 @@ RSpec.describe Commands::AllFoodOrders do
 
     all_food_orders.prepare(user_id: "asdf")
 
-    expect(all_food_orders.run).to eq("burger: 2\nfish: 1")
+    expect(all_food_orders.run).to eq("Burger: 2\nFish: 1")
   end
 
   it "return only the meal of the current week" do
@@ -38,7 +38,7 @@ RSpec.describe Commands::AllFoodOrders do
 
     all_food_orders.prepare(user_id: "asdf")
 
-    expect(all_food_orders.run).to eq("burger: 2\nfish: 1")
+    expect(all_food_orders.run).to eq("Burger: 2\nFish: 1")
   end
 
   it "return monday orders" do
@@ -47,7 +47,7 @@ RSpec.describe Commands::AllFoodOrders do
 
     all_food_orders.prepare(user_id: "asdf")
 
-    expect(all_food_orders.run).to eq("burger: 1")
+    expect(all_food_orders.run).to eq("Burger: 1")
   end
 
   it "return friday orders" do
@@ -61,7 +61,7 @@ RSpec.describe Commands::AllFoodOrders do
 
     all_food_orders.prepare(user_id: "asdf")
 
-    expect(all_food_orders.run).to eq("burger: 1")
+    expect(all_food_orders.run).to eq("Burger: 1")
   end
 
   it "doesn't count guest without orders" do
@@ -78,7 +78,7 @@ RSpec.describe Commands::AllFoodOrders do
 
     all_food_orders.prepare(user_id: "asdf")
 
-    expect(all_food_orders.run).to eq("burger: 1")
+    expect(all_food_orders.run).to eq("Burger: 1")
   end
 
   private
