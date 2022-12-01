@@ -4,7 +4,7 @@ ruby '2.5.5'
 gem 'coveralls', require: false
 gem 'httparty'
 gem "rack", ">= 1.6.11"
-gem 'sinatra', '~> 1.4.7'
+gem 'sinatra', '~> 2.2.3'
 gem 'slack-ruby-client', '~> 0.13.1'
 gem 'honeycomb-beeline'
 
